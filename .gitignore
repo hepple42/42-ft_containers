@@ -1,0 +1,16 @@
+*.d
+*.o
+
+ft_containers_terminator
+
+a.out
+containers
+ft_containers
+ft_map
+ft_vector
+ft_set
+ft_stack
+std_map
+std_vector
+std_stack
+std_set

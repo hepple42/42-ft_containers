@@ -6,7 +6,7 @@
 #    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 12:14:51 by hepple            #+#    #+#              #
-#    Updated: 2023/01/16 12:19:02 by hepple           ###   ########.fr        #
+#    Updated: 2023/01/17 12:20:13 by hepple           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CXXFLAGS	:= -std=c++98 -Wall -Wextra -Werror# -fsanitize=address
 
 LDFLAGS		:= 
 
-DEPFLAGS	 = -MMD -MP -MF $(DDIR)/$*.d
+DEPFLAGS	 = -MT $@ -MMD -MP -MF $(DDIR)/$*.d
 
 VPATH		:= ./ src/
 
@@ -61,4 +61,5 @@ fclean: clean
 
 re: fclean all
 
+$(DEPS):
 -include $(DEPS)
