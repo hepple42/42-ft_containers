@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/20 15:59:30 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/23 16:58:02 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 #ifndef FT_VECTOR_HPP
 #define FT_VECTOR_HPP
 
+
 #include <memory>
 #include <stdexcept>
 
-
-namespace ft
-{
+#include "iterator.hpp"
 
 
-/* *** VECTOR *************************************************************** */
+namespace ft {
+
+
+/* *** V E C T O R ********************************************************** */
 
 template < typename T, typename Alloc = std::allocator<T> >
 class vector
@@ -31,14 +33,14 @@ class vector
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	// typedef value_type;
-	// typedef allocator_type;
-	// typedef difference_type;
-	// typedef size_type;
-	// typedef reference;
-	// typedef const_reference;
-	// typedef pointer;
-	// typedef const_pointer;
+	typedef T											value_type;
+	typedef Alloc										allocator_type;
+	typedef typename allocator_type::differece_type		difference_type;
+	typedef typename allocator_type::size_type			size_type;
+	typedef typename allocator_type::reference			reference;
+	typedef typename allocator_type::const_reference	const_reference;
+	typedef typename allocator_type::pointer			pointer;
+	typedef typename allocator_type::const_pointer		const_pointer;
 	// typedef iterator;
 	// typedef const_iterator;
 	// typedef reverse_iterator;
@@ -50,7 +52,7 @@ class vector
 
 	explicit vector(allocator_type const &alloc = allocator_type());
 	explicit vector(size_type n, value_type const &val = value_type(), allocator_type const &alloc = allocator_type());
-	template < class InputIterator >
+	template < typename InputIterator >
 	vector (InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type());
 	vector (vector const &x);
 
@@ -133,36 +135,40 @@ class vector
 
 	allocator_type get_allocator() const;
 
-//   private: / protected:
+  protected:  // PRIVATE???
+
+	allocator_type	_alloc;
+	pointer			_start;
+	pointer			_finish;
+	pointer			_cap;
 
 };
-
 
 /* *** NON-MEMBER FUNCTION OVERLOADS **************************************** */
 
 /* *** Relational Operators ************************************************* */
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 bool operator==(vector<T, Alloc> const &lhs, vector<T, Alloc> const &rhs);
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 bool operator!=(vector<T, Alloc> const &lhs, vector<T, Alloc> const &rhs);
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 bool operator<(vector<T, Alloc> const &lhs, vector<T, Alloc> const &rhs);
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 bool operator<=(vector<T, Alloc> const &lhs, vector<T, Alloc> const &rhs);
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 bool operator>(vector<T, Alloc> const &lhs, vector<T, Alloc> const &rhs);
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 bool operator>=(vector<T, Alloc> const &lhs, vector<T, Alloc> const &rhs);
 
 /* *** Swap ***************************************************************** */
 
-template < class T, class Alloc >
+template < typename T, typename Alloc >
 void swap(vector<T, Alloc> &x, vector<T, Alloc> &y);
 
 
