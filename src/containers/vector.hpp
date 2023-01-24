@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/23 16:58:02 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/24 11:56:52 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <memory>
 #include <stdexcept>
 
-#include "iterator.hpp"
+#include "../iterators/iterator.hpp"
 
 
 namespace ft {
@@ -45,7 +45,8 @@ class vector
 	// typedef const_iterator;
 	// typedef reverse_iterator;
 	// typedef const_reverse_iterator;
-	
+
+
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
 /* *** Constructor ********************************************************** */
@@ -144,6 +145,7 @@ class vector
 
 };
 
+
 /* *** NON-MEMBER FUNCTION OVERLOADS **************************************** */
 
 /* *** Relational Operators ************************************************* */
@@ -175,4 +177,4 @@ void swap(vector<T, Alloc> &x, vector<T, Alloc> &y);
 } // namespace ft
 
 
-#endif // VECTOR_HPP
+#endif // FT_VECTOR_HPP

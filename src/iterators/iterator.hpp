@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/23 13:47:31 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/24 11:25:54 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 #include <cstddef>
 #include <iterator>
+
+#include "type_traits.hpp"
 
 
 namespace ft {
@@ -47,7 +49,7 @@ struct iterator
 	typedef Pointer		pointer;
 	typedef Reference	reference;
 	typedef Category	iterator_category;
-}
+};
 
 
 /* *** ITERATOR_TRAITS ****************************************************** */
@@ -60,7 +62,7 @@ struct iterator_traits
 	typedef typename Iterator::pointer				pointer;
 	typedef typename Iterator::reference			reference;
 	typedef typename Iterator::iterator_category	iterator_category;
-}
+};
 
 template < typename T >
 struct iterator_traits<T *>
@@ -70,7 +72,7 @@ struct iterator_traits<T *>
 	typedef T *							pointer;
 	typedef T &							reference;
 	typedef random_access_iterator_tag	iterator_category;
-}
+};
 
 template < typename T >
 struct iterator_traits<T const *>
@@ -80,9 +82,9 @@ struct iterator_traits<T const *>
 	typedef T const *					pointer;
 	typedef T const &					reference;
 	typedef random_access_iterator_tag	iterator_category;
-}
+};
 
 } // namespace ft
 
 
-#endif // ITERATOR_HPP
+#endif // FT_ITERATOR_HPP
