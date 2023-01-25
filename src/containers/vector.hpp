@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/25 11:58:49 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/25 15:21:59 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ namespace ft {
 template < typename T, typename Alloc = std::allocator<T> >
 class vector
 {
-	public:
-
+	
 /* *** MEMBER TYPES ********************************************************* */
+
+	public:
 
 	typedef T											value_type;
 	typedef Alloc										allocator_type;
@@ -48,6 +49,8 @@ class vector
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
+
+	public:
 
 /* *** Constructor ********************************************************** */
 
@@ -137,9 +140,9 @@ class vector
 	allocator_type get_allocator() const;
 
 
-	protected:  // PRIVATE???
-
 /* *** MEMBER VARIABLES ***************************************************** */
+
+	protected:  // PRIVATE???
 
 	allocator_type	_alloc;
 	pointer			_start;
