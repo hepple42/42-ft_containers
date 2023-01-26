@@ -6,7 +6,7 @@
 #    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 12:14:51 by hepple            #+#    #+#              #
-#    Updated: 2023/01/17 12:20:13 by hepple           ###   ########.fr        #
+#    Updated: 2023/01/26 11:25:02 by hepple           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #   V A R I A B L E S   #
 # ********************* #
 
-NAME		:= containers
+NAME		:= ft_containers
 
 CXX			:= c++
 CXXFLAGS	:= -std=c++98 -Wall -Wextra -Werror# -fsanitize=address

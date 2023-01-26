@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/25 15:21:59 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 10:38:27 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ class vector
 	explicit vector(size_type n, value_type const &val = value_type(), allocator_type const &alloc = allocator_type());
 	template < typename InputIterator >
 	vector (InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type());
-	vector (vector const &x);
+	vector (vector const &src);
 
 /* *** Destructor *********************************************************** */
 
@@ -66,7 +66,7 @@ class vector
 
 /* *** Assignment *********************************************************** */
 
-	vector &operator=(vector const &x);
+	vector &operator=(vector const &src);
 
 /* *** Iterators ************************************************************ */
 
