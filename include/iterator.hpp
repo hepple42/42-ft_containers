@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 13:18:08 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 15:01:01 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,20 @@ struct iterator
 
 /* *** R E V E R S E _ I T E R A T O R ************************************** */
 
-template < typename Iter >
-class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iter>::iterator_category, typename ft::iterator_traits<Iter>::value_type, typename ft::iterator_traits<Iter>::difference_type, typename ft::iterator_traits<Iter>::pointer, typename ft::iterator_traits<Iter>::reference>
+template < typename Iterator >
+class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category, typename ft::iterator_traits<Iterator>::value_type, typename ft::iterator_traits<Iterator>::difference_type, typename ft::iterator_traits<Iterator>::pointer, typename ft::iterator_traits<Iterator>::reference>
 {
 
 /* *** MEMBER TYPES ********************************************************* */
 
 	public:
 
-	typedef Iter												iterator_type;
-	typedef typename iterator_traits<Iter>::value_type			value_type;
-	typedef typename iterator_traits<Iter>::difference_type		difference_type;
-	typedef typename iterator_traits<Iter>::pointer				pointer;
-	typedef typename iterator_traits<Iter>::reference			reference;
-	typedef typename iterator_traits<Iter>::iterator_category	iterator_category;
+	typedef Iterator												iterator_type;
+	typedef typename iterator_traits<Iterator>::value_type			value_type;
+	typedef typename iterator_traits<Iterator>::difference_type		difference_type;
+	typedef typename iterator_traits<Iterator>::pointer				pointer;
+	typedef typename iterator_traits<Iterator>::reference			reference;
+	typedef typename iterator_traits<Iterator>::iterator_category	iterator_category;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
@@ -257,7 +257,7 @@ bool operator>=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> cons
 template < typename Iter >
 reverse_iterator<Iter> operator+(typename reverse_iterator<Iter>::difference_type n, reverse_iterator<Iter> const &rev_it)
 {
-	return reverse_iterator<Iter>(it.base() - n);
+	return reverse_iterator<Iter>(rev_it.base() - n);
 }
 
 template < typename IterL, typename IterR >
@@ -269,7 +269,7 @@ typename reverse_iterator<IterL>::difference_type operator-(reverse_iterator<Ite
 
 /* *** N O R M A L _ I T E R A T O R **************************************** */
 
-template < typename Iter >
+template < typename Iterator >
 class normal_iterator
 {
 	
@@ -277,12 +277,12 @@ class normal_iterator
 
 	public:
 
-	typedef Iter												iterator_type;
-	typedef typename iterator_traits<Iter>::value_type			value_type;
-	typedef typename iterator_traits<Iter>::difference_type		difference_type;
-	typedef typename iterator_traits<Iter>::pointer				pointer;
-	typedef typename iterator_traits<Iter>::reference			reference;
-	typedef typename iterator_traits<Iter>::iterator_category	iterator_category;
+	typedef Iterator												iterator_type;
+	typedef typename iterator_traits<Iterator>::value_type			value_type;
+	typedef typename iterator_traits<Iterator>::difference_type		difference_type;
+	typedef typename iterator_traits<Iterator>::pointer				pointer;
+	typedef typename iterator_traits<Iterator>::reference			reference;
+	typedef typename iterator_traits<Iterator>::iterator_category	iterator_category;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
@@ -438,7 +438,7 @@ bool operator>=(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const 
 template < typename Iter >
 normal_iterator<Iter> operator+(typename normal_iterator<Iter>::difference_type n, normal_iterator<Iter> const &n_it)
 {
-	return normal_iterator<Iter>(it.base() + n);
+	return normal_iterator<Iter>(n_it.base() + n);
 }
 
 template < typename IterL, typename IterR >

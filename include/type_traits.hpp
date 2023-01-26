@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:45:41 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 13:44:08 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 15:34:04 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,34 @@ struct remove_cv
 
 /* *** TRUE_TYPE / FALSE_TYPE *********************************************** */
 
-struct true_type
+// struct true_type
+// {
+// 	typedef true_type	type;
+// 	static bool const	value = true;
+// };
+
+// struct false_type
+// {
+// 	typedef false_type	type;
+// 	static bool const	value = false;
+// };
+
+template < typename T, T v >
+struct integral_constant
 {
-	typedef true_type	type;
-	static bool const	value = true;
+	static T const	value = v;
+
+	typedef T						value_type;
+	typedef integral_constant<T, v>	type;
+
+	operator const value_type() const
+	{
+		return value;
+	}
 };
 
-struct false_type
-{
-	typedef false_type	type;
-	static bool const	value = false;
-};
+typedef ft::integral_constant<bool, true>	true_type;
+typedef ft::integral_constant<bool, false>	false_type;
 
 
 /* *** IS_INTEGRAL ********************************************************** */
