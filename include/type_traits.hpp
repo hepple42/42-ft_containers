@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:45:41 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 15:34:04 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 15:46:12 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,15 @@ struct is_integral_no_cv<bool> : public true_type { };
 
 template < >
 struct is_integral_no_cv<char> : public true_type { };
+
+template < >
+struct is_integral_no_cv<char16_t> : public true_type { };
+
+template < >
+struct is_integral_no_cv<char32_t> : public true_type { };
+
+template < >
+struct is_integral_no_cv<wchar_t> : public true_type { };
 
 template < >
 struct is_integral_no_cv<signed char> : public true_type { };
