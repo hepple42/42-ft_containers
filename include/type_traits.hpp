@@ -6,16 +6,13 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:45:41 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/25 14:43:43 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 13:44:08 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef FT_TYPE_TRAITS_HPP
 #define FT_TYPE_TRAITS_HPP
-
-
-#include <cstddef>
 
 
 namespace ft {
