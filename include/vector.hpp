@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 13:40:27 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 15:06:08 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ class vector
 
 	typedef T											value_type;
 	typedef Alloc										allocator_type;
-	typedef typename allocator_type::differece_type		difference_type;
+	typedef typename allocator_type::difference_type	difference_type;
 	typedef typename allocator_type::size_type			size_type;
 	typedef typename allocator_type::reference			reference;
 	typedef typename allocator_type::const_reference	const_reference;
 	typedef typename allocator_type::pointer			pointer;
 	typedef typename allocator_type::const_pointer		const_pointer;
-	// typedef iterator;
-	// typedef const_iterator;
-	// typedef reverse_iterator;
-	// typedef const_reverse_iterator;
+	typedef ft::normal_iterator<pointer>				iterator;
+	typedef ft::normal_iterator<const_pointer>			const_iterator;
+	typedef ft::reverse_iterator<iterator>				reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
