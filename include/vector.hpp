@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 15:06:08 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 17:07:59 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ class vector
 	typedef ft::normal_iterator<const_pointer>			const_iterator;
 	typedef ft::reverse_iterator<iterator>				reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+
+
+/* *** MEMBER VARIABLES ***************************************************** */
+
+	private:
+
+	allocator_type	_alloc;
+	pointer			_start;
+	pointer			_finish;
+	pointer			_cap;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -141,16 +151,6 @@ class vector
 /* *** Allocator ************************************************************ */
 
 	allocator_type get_allocator() const;
-
-
-/* *** MEMBER VARIABLES ***************************************************** */
-
-	protected:  // PRIVATE???
-
-	allocator_type	_alloc;
-	pointer			_start;
-	pointer			_finish;
-	pointer			_cap;
 
 };
 
