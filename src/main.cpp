@@ -6,12 +6,14 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:14:44 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/20 16:06:54 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 13:17:04 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include <iostream>
+
+#include "stack.hpp"
 
 int main(void)
 {

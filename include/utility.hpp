@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pair.hpp                                           :+:      :+:    :+:   */
+/*   utility.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 12:05:57 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 12:53:28 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/26 13:28:13 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef FT_PAIR_HPP
-#define FT_PAIR_HPP
+#ifndef FT_UTILITY_HPP
+#define FT_UTILITY_HPP
 
 
 namespace ft {
@@ -103,7 +103,8 @@ bool operator>=(pair<T1, T2> const &lhs, pair<T1, T2> const &rhs)
 	return !(lhs < rhs);
 }
 
-/* *** Make Pair ************************************************************ */
+
+/* *** MAKE_PAIR ************************************************************ */
 
 template < typename T1, typename T2 >
 pair<T1, T2> make_pair(T1 a, T2 b)
@@ -115,4 +116,4 @@ pair<T1, T2> make_pair(T1 a, T2 b)
 } // namespace ft
 
 
-#endif // FT_PAIR_HPP
+#endif // FT_UTILITY_HPP

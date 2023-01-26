@@ -1,6 +1,9 @@
 *.d
 *.o
 
+dep
+obj
+
 ft_containers_terminator
 
 a.out
