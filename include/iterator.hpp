@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 15:01:01 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/27 12:19:59 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,31 +225,31 @@ bool operator==(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> cons
 template < typename IterL, typename IterR >
 bool operator!=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
 {
-	return (lhs.base() != lhs.base());
+	return (lhs.base() != rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator<(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
 {
-	return (lhs.base() > lhs.base());
+	return (lhs.base() > rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator<=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
 {
-	return (lhs.base() >= lhs.base());
+	return (lhs.base() >= rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator>(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
 {
-	return (lhs.base() < lhs.base());
+	return (lhs.base() < rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator>=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
 {
-	return (lhs.base() <= lhs.base());
+	return (lhs.base() <= rhs.base());
 }
 
 /* *** Increment / Decrement ************************************************ */
@@ -406,31 +406,31 @@ bool operator==(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const 
 template < typename IterL, typename IterR >
 bool operator!=(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const &rhs)
 {
-	return (lhs.base() != lhs.base());
+	return (lhs.base() != rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator<(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const &rhs)
 {
-	return (lhs.base() < lhs.base());
+	return (lhs.base() < rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator<=(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const &rhs)
 {
-	return (lhs.base() <= lhs.base());
+	return (lhs.base() <= rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator>(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const &rhs)
 {
-	return (lhs.base() > lhs.base());
+	return (lhs.base() > rhs.base());
 }
 
 template < typename IterL, typename IterR >
 bool operator>=(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const &rhs)
 {
-	return (lhs.base() >= lhs.base());
+	return (lhs.base() >= rhs.base());
 }
 
 /* *** Increment / Decrement ************************************************ */
