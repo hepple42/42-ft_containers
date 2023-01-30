@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/27 12:19:59 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/30 11:54:27 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ struct iterator
 	typedef Reference	reference;
 	typedef Category	iterator_category;
 };
+
+
+/* *** ITERATOR_CATEGORY **************************************************** */
+
+template < typename Iterator >
+typename iterator_traits<Iterator>::iterator_category iterator_category(Iterator const &it)
+{
+	return typename iterator_traits<Iterator>::iterator_category();
+}
 
 
 /* *** R E V E R S E _ I T E R A T O R ************************************** */
