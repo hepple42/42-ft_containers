@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/30 11:54:27 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/30 12:04:08 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ struct iterator
 /* *** ITERATOR_CATEGORY **************************************************** */
 
 template < typename Iterator >
-typename iterator_traits<Iterator>::iterator_category iterator_category(Iterator const &it)
+typename iterator_traits<Iterator>::iterator_category iterator_category(Iterator const &)
 {
 	return typename iterator_traits<Iterator>::iterator_category();
 }
