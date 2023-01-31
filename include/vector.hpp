@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/31 15:37:58 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/31 16:28:18 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,36 +311,22 @@ class vector
 
 	// iterator insert(iterator pos, value_type const &val)
 	// {
-	// 	if (pos == end())
-	// 	{
-	// 		push_back(val);
-	// 		return (pos);
-	// 	}
-	// 	else
-	// 	{
-	// 		size_type size_old = size();
-	// 		difference_type off = pos - begin();
+	// 	difference_type diff = pos - begin();
+	// 	insert(pos, 1, val);
 
-	// 		reserve(_new_capacity(size_old + 1));
-	// 		_construct(1, val);
-
-	// 		iterator first = begin() + off;
-	// 		iterator last = end();
-	// 		while (last != first + 1)
-	// 		{
-	// 			--last;
-	// 			*last = *(last - 1);
-	// 		}
-
-	// 		*(begin() + off) = val;
-
-	// 		return begin() + off;
-	// 	}
+	// 	return begin() + diff;
 	// }
 
-	void insert(iterator pos, size_type n, value_type const &val);
-	template < class InputIter >
-	void insert(iterator pos, InputIter first, InputIter last);
+	// void insert(iterator pos, size_type n, value_type const &val)
+	// {
+		
+	// }
+
+	// template < class InputIter >
+	// void insert(iterator pos, InputIter first, InputIter last)
+	// {
+	// 	_range_insert(pos, first, last, ft::iterator_category(first));
+	// }
 
 	iterator erase(iterator pos)
 	{
@@ -505,6 +491,18 @@ class vector
 			_construct(first, last, ft::iterator_category(first));
 		}
 	}
+
+	// template < typename InputIter >
+	// void _range_insert(iterator pos, InputIter first, InputIter last, ft::input_iterator_tag)
+	// {
+		
+	// }
+
+	// template < typename FwdIter >
+	// void _range_insert(iterator pos, FwdIter first, FwdIter last, ft::forward::iterator_tag)
+	// {
+		
+	// }
 
 /* *** Capacity ************************************************************* */
 
