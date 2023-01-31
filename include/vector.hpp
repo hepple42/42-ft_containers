@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/31 15:00:56 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/31 15:37:58 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ class vector
 		}
 	}
 
-	template < typename InputIterator >
-	vector(InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
+	template < typename InputIter >
+	vector(InputIter first, InputIter last, allocator_type const &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0) : _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
 	{
 		_range_init(first, last, iterator_category(first));
 	}
@@ -291,16 +291,10 @@ class vector
 		}
 	}
 
-	template < class InputIterator >
-	void assign(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, bool>::type = 0)
+	template < class InputIter >
+	void assign(InputIter first, InputIter last, typename ft::enable_if<!ft::is_integral<InputIter>::value, bool>::type = 0)
 	{
-		_destroy(_begin);
-
-		while (first != last)
-		{
-			push_back(*first);
-			++first;
-		}
+		_range_assign(first, last, ft::iterator_category(first));
 	}
 
 	void push_back(value_type const &val)
@@ -345,14 +339,14 @@ class vector
 	// }
 
 	void insert(iterator pos, size_type n, value_type const &val);
-	template < class InputIterator >
-	void insert(iterator pos, InputIterator first, InputIterator last);
+	template < class InputIter >
+	void insert(iterator pos, InputIter first, InputIter last);
 
 	iterator erase(iterator pos)
 	{
 		for (size_type i = pos - begin(); i < size() - 1; ++i)
 			*(_begin + i) = *(_begin + i + 1);
-		_destroy(_end - 1);
+		pop_back();
 
 		return pos;
 	}
@@ -421,7 +415,7 @@ class vector
 		if (_begin == NULL)
 			return;
 
-		_destroy(_begin);
+		clear();
 
 		_alloc.deallocate(_begin, capacity());
 		_begin = NULL;
@@ -440,8 +434,8 @@ class vector
 		}
 	}
 
-	template < typename FwdIterator >
-	void _construct(FwdIterator first, FwdIterator last, ft::forward_iterator_tag)
+	template < typename FwdIter >
+	void _construct(FwdIter first, FwdIter last, ft::forward_iterator_tag)
 	{
 		while (first != last)
 		{
@@ -462,8 +456,8 @@ class vector
 
 /* *** Range **************************************************************** */
 
-	template < typename InputIterator>
-	void _range_init(InputIterator first, InputIterator last, ft::input_iterator_tag)
+	template < typename InputIter >
+	void _range_init(InputIter first, InputIter last, ft::input_iterator_tag)
 	{
 		while (first != last)
 		{
@@ -472,13 +466,42 @@ class vector
 		}
 	}
 
-	template < typename FwdIterator>
-	void _range_init(FwdIterator first, FwdIterator last, ft::forward_iterator_tag)
+	template < typename FwdIter >
+	void _range_init(FwdIter first, FwdIter last, ft::forward_iterator_tag)
 	{
 		size_type n = static_cast<size_type>(ft::distance(first, last));
 		if (n > 0)
 		{
 			_allocate(n);
+			_construct(first, last, ft::iterator_category(first));
+		}
+	}
+
+	template < typename InputIter >
+	void _range_assign(InputIter first, InputIter last, ft::input_iterator_tag)
+	{
+		clear();
+
+		while (first != last)
+		{
+			push_back(*first);
+			++first;
+		}
+	}
+
+	template < typename FwdIter >
+	void _range_assign(FwdIter first, FwdIter last, ft::forward_iterator_tag)
+	{
+		clear();
+
+		size_type n = static_cast<size_type>(ft::distance(first, last));
+		if (n > 0)
+		{
+			if (n > capacity())
+			{
+				_deallocate();
+				_allocate(n);
+			}
 			_construct(first, last, ft::iterator_category(first));
 		}
 	}
