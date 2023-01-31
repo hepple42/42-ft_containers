@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/30 16:20:17 by hepple           ###   ########.fr       */
+/*   Updated: 2023/01/31 15:00:56 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,7 @@ class vector
 	template < typename InputIterator >
 	vector(InputIterator first, InputIterator last, allocator_type const &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
 	{
-		while (first != last)
-		{
-			push_back(*first);
-			++first;
-		}
+		_range_init(first, last, iterator_category(first));
 	}
 
 	vector(vector const &src) : _alloc(src.get_allocator()), _begin(NULL), _end(NULL), _cap(NULL)
@@ -322,16 +318,19 @@ class vector
 	// iterator insert(iterator pos, value_type const &val)
 	// {
 	// 	if (pos == end())
+	// 	{
 	// 		push_back(val);
+	// 		return (pos);
+	// 	}
 	// 	else
 	// 	{
 	// 		size_type size_old = size();
-	// 		reserve(_new_capacity(size_old + 1));
+	// 		difference_type off = pos - begin();
 
-	// 		// difference_type diff = pos - begin();
+	// 		reserve(_new_capacity(size_old + 1));
 	// 		_construct(1, val);
 
-	// 		iterator first = pos;
+	// 		iterator first = begin() + off;
 	// 		iterator last = end();
 	// 		while (last != first + 1)
 	// 		{
@@ -339,10 +338,10 @@ class vector
 	// 			*last = *(last - 1);
 	// 		}
 
-	// 		*pos = val;
-	// 	}
+	// 		*(begin() + off) = val;
 
-	// 	return pos;
+	// 		return begin() + off;
+	// 	}
 	// }
 
 	void insert(iterator pos, size_type n, value_type const &val);
@@ -458,6 +457,29 @@ class vector
 		{
 			--_end;
 			_alloc.destroy(_end);
+		}
+	}
+
+/* *** Range **************************************************************** */
+
+	template < typename InputIterator>
+	void _range_init(InputIterator first, InputIterator last, ft::input_iterator_tag)
+	{
+		while (first != last)
+		{
+			push_back(*first);
+			++first;
+		}
+	}
+
+	template < typename FwdIterator>
+	void _range_init(FwdIterator first, FwdIterator last, ft::forward_iterator_tag)
+	{
+		size_type n = static_cast<size_type>(ft::distance(first, last));
+		if (n > 0)
+		{
+			_allocate(n);
+			_construct(first, last, ft::iterator_category(first));
 		}
 	}
 
