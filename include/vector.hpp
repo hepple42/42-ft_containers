@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/01 11:46:30 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:53:50 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ class vector
 	}
 
 	template < class InputIter >
-	void assign(InputIter first, InputIter last, typename ft::enable_if<!ft::is_integral<InputIter>::value, bool>::type = 0)
+	void assign(InputIter first, InputIter last, typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
 	{
 		_range_assign(first, last, ft::iterator_category(first));
 	}
@@ -340,11 +340,11 @@ class vector
 		}
 	}
 
-	// template < class InputIter >
-	// void insert(iterator pos, InputIter first, InputIter last)
-	// {
-	// 	_range_insert(pos, first, last, ft::iterator_category(first));
-	// }
+	template < class InputIter >
+	void insert(iterator pos, InputIter first, InputIter last, typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
+	{
+		_range_insert(pos, first, last, ft::iterator_category(first));
+	}
 
 	iterator erase(iterator pos)
 	{
@@ -510,16 +510,140 @@ class vector
 		}
 	}
 
-	// template < typename InputIter >
-	// void _range_insert(iterator pos, InputIter first, InputIter last, ft::input_iterator_tag)
-	// {
-		
-	// }
+	template < typename InputIter >
+	void _range_insert(iterator pos, InputIter first, InputIter last, ft::input_iterator_tag)
+	{
+		if (pos == end())
+		{
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+		else
+		{
+			vector tmp(first, last);
+			insert(pos, tmp.begin(), tmp.end());
+		}
+	}
+
+	template < typename FwdIter >
+	void _range_insert(iterator pos, FwdIter first, FwdIter last, ft::forward_iterator_tag)
+	{
+		size_type n = static_cast<size_type>(ft::distance(first, last));
+		if (n > 0)
+		{
+			size_type pos_insert = pos - begin();
+			size_type size_old = size();
+			resize(size_old + n);
+
+			iterator first_from = begin() + pos_insert;
+			iterator last_from = begin() + size_old;
+			iterator last_to = begin() + size();
+			while (last_from != first_from)
+			{
+				--last_to;
+				--last_from;
+				*last_to = *last_from;
+			}
+
+			for (size_type i = 0; i < n; ++i)
+			{
+				*(_begin + pos_insert + i) = *first;
+				++first;
+			}
+		}
+	}
 
 	// template < typename FwdIter >
-	// void _range_insert(iterator pos, FwdIter first, FwdIter last, ft::forward::iterator_tag)
+	// void _range_insert(iterator pos, FwdIter first, FwdIter last, ft::forward_iterator_tag)
 	// {
-		
+	// 	size_type n = static_cast<size_type>(ft::distance(first, last));
+	// 	if (n > max_size())
+	// 		throw std::length_error("ft::vector");
+	// 	if (n > 0)
+	// 	{
+	// 		size_type pos_insert = pos - begin();
+	// 		size_type space_left = _cap - _end;
+	// 		if (space_left < n)
+	// 		{
+	// 			size_type capacity_new = _new_capacity(size() + n);
+	// 			pointer begin_new = _alloc.allocate(capacity_new);
+	// 			pointer end_new = begin_new;
+				
+	// 			end_new = _range_construct(end_new, begin(), begin() + pos_insert);
+	// 			end_new = _range_construct(end_new, first, last);
+	// 			end_new = _range_construct(end_new, begin() + pos_insert, end());
+
+	// 			_deallocate();
+
+	// 			_begin = begin_new;
+	// 			_end = end_new;
+	// 			_cap = begin_new + capacity_new;
+	// 		}
+	// 		else
+	// 		{
+	// 			size_type elements_after_pos = end() - pos;
+	// 			pointer end_old = _end;
+
+	// 			if (n > elements_after_pos)
+	// 			{
+	// 				_end = _range_construct(_end, first + elements_after_pos, last);
+	// 				_end = _range_construct(_end, std::advance(begin(), pos_insert), end_old);
+
+	// 				for (size_type i = 0; i < n - elements_after_pos; ++i)
+	// 				{
+	// 					*(_begin + pos_insert + i) = *first;
+	// 					++first;
+	// 				}
+	// 			}
+	// 			else
+	// 			{
+	// 				_end = _range_construct(_end, _end - n, _end);
+
+	// 				iterator first_from = begin() + pos_insert;
+	// 				iterator last_from = end_old - n;
+	// 				iterator last_to = end_old;
+	// 				while (last_from != first_from)
+	// 				{
+	// 					--last_to;
+	// 					--last_from;
+	// 					*last_to = *last_from;
+	// 				}
+
+	// 				for (size_type i = 0; i < n; ++i)
+	// 				{
+	// 					*(_begin + pos_insert + i) = *first;
+	// 					++first;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	// pointer _range_construct(pointer pos, size_type n, const_reference val = value_type())
+	// {
+	// 	for (size_type i = 0; i < n; ++i)
+	// 	{
+	// 		_alloc.construct(pos, val);
+	// 		++pos;
+	// 	}
+
+	// 	return pos;
+	// }
+
+	// template < typename Iter >
+	// pointer _range_construct(pointer pos, Iter first, Iter last)
+	// {
+	// 	while (first != last)
+	// 	{
+	// 		_alloc.construct(pos, *first);
+	// 		++pos;
+	// 		++first;
+	// 	}
+
+	// 	return pos;
 	// }
 
 /* *** Capacity ************************************************************* */
