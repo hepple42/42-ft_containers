@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:15:36 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 15:37:11 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:47:28 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 #define FT_STACK_HPP
 
 
-#include <vector> // TEST!!!
-
-// #include "vector.hpp"
+#include "vector.hpp"
 
 
 namespace ft {
@@ -25,7 +23,7 @@ namespace ft {
 
 /* *** S T A C K ************************************************************ */
 
-template < typename T, typename Container = std::vector<T> > // TEST!!!
+template < typename T, typename Container = ft::vector<T> >
 class stack
 {
 
