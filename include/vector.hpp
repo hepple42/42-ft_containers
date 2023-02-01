@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/01 14:53:50 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/01 17:24:20 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft {
 template < typename T, typename Alloc = std::allocator<T> >
 class vector
 {
-	
+
 /* *** MEMBER TYPES ********************************************************* */
 
 	public:
