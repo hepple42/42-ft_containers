@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/31 14:42:19 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/01 16:31:59 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typename ft::iterator_traits<InputIter>::difference_type distance(InputIter firs
 template < typename Iterator >
 class normal_iterator
 {
-	
+
 /* *** MEMBER TYPES ********************************************************* */
 
 	public:
