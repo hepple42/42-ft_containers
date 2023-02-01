@@ -6,6 +6,7 @@ obj
 
 ft_containers_terminator
 ft_containers-unit-test
+ft_containers_test
 
 a.out
 ft_containers
