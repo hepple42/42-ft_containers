@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/31 16:28:18 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/01 11:46:30 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,18 +309,36 @@ class vector
 		_destroy(_end - 1);
 	}
 
-	// iterator insert(iterator pos, value_type const &val)
-	// {
-	// 	difference_type diff = pos - begin();
-	// 	insert(pos, 1, val);
+	iterator insert(iterator pos, value_type const &val)
+	{
+		difference_type diff = pos - begin();
+		insert(pos, 1, val);
 
-	// 	return begin() + diff;
-	// }
+		return begin() + diff;
+	}
 
-	// void insert(iterator pos, size_type n, value_type const &val)
-	// {
-		
-	// }
+	void insert(iterator pos, size_type n, value_type const &val)
+	{
+		if (n > 0)
+		{
+			size_type pos_insert = pos - begin();
+			size_type size_old = size();
+			resize(size_old + n);
+
+			iterator first_from = begin() + pos_insert;
+			iterator last_from = begin() + size_old;
+			iterator last_to = begin() + size();
+			while (last_from != first_from)
+			{
+				--last_to;
+				--last_from;
+				*last_to = *last_from;
+			}
+
+			for (size_type i = 0; i < n; ++i)
+				*(_begin + pos_insert + i) = val;
+		}
+	}
 
 	// template < class InputIter >
 	// void insert(iterator pos, InputIter first, InputIter last)
