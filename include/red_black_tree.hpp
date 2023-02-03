@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/02 15:15:58 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/03 11:19:42 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ class tree_iterator
 
 	private:
 
-	typedef typename node<T>::pointer				node_pointer;
-	typedef typename node<T>::const_pointer			const_node_pointer;
+	typedef typename node<T>::pointer		node_pointer;
+	typedef typename node<T>::const_pointer	const_node_pointer;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
