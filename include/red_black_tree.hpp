@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/03 11:19:42 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/03 13:13:54 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ struct node
 /* *** MEMBER TYPES ********************************************************* */
 
 	typedef T				value_type;
-	typedef node<T> *		node_pointer;
-	typedef node<T> const *	const_node_pointer;
+	typedef node<T> *		pointer;
+	typedef node<T> const *	const_pointer;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	NODE_COLOR		color;
-	node_pointer	parent;
-	node_pointer	left;
-	node_pointer	right;
-	value_type		value;
+	NODE_COLOR	color;
+	pointer		parent;
+	pointer		left;
+	pointer		right;
+	value_type	value;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -164,8 +164,8 @@ class tree_iterator
 
 	private:
 
-	typedef typename node<T>::pointer		node_pointer;
-	typedef typename node<T>::const_pointer	const_node_pointer;
+	typedef typename ft::node<T>::pointer		node_pointer;
+	typedef typename ft::node<T>::const_pointer	const_node_pointer;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
@@ -288,8 +288,8 @@ class const_tree_iterator
 
 	private:
 
-	typedef typename node<T>::pointer		node_pointer;
-	typedef typename node<T>::const_pointer	const_node_pointer;
+	typedef typename ft::node<T>::pointer		node_pointer;
+	typedef typename ft::node<T>::const_pointer	const_node_pointer;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
@@ -391,6 +391,45 @@ class const_tree_iterator
 	{
 		return !(*this == rhs);
 	}
+
+};
+
+
+/* *** R B _ T R E E ******************************************************** */
+
+template < typename T, typename Compare, typename Alloc >
+class rb_tree
+{
+
+/* *** MEMBER TYPES ********************************************************* */
+
+	public:
+
+	typedef T															value_type;
+	typedef Compare														value_compare;
+	typedef Alloc														allocator_type;
+	typedef typename allocator_type::difference_type					difference_type;
+	typedef typename allocator_type::size_type							size_type;
+	typedef typename allocator_type::reference							reference;
+	typedef typename allocator_type::const_reference					const_reference;
+	typedef typename allocator_type::pointer							pointer;
+	typedef typename allocator_type::const_pointer						const_pointer;
+	typedef ft::node<value_type>										node_type;
+	typedef typename node_type::pointer									node_pointer;
+	typedef typename node_type::const_pointer							const_node_pointer;
+	typedef typename allocator_type::template rebind<node_type>::other	node_allocator_type;
+	typedef ft::tree_iterator<value_type, difference_type>				iterator;
+	typedef ft::const_tree_iterator<value_type, difference_type>		const_iterator;
+	typedef ft::reverse_iterator<iterator>								reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
+
+
+/* *** MEMBER VARIABLES **************************************************** */
+
+	// size_type			_size;
+	// value_compare		_value_comp;
+	// allocator_type		_value_alloc;
+	// node_allocator_type	_node_alloc;
 
 };
 
