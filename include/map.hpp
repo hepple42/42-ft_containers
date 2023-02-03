@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/03 10:32:49 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/03 11:20:42 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,7 @@ template < typename Key, typename T, typename Compare = std::less<Key>, typename
 class map
 {
 
-/* *** SUBCLASSES *********************************************************** */
-
-/* *** Value_Compare ******************************************************** */
-
-
 /* *** MEMBER TYPES ********************************************************* */
-
-	private:
-
-	// typedef tree_type;
-	// typedef value_type_compare;
 
 	public:
 
@@ -59,10 +49,49 @@ class map
 	typedef typename allocator_type::const_reference	const_reference;
 	typedef typename allocator_type::pointer			pointer;
 	typedef typename allocator_type::const_pointer		const_pointer;
-	// typedef tree_type::iterator							iterator;
-	// typedef tree_type::const_iterator					const_iterator;
-	// typedef tree_type::reverse_iterator					reverse_iterator;
-	// typedef tree_type::const_reverse_iterator			const_reverse_iterator;
+
+
+/* *** SUBCLASSES *********************************************************** */
+
+	public:
+
+/* *** Value_Compare ******************************************************** */
+
+	class value_compare : public std::binary_function<value_type, value_type, bool>
+	{
+		friend class map;
+
+		public:
+
+		typedef bool		result_type;
+		typedef value_type	first_argument_type;
+		typedef value_type	second_argument_type;
+		
+		bool operator()(value_type const &lhs, value_type const &rhs) const
+		{
+			return comp(rhs.first, lhs.first);
+		}
+
+		protected:
+		
+		key_compare	_comp;
+
+		value_compare(key_compare kc) : _comp(kc) { }
+	};
+
+
+/* *** MEMBER TYPES ********************************************************* */
+
+	// private:
+
+	// typedef rb_tree<value_type, value_compare, allocator_type>	tree_type;
+
+	// public:
+
+	// typedef tree_type::iterator					iterator;
+	// typedef tree_type::const_iterator			const_iterator;
+	// typedef tree_type::reverse_iterator			reverse_iterator;
+	// typedef tree_type::const_reverse_iterator	const_reverse_iterator;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
