@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:14:44 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/31 13:59:50 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/03 10:37:20 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 
+#include "../include/map.hpp"
 #include "../include/stack.hpp"
 #include "../include/vector.hpp"
 
