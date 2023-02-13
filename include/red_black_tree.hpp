@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/13 15:25:57 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/13 18:34:42 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ class const_tree_iterator;
 
 /* *** NODE_COLOR *********************************************************** */
 
-enum NODE_COLOR { BLACK = 0, RED = 1};
+enum NODE_COLOR
+{
+	BLACK = 0,
+	RED = 1
+};
 
 
 /* *** N O D E ************************************************************** */
@@ -94,7 +98,7 @@ struct node
 
 	void flip_color()
 	{
-		if (color = BLACK);
+		if (color = BLACK)
 			color = RED;
 		else
 			color = BLACK;
@@ -446,9 +450,23 @@ class rb_tree
 
 /* *** Constructor ********************************************************** */
 
-	explicit rb_tree(value_compare const &comp, allocator_type const &alloc);
+	explicit rb_tree(value_compare const &comp, allocator_type const &alloc) : _comp(comp), _value_alloc(alloc), _node_alloc(alloc), _size(0)
+	{
+		_create_nil();
+		_head = _construct_node(value_type(), BLACK);
+		_head->parent = _head;
+		_leftmost = _head;
+	}
 
-	rb_tree(rb_tree const &src);
+	rb_tree(rb_tree const &src) : _comp(src._comp), _value_alloc(src._value_alloc), _node_alloc(src._node_alloc), _size(src._size)
+	{
+		create_nil();
+		_head = _construct_node(value_type(), BLACK);
+		_head->parent = _head;
+		_leftmost = _head;
+
+		*this = src;
+	}
 
 /* *** Destructor *********************************************************** */
 
@@ -460,29 +478,62 @@ class rb_tree
 
 /* *** Iterators ************************************************************ */
 
-	iterator begin();
+	iterator begin()
+	{
+		return iterator(_leftmost);
+	}
 
-	const_iterator begin() const;
+	const_iterator begin() const
+	{
+		return const_iterator(_leftmost);
+	}
 
-	iterator end();
+	iterator end()
+	{
+		return iterator(_head);
+	}
 
-	const_iterator end() const;
+	const_iterator end() const
+	{
+		return const_iterator(_head);
+	}
 
-	reverse_iterator rbegin();
+	reverse_iterator rbegin()
+	{
+		return reverse_iterator(_head);
+	}
 
-	const_reverse_iterator rbegin() const;
+	const_reverse_iterator rbegin() const
+	{
+		return const_reverse_iterator(_head);
+	}
 
-	reverse_iterator rend();
+	reverse_iterator rend()
+	{
+		return reverse_iterator(_leftmost);
+	}
 
-	const_reverse_iterator rend() const;
+	const_reverse_iterator rend() const
+	{
+		return const_reverse_iterator(_leftmost);
+	}
 
 /* *** Capacity ************************************************************* */
 
-	bool empty() const;
+	bool empty() const
+	{
+		return (_size == 0);
+	}
 
-	size_type size() const;
+	size_type size() const
+	{
+		return _size;
+	}
 
-	size_type max_size() const;
+	size_type max_size() const
+	{
+		return _value_alloc.max_size();
+	}
 
 /* *** Modifiers ************************************************************ */
 
@@ -505,13 +556,42 @@ class rb_tree
 
 /* *** Observers ************************************************************ */
 
-	value_compare value_comp() const;
+	value_compare value_comp() const
+	{
+		return _comp;
+	}
 
 /* *** Operations *********************************************************** */
 
-	iterator find(value_type const &val);
+	iterator find(value_type const &val)
+	{
+		node_pointer tmp = _root();
+		while (tmp != _nil)
+		{
+			if (_comp(val, tmp->_value))
+				tmp = tmp->_left;
+			else if (_comp(tmp->_value, val))
+				tmp = tmp->right;
+			else
+				return iterator(tmp);
+		}
+		return end();
+	}
 
-	const_iterator find(value_type const &val) const;
+	const_iterator find(value_type const &val) const
+	{
+		const_node_pointer tmp = _root();
+		while (tmp != _nil)
+		{
+			if (_comp(val, tmp->_value))
+				tmp = tmp->_left;
+			else if (_comp(tmp->_value, val))
+				tmp = tmp->right;
+			else
+				return const_iterator(tmp);
+		}
+		return end();
+	}
 
 	size_type count(value_type const &val) const;
 
@@ -529,9 +609,53 @@ class rb_tree
 
 /* *** Allocator ************************************************************ */
 
-	allocator_type get_allocator() const;
+	allocator_type get_allocator() const
+	{
+		return _value_alloc;
+	}
+
+
+	private:
+
+	node_pointer _root() const
+	{
+		return _head->_left;
+	}
+
+	void _create_nil()
+	{
+		_nil = _node_alloc.allocate(1);
+		_value_alloc.construct(&(_nil->value), value_type());
+		new_node->color = BLACK;
+		new_node->parent = NULL;
+		new_node->left = NULL;
+		new_node->right = NULL;
+	}
+
+	node_pointer _construct_node(value_type const &val, NODE_COLOR color = RED)
+	{
+		node_pointer new_node = _node_alloc.allocate(1);
+		_value_alloc.construct(&(new_node->value), val); // !!!
+		new_node->color = color;
+		new_node->parent = _nil;
+		new_node->left = _nil;
+		new_node->right = _nil;
+
+		return new_node;
+	}
 
 };
+
+
+/* *** NON-MEMBER FUNCTION OVERLOADS **************************************** */
+
+/* *** Swap ***************************************************************** */
+
+template < typename T, typename Compare, typename Alloc >
+void swap(rb_tree<T, Compare, Alloc> &lhs, rb_tree<T, Compare, Alloc> &rhs)
+{
+	lhs.swap(rhs);
+}
 
 
 } // namespace ft
