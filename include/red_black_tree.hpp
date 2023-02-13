@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/03 13:13:54 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/13 15:25:57 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ struct node
 
 	node() : color(BLACK), parent(NULL), left(NULL), right(NULL), value() { }
 
-	node(value_type val, NODE_COLOR col) : color(col), parent(NULL), left(NULL), right(NULL), value(val) { }
+	node(value_type val, NODE_COLOR col = BLACK) : color(col), parent(NULL), left(NULL), right(NULL), value(val) { }
 
 	node(node const &src) : color(src.color), parent(src.parent), left(src.left), right(src.right), value(src.value) { }
 
@@ -94,7 +94,10 @@ struct node
 
 	void flip_color()
 	{
-		color = (color + 1) % 2;
+		if (color = BLACK);
+			color = RED;
+		else
+			color = BLACK;
 	}
 
 };
@@ -424,12 +427,109 @@ class rb_tree
 	typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 
 
-/* *** MEMBER VARIABLES **************************************************** */
+/* *** MEMBER VARIABLES ***************************************************** */
 
-	// size_type			_size;
-	// value_compare		_value_comp;
-	// allocator_type		_value_alloc;
-	// node_allocator_type	_node_alloc;
+	private: // protected ???
+
+	value_compare		_comp;
+	allocator_type		_value_alloc;
+	node_allocator_type	_node_alloc;
+	size_type			_size;
+	node_pointer		_nil;
+	node_pointer		_head;
+	node_pointer		_leftmost;
+
+
+/* *** MEMBER FUNCTIONS ***************************************************** */
+
+	public:
+
+/* *** Constructor ********************************************************** */
+
+	explicit rb_tree(value_compare const &comp, allocator_type const &alloc);
+
+	rb_tree(rb_tree const &src);
+
+/* *** Destructor *********************************************************** */
+
+	~rb_tree();
+
+/* *** Assignment *********************************************************** */
+
+	rb_tree &operator=(rb_tree const &src);
+
+/* *** Iterators ************************************************************ */
+
+	iterator begin();
+
+	const_iterator begin() const;
+
+	iterator end();
+
+	const_iterator end() const;
+
+	reverse_iterator rbegin();
+
+	const_reverse_iterator rbegin() const;
+
+	reverse_iterator rend();
+
+	const_reverse_iterator rend() const;
+
+/* *** Capacity ************************************************************* */
+
+	bool empty() const;
+
+	size_type size() const;
+
+	size_type max_size() const;
+
+/* *** Modifiers ************************************************************ */
+
+	pair<iterator, bool> insert(value_type const &val);
+
+	iterator insert(iterator pos, value_type const &val);
+
+	template < typename InputIter >
+	void insert(InputIter first, InputIter last);
+
+	void erase(iterator pos);
+
+	size_type erase(value_type const &val);
+
+	void erase(iterator first, iterator last);
+
+	void swap(rb_tree &t);
+
+	void clear();
+
+/* *** Observers ************************************************************ */
+
+	value_compare value_comp() const;
+
+/* *** Operations *********************************************************** */
+
+	iterator find(value_type const &val);
+
+	const_iterator find(value_type const &val) const;
+
+	size_type count(value_type const &val) const;
+
+	iterator lower_bound(value_type const &val);
+
+	const_iterator lower_bound(value_type const &val) const;
+
+	iterator upper_bound(value_type const &val);
+
+	const_iterator upper_bound(value_type const &val) const;
+
+	pair<iterator, iterator> equal_range(value_type const &val);
+
+	pair<const_iterator, const_iterator> equal_range(value_type const &val) const;
+
+/* *** Allocator ************************************************************ */
+
+	allocator_type get_allocator() const;
 
 };
 
