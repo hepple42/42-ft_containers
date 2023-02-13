@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/03 14:38:06 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/13 15:22:50 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,9 +197,9 @@ class map
 
 	const_iterator upper_bound(key_type const &key) const;
 
-	pair<const_iterator, const_iterator> equal_range(key_type const &key) const;
-
 	pair<iterator, iterator> equal_range(key_type const &key);
+
+	pair<const_iterator, const_iterator> equal_range(key_type const &key) const;
 
 /* *** Allocator ************************************************************ */
 
