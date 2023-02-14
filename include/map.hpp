@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/13 15:22:50 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/14 10:51:31 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,23 @@ class map
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	// private:
+	private:
 
-	// typedef rb_tree<value_type, value_compare, allocator_type>	tree_type;
+	typedef rb_tree<value_type, value_compare, allocator_type>	tree_type;
 
-	// public:
+	public:
 
-	// typedef tree_type::iterator					iterator;
-	// typedef tree_type::const_iterator			const_iterator;
-	// typedef tree_type::reverse_iterator			reverse_iterator;
-	// typedef tree_type::const_reverse_iterator	const_reverse_iterator;
+	typedef typename tree_type::iterator				iterator;
+	typedef typename tree_type::const_iterator			const_iterator;
+	typedef typename tree_type::reverse_iterator		reverse_iterator;
+	typedef typename tree_type::const_reverse_iterator	const_reverse_iterator;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	// private:
+	private:
 
-	// tree_type _tree;
+	tree_type _tree;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
