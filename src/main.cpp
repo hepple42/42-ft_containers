@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:14:44 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 08:30:52 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 11:26:14 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,31 +86,40 @@ int main(void)
 		// std::cout << tree.size() << std::endl;
 
 
-		tree.insert(1);
+		tree.insert(10);
 		tree.print();
 
-		tree.insert(1);
-		tree.print();
-
-		tree.insert(4);
-		tree.print();
-
-		tree.insert(2);
+		tree.insert(18);
 		tree.print();
 
 		tree.insert(7);
 		tree.print();
 
-		tree.insert(9);
+		tree.insert(15);
 		tree.print();
 
-		tree.insert(8);
+		tree.insert(16);
 		tree.print();
 
-		tree.insert(3);
+		tree.insert(30);
 		tree.print();
 
-		tree.insert(5);
+		tree.insert(25);
+		tree.print();
+
+		tree.insert(40);
+		tree.print();
+
+		tree.insert(60);
+		tree.print();
+
+		tree.insert(2);
+		tree.print();
+
+		tree.insert(1);
+		tree.print();
+
+		tree.insert(70);
 		tree.print();
 	}
 	
