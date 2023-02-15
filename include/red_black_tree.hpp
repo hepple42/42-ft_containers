@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/14 17:54:33 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 08:35:13 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,6 +435,8 @@ class rb_tree
 
 	private: // protected ???
 
+	// HEAD UND NIL ZUSAMMENFASSEN???
+
 	value_compare		_comp;
 	allocator_type		_value_alloc;
 	node_allocator_type	_node_alloc;
@@ -729,6 +731,15 @@ class rb_tree
 	}
 
 
+
+	void print()
+	{
+		std::cout << "PRINTER:" << std::endl;
+		_print(_root());
+	}
+
+
+
 	private:
 
 	node_pointer &_root()
@@ -911,8 +922,7 @@ class rb_tree
 		z->parent = y;
 		if (y == _nil)
 		{
-			_head->left = z;
-			z->color = BLACK;
+			_root() = z;
 			z->parent = _head;
 		}
 		else if (_comp(z->value, y->value))
@@ -924,20 +934,20 @@ class rb_tree
 			_begin_node = z;
 
 
-		std::cout << "nil:  " << _nil << std::endl;
+		// std::cout << "nil:  " << _nil << std::endl;
 
-		std::cout << "root:" << std::endl;
-		std::cout << "root:    " << _root() << std::endl;
-		std::cout << "color:   " << _root()->color << std::endl;
-		std::cout << "parent:  " << _root()->parent << std::endl;
-		std::cout << "left:    " << _root()->left << std::endl;
-		std::cout << "right:   " << _root()->right << std::endl;
+		// std::cout << "root:" << std::endl;
+		// std::cout << "root:    " << _root() << std::endl;
+		// std::cout << "color:   " << _root()->color << std::endl;
+		// std::cout << "parent:  " << _root()->parent << std::endl;
+		// std::cout << "left:    " << _root()->left << std::endl;
+		// std::cout << "right:   " << _root()->right << std::endl;
 
-		std::cout << "FIXUP STARTING" << std::endl;
+		// std::cout << "FIXUP STARTING" << std::endl;
 
 		_insert_fixup(z);
 
-		std::cout << "FIXUP DONE" << std::endl;
+		// std::cout << "FIXUP DONE" << std::endl;
 
 		return ft::make_pair<iterator, bool>(iterator(z), true);
 	}
@@ -950,11 +960,11 @@ class rb_tree
 		{
 			if (z->parent == z->parent->parent->left)
 			{
-				std::cout << "CASE LEFT" << std::endl;
+				// std::cout << "CASE LEFT" << std::endl;
 				y = z->parent->parent->right;
 				if (y->color == RED)
 				{
-					std::cout << "CASE 1" << std::endl;
+					// std::cout << "CASE 1" << std::endl;
 					z->parent->color = BLACK;
 					y->color = BLACK;
 					z->parent->parent->color = RED;
@@ -964,12 +974,12 @@ class rb_tree
 				{
 					if (z == z->parent->right)
 					{
-						std::cout << "CASE 2" << std::endl;
+						// std::cout << "CASE 2" << std::endl;
 						z = z->parent;
 						_rotate_left(z);
 					}
 
-					std::cout << "CASE 3" << std::endl;
+					// std::cout << "CASE 3" << std::endl;
 					z->parent->color = BLACK;
 					z->parent->parent->color = RED;
 					_rotate_right(z->parent->parent);
@@ -977,11 +987,11 @@ class rb_tree
 			}
 			else
 			{
-				std::cout << "CASE RIGHT" << std::endl;
+				// std::cout << "CASE RIGHT" << std::endl;
 				y = z->parent->parent->left;
 				if (y->color == RED)
 				{
-					std::cout << "CASE 1" << std::endl;
+					// std::cout << "CASE 1" << std::endl;
 					z->parent->color = BLACK;
 					y->color = BLACK;
 					z->parent->parent->color = RED;
@@ -991,18 +1001,20 @@ class rb_tree
 				{
 					if (z == z->parent->left)
 					{
-						std::cout << "CASE 2" << std::endl;
+						// std::cout << "CASE 2" << std::endl;
 						z = z->parent;
 						_rotate_right(z);
 					}
 
-					std::cout << "CASE 3" << std::endl;
+					// std::cout << "CASE 3" << std::endl;
 					z->parent->color = BLACK;
 					z->parent->parent->color = RED;
 					_rotate_left(z->parent->parent);
 				}
 			}
 		}
+
+		_root()->color = BLACK;
 	}
 
 /* *** Delete *************************************************************** */
@@ -1014,6 +1026,39 @@ class rb_tree
 		else
 			u->parent->right = v;
 		v->parent = u->parent;
+	}
+
+/* *** Print **************************************************************** */
+
+	void _print(node_pointer node, std::string const &prefix = "", bool is_left = false, bool is_first = true)
+	{
+		if (node != _nil)
+		{
+			if (is_first)
+				_print(node->right, prefix, false, false);
+			else
+				_print(node->right, prefix + "     ", false, false);
+
+			std::cout << prefix;
+
+			if (!is_first)
+			{
+				if (is_left)
+					std::cout << "└────";
+				else
+					std::cout << "┌────";
+			}
+
+			if (node->color == BLACK)
+				std::cout << node->value << std::endl;
+			else
+				std::cout << "\033[0;31m" << node->value << "\033[0m" << std::endl;
+
+			if (is_first)
+				_print(node->left, prefix, true, false);
+			else
+				_print(node->left, prefix + "     ", true, false);
+		}
 	}
 
 };
