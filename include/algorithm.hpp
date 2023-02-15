@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 13:33:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 14:29:45 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 14:28:55 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,17 @@ bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputI
 		++first2;
 	}
 	return (first1 == last1 && first2 != last2);
+}
+
+
+/* *** SWAP ***************************************************************** */
+
+template < typename T >
+void swap(T& x, T& y)
+{
+	T tmp = x;
+	x = y;
+	y = tmp;
 }
 
 
