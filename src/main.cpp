@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:14:44 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 11:26:14 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 14:05:15 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,41 +85,128 @@ int main(void)
 		// tree.insert(7);
 		// std::cout << tree.size() << std::endl;
 
+		int x;
 
-		tree.insert(10);
+		x = 10;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(18);
+		x = 18;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(7);
+		x = 7;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(15);
+		x = 15;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(16);
+		x = 16;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(30);
+		x = 30;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(25);
+		x = 25;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(40);
+		x = 40;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(60);
+		x = 60;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(2);
+		x = 2;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(1);
+		x = 1;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
 		tree.print();
 
-		tree.insert(70);
+		x = 70;
+		std::cout << "Inserting " << x << ":" << std::endl;
+		tree.insert(x);
+		tree.print();
+
+		std::cout << "- - - - - - - - - - - - - - - - -" << std::endl;
+
+		x = 10;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 18;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 7;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 15;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 16;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 30;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 25;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 40;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 60;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 2;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 1;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
+		tree.print();
+
+		x = 70;
+		std::cout << "Erasing " << x << ":" << std::endl;
+		tree.erase(x);
 		tree.print();
 	}
 	
