@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 14:19:33 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 14:25:11 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -600,7 +600,16 @@ class rb_tree
 		}
 	}
 
-	// void swap(rb_tree &t);
+	void swap(rb_tree &t)
+	{
+		ft::swap(_comp, t._comp);
+		ft::swap(_value_alloc, t._value_alloc);
+		ft::swap(_node_alloc, t._node_alloc);
+		ft::swap(_size, t._size);
+		ft::swap(_nil, t._nil);
+		ft::swap(_head, t._head);
+		ft::swap(_begin_node, t._begin_node);
+	}
 
 	void clear()
 	{
