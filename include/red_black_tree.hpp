@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 12:54:27 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 13:59:09 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,6 @@ struct node
 		return *this;
 	}
 
-/* *** Color **************************************************************** */
-
-	void flip_color()
-	{
-		if (color == BLACK)
-			color = RED;
-		else
-			color = BLACK;
-	}
-
 };
 
 
@@ -114,7 +104,7 @@ struct node
 template < typename NodePtr >
 NodePtr rbt_min_node(NodePtr node)
 {
-	while (node->left != NULL)
+	while (node != NULL && node->left != NULL && node->left->right != NULL) // NULL <-> _nil !!!
 		node = node->left;
 	return node;
 }
@@ -122,7 +112,7 @@ NodePtr rbt_min_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_max_node(NodePtr node)
 {
-	while (node->right != NULL)
+	while (node != NULL && node->right != NULL && node->right->right != NULL) // NULL <-> _nil !!!
 		node = node->right;
 	return node;
 }
@@ -132,7 +122,7 @@ NodePtr rbt_max_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_prev_node(NodePtr node)
 {
-	if (node->left != NULL)
+	if (node->left->right != NULL) // NULL <-> _nil !!!
 		return rbt_max_node(node->left);
 
 	while (node == node->parent->left)
@@ -143,7 +133,7 @@ NodePtr rbt_prev_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_next_node(NodePtr node)
 {
-	if (node->right != NULL)
+	if (node->right->right != NULL) // NULL <-> _nil !!!
 		return rbt_min_node(node->right);
 
 	while (node == node->parent->right)
@@ -585,7 +575,7 @@ class rb_tree
 
 	void erase(iterator pos)
 	{
-		_erase(pos);
+		_erase(pos.base());
 	}
 
 	size_type erase(value_type const &val)
@@ -595,7 +585,7 @@ class rb_tree
 		if (found == end())
 			return 0;
 
-		_erase(found);
+		_erase(found.base());
 		return 1;
 	}
 
@@ -603,7 +593,7 @@ class rb_tree
 	{
 		while (first != last)
 		{
-			_erase(first);
+			_erase(first.base());
 			++first;
 		}
 	}
@@ -631,9 +621,9 @@ class rb_tree
 		node_pointer tmp = _root();
 		while (tmp != _nil)
 		{
-			if (_comp(val, tmp->_value))
-				tmp = tmp->_left;
-			else if (_comp(tmp->_value, val))
+			if (_comp(val, tmp->value))
+				tmp = tmp->left;
+			else if (_comp(tmp->value, val))
 				tmp = tmp->right;
 			else
 				return iterator(tmp);
@@ -647,9 +637,9 @@ class rb_tree
 		const_node_pointer tmp = _root();
 		while (tmp != _nil)
 		{
-			if (_comp(val, tmp->_value))
-				tmp = tmp->_left;
-			else if (_comp(tmp->_value, val))
+			if (_comp(val, tmp->value))
+				tmp = tmp->left;
+			else if (_comp(tmp->value, val))
 				tmp = tmp->right;
 			else
 				return const_iterator(tmp);
@@ -763,7 +753,6 @@ class rb_tree
 
 	void print()
 	{
-		std::cout << "PRINTER:" << std::endl;
 		_print(_root());
 	}
 
@@ -1049,7 +1038,13 @@ class rb_tree
 
 	void _transplant(node_pointer u, node_pointer v)
 	{
-		if (u == u->parent->left)
+// std::cout << "TEST!" << std::endl;
+		if (u == _root())
+		{
+			_root() = v;
+			v->parent = _head;
+		}
+		else if (u == u->parent->left)
 			u->parent->left = v;
 		else
 			u->parent->right = v;
@@ -1058,6 +1053,9 @@ class rb_tree
 
 	void _erase(node_pointer z)
 	{
+		if (z == _head || z == _nil)
+			return;
+
 		node_pointer x;
 		node_pointer y = z;
 		NODE_COLOR y_color_original = y->color;
@@ -1075,6 +1073,7 @@ class rb_tree
 		else
 		{
 			y = rbt_min_node(z->right);
+// if (y == _nil) std::cout << "y == _nil !" << std::endl;
 			y_color_original = y->color;
 			x = y->right;
 
@@ -1082,6 +1081,10 @@ class rb_tree
 				x->parent = y;
 			else
 			{
+// std::cout << "BLUB!" << std::endl;
+// std::cout << "y->value:  " << y->value << std::endl;
+// if (y == _nil) std::cout << "y == _nil !" << std::endl;
+// std::cout << "y->right->value:  " << y->right->value << std::endl;
 				_transplant(y, y->right);
 				y->right = z->right;
 				y->right->parent = y;
