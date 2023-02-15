@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 13:59:09 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 14:19:33 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 
 #include <cstddef>
+#include <iostream>
+#include <string>
 
 #include "algorithm.hpp"
 #include "iterator.hpp"
@@ -591,10 +593,10 @@ class rb_tree
 
 	void erase(iterator first, iterator last)
 	{
-		while (first != last)
+		for (iterator tmp = first; tmp != last; tmp = first)
 		{
-			_erase(first.base());
 			++first;
+			_erase(tmp.base());
 		}
 	}
 
