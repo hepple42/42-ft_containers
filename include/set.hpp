@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:20:12 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/14 10:52:13 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 15:25:01 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,15 @@ class set
 
 /* *** Constructor ********************************************************** */
 
-	explicit set(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type());
+	explicit set(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) : _tree(comp, alloc) { }
 
 	template < typename InputIter >
-	set(InputIter first, InputIter last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type());
+	set(InputIter first, InputIter last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) : _tree(comp, alloc)
+	{
+		_tree.insert(first, last);
+	}
 
-	set(set const &src);
+	set(set const &src) : _tree(src._tree) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -88,74 +91,161 @@ class set
 
 /* *** Assignment *********************************************************** */
 
-	set &operator=(set const &src);
+	set &operator=(set const &src)
+	{
+		if (this != &src)
+			_tree = src._tree;
+
+		return *this;
+	}
 
 /* *** Iterators ************************************************************ */
 
-	iterator begin();
+	iterator begin()
+	{
+		return _tree.begin();
+	}
 
-	const_iterator begin() const;
+	const_iterator begin() const
+	{
+		return _tree.begin();
+	}
 
-	iterator end();
+	iterator end()
+	{
+		return _tree.end();
+	}
 
-	const_iterator end() const;
+	const_iterator end() const
+	{
+		return _tree.end();
+	}
 
-	reverse_iterator rbegin();
+	reverse_iterator rbegin()
+	{
+		return _tree.rbegin();
+	}
 
-	const_reverse_iterator rbegin() const;
+	const_reverse_iterator rbegin() const
+	{
+		return _tree.rbegin();
+	}
 
-	reverse_iterator rend();
+	reverse_iterator rend()
+	{
+		return _tree.rend();
+	}
 
-	const_reverse_iterator rend() const;
+	const_reverse_iterator rend() const
+	{
+		return _tree.rend();
+	}
 
 /* *** Capacity ************************************************************* */
 
-	bool empty() const;
+	bool empty() const
+	{
+		return _tree.empty();
+	}
 
-	size_type size() const;
+	size_type size() const
+	{
+		return _tree.size();
+	}
 
-	size_type max_size() const;
+	size_type max_size() const
+	{
+		return _tree.max_size();
+	}
 
 /* *** Modifiers ************************************************************ */
 
-	pair<iterator, bool> insert(value_type const &val);
+	pair<iterator, bool> insert(value_type const &val)
+	{
+		return _tree.insert(val);
+	}
 
-	iterator insert(iterator pos, value_type const &val);
+	iterator insert(iterator pos, value_type const &val)
+	{
+		return _tree.insert(pos, val);
+	}
 
 	template < typename InputIter >
-	void insert(InputIter first, InputIter last);
+	void insert(InputIter first, InputIter last)
+	{
+		_tree.insert(first, last);
+	}
 
-	void erase(iterator pos);
+	void erase(iterator pos)
+	{
+		_tree.erase(pos);
+	}
 
-	size_type erase(value_type const &val);
+	size_type erase(value_type const &val)
+	{
+		return _tree.erase(val);
+	}
 
-	void erase(iterator first, iterator last);
+	void erase(iterator first, iterator last)
+	{
+		_tree.erase(first, last);
+	}
 
-	void swap(set &s);
+	void swap(set &s)
+	{
+		_tree.swap(s._tree);
+	}
 
-	void clear();
+	void clear()
+	{
+		_tree.clear();
+	}
 
 /* *** Observers ************************************************************ */
 
-	key_compare key_comp() const;
+	key_compare key_comp() const
+	{
+		return key_compare();
+	}
 
-	value_compare value_comp() const;
+	value_compare value_comp() const
+	{
+		return _tree.value_comp();
+	}
 
 /* *** Operations *********************************************************** */
 
-	iterator find(value_type const &val) const;
+	iterator find(value_type const &val) const
+	{
+		return _tree.find(val);
+	}
 
-	size_type count(value_type const &val) const;
+	size_type count(value_type const &val) const
+	{
+		return _tree.count(val);
+	}
 
-	iterator lower_bound(value_type const &val) const;
+	iterator lower_bound(value_type const &val) const
+	{
+		return _tree.lower_bound(val);
+	}
 
-	iterator upper_bound(value_type const &val) const;
+	iterator upper_bound(value_type const &val) const
+	{
+		return _tree.upper_bound(val);
+	}
 
-	pair<iterator, iterator> equal_range(value_type const &val) const;
+	pair<iterator, iterator> equal_range(value_type const &val) const
+	{
+		return _tree.equal_range(val);
+	}
 
 /* *** Allocator ************************************************************ */
 
-	allocator_type get_allocator() const;
+	allocator_type get_allocator() const
+	{
+		return _tree.get_allocator();
+	}
 
 };
 
