@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 14:25:11 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 17:13:29 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -508,22 +508,22 @@ class rb_tree
 
 	iterator end()
 	{
-		return iterator(_head);
+		return iterator(_end_node());
 	}
 
 	const_iterator end() const
 	{
-		return const_iterator(_head);
+		return const_iterator(_end_node());
 	}
 
 	reverse_iterator rbegin()
 	{
-		return reverse_iterator(_head);
+		return reverse_iterator(_end_node());
 	}
 
 	const_reverse_iterator rbegin() const
 	{
-		return const_reverse_iterator(_head);
+		return const_reverse_iterator(_end_node());
 	}
 
 	reverse_iterator rend()
@@ -688,9 +688,9 @@ class rb_tree
 
 	const_iterator lower_bound(value_type const &val) const
 	{
-		node_pointer result = _end_node();
+		const_node_pointer result = _end_node();
 
-		node_pointer node = _root();
+		const_node_pointer node = _root();
 		while (node != _nil)
 		{
 			if (!_comp(node->value, val))
@@ -726,9 +726,9 @@ class rb_tree
 
 	const_iterator upper_bound(value_type const &val) const
 	{
-		node_pointer result = _end_node();
+		const_node_pointer result = _end_node();
 
-		node_pointer node = _root();
+		const_node_pointer node = _root();
 		while (node != _nil)
 		{
 			if (_comp(val, node->value))
@@ -853,7 +853,7 @@ class rb_tree
 
 	node_pointer _copy(rb_tree const &src_tree, node_pointer const &src_node)
 	{
-		if (src_node == src_tree->_nil)
+		if (src_node == src_tree._nil)
 			return _nil;
 
 		node_pointer new_node = _construct_node(src_node);
