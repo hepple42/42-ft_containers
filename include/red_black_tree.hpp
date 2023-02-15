@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 11:19:41 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 12:54:27 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -568,16 +568,45 @@ class rb_tree
 		return _insert(val);
 	}
 
-	// iterator insert(iterator pos, value_type const &val);
+	iterator insert(__attribute__((unused)) iterator pos, value_type const &val)
+	{
+		return _insert(val).first;
+	}
 
-	// template < typename InputIter >
-	// void insert(InputIter first, InputIter last);
+	template < typename InputIter >
+	void insert(InputIter first, InputIter last)
+	{
+		while (first != last)
+		{
+			_insert(*first);
+			++first;
+		}
+	}
 
-	// void erase(iterator pos);
+	void erase(iterator pos)
+	{
+		_erase(pos);
+	}
 
-	// size_type erase(value_type const &val);
+	size_type erase(value_type const &val)
+	{
+		iterator found = find(val);
 
-	// void erase(iterator first, iterator last);
+		if (found == end())
+			return 0;
+
+		_erase(found);
+		return 1;
+	}
+
+	void erase(iterator first, iterator last)
+	{
+		while (first != last)
+		{
+			_erase(first);
+			++first;
+		}
+	}
 
 	// void swap(rb_tree &t);
 
@@ -682,7 +711,7 @@ class rb_tree
 		node_pointer node = _root();
 		while (node != _nil)
 		{
-			if (_comp(node->value, val))
+			if (_comp(val, node->value))
 			{
 				result = node;
 				node = node->left;
@@ -701,7 +730,7 @@ class rb_tree
 		node_pointer node = _root();
 		while (node != _nil)
 		{
-			if (_comp(node->value, val))
+			if (_comp(val, node->value))
 			{
 				result = node;
 				node = node->left;
@@ -730,14 +759,13 @@ class rb_tree
 		return _value_alloc;
 	}
 
-
+/* *** Print **************************************************************** */
 
 	void print()
 	{
 		std::cout << "PRINTER:" << std::endl;
 		_print(_root());
 	}
-
 
 
 	private:
@@ -1026,6 +1054,138 @@ class rb_tree
 		else
 			u->parent->right = v;
 		v->parent = u->parent;
+	}
+
+	void _erase(node_pointer z)
+	{
+		node_pointer x;
+		node_pointer y = z;
+		NODE_COLOR y_color_original = y->color;
+
+		if (z->left == _nil)
+		{
+			x = z->right;
+			_transplant(z, z->right);
+		}
+		else if (z->right == _nil)
+		{
+			x = z->left;
+			_transplant(z, z->left);
+		}
+		else
+		{
+			y = rbt_min_node(z->right);
+			y_color_original = y->color;
+			x = y->right;
+
+			if (y->parent == z)
+				x->parent = y;
+			else
+			{
+				_transplant(y, y->right);
+				y->right = z->right;
+				y->right->parent = y;
+			}
+
+			_transplant(z, y);
+			y->left = z->left;
+			y->left->parent = y;
+			y->color = z->color;
+		}
+
+		// ORDER ?!?
+
+		if (y_color_original == BLACK)
+			_erase_fixup(x);
+
+		if (z == _begin_node)
+		{
+			if (z->right == _nil)
+				_begin_node = z->parent;
+			else
+				_begin_node = rbt_min_node(z->right);
+		}
+
+		_destroy_node(z);
+	}
+
+	void _erase_fixup(node_pointer x)
+	{
+		node_pointer w;
+
+		while (x != _root() && x->color == BLACK)
+		{
+			if (x == x->parent->left)
+			{
+				w = x->parent->right;
+
+				if (w->color == RED)
+				{
+					w->color = BLACK;
+					x->parent->color = RED;
+					_rotate_left(x->parent);
+					w = x->parent->right;
+				}
+
+				if (w->left->color == BLACK && w->right->color == BLACK)
+				{
+					w->color = RED;
+					x = x->parent;
+				}
+				else
+				{
+					if (w->right->color == BLACK)
+					{
+						w->left->color = BLACK;
+						w->color = RED;
+						_rotate_right(w);
+						w = x->parent->right;
+					}
+
+					w->color = x->parent->color;
+					x->parent->color = BLACK;
+					w->right->color = BLACK;
+					_rotate_left(x->parent);
+					x = _root();
+				}
+			}
+			else
+			{
+				w = x->parent->left;
+
+				if (w->color == RED)
+				{
+					w->color = BLACK;
+					x->parent->color = RED;
+					_rotate_right(x->parent);
+					w = x->parent->left;
+				}
+
+				if (w->right->color == BLACK && w->left->color == BLACK)
+				{
+					w->color = RED;
+					x = x->parent;
+				}
+				else
+				{
+					if (w->left->color == BLACK)
+					{
+						w->right->color = BLACK;
+						w->color = RED;
+						_rotate_left(w);
+						w = x->parent->left;
+					}
+
+					w->color = x->parent->color;
+					x->parent->color = BLACK;
+					w->left->color = BLACK;
+					_rotate_right(x->parent);
+					x = _root();
+				}
+			}
+		}
+
+		x->color = BLACK;
 	}
 
 /* *** Print **************************************************************** */
