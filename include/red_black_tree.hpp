@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 08:35:13 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/15 11:19:41 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1030,19 +1030,22 @@ class rb_tree
 
 /* *** Print **************************************************************** */
 
-	void _print(node_pointer node, std::string const &prefix = "", bool is_left = false, bool is_first = true)
+	void _print(node_pointer node, std::string const &spaces = "", bool is_left = false, bool is_first = true)
 	{
 		if (node != _nil)
 		{
 			if (is_first)
-				_print(node->right, prefix, false, false);
+				_print(node->right, spaces, false, false);
 			else
-				_print(node->right, prefix + "     ", false, false);
+				_print(node->right, spaces + "     ", false, false);
 
-			std::cout << prefix;
+			std::cout << spaces;
 
-			if (!is_first)
+			if (is_first)
+				std::cout << "──";
+			else
 			{
+				std::cout << "  ";
 				if (is_left)
 					std::cout << "└────";
 				else
@@ -1055,9 +1058,9 @@ class rb_tree
 				std::cout << "\033[0;31m" << node->value << "\033[0m" << std::endl;
 
 			if (is_first)
-				_print(node->left, prefix, true, false);
+				_print(node->left, spaces, true, false);
 			else
-				_print(node->left, prefix + "     ", true, false);
+				_print(node->left, spaces + "     ", true, false);
 		}
 	}
 
