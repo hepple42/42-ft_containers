@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:20:12 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 12:34:36 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/16 13:18:09 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,9 @@ class set
 		return _tree.insert(val);
 	}
 
-	iterator insert(iterator pos, value_type const &val)
+	iterator insert(__attribute__((unused)) iterator pos, value_type const &val)
 	{
-		return _tree.insert(pos, val);
+		return (_tree.insert(val)).first;
 	}
 
 	template < typename InputIter >
@@ -178,7 +178,7 @@ class set
 
 	void erase(iterator pos)
 	{
-		_tree.erase(pos);
+		_tree.erase(*pos);
 	}
 
 	size_type erase(value_type const &val)
@@ -188,7 +188,11 @@ class set
 
 	void erase(iterator first, iterator last)
 	{
-		_tree.erase(first, last);
+		for (iterator tmp = first; tmp != last; tmp = first)
+		{
+			++first;
+			_tree.erase(*tmp);
+		}
 	}
 
 	void swap(set &s)
