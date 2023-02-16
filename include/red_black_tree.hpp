@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 10:44:57 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/16 13:47:51 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -487,7 +487,7 @@ class rb_tree
 		if (src._root() != src._nil)
 		{
 			_root() = _copy(src, src._root());
-			_root()->parent = _head; // HEAD OR NIL???
+			_root()->parent = _head;
 			_begin_node = rbt_min_node(_root());
 		}
 
@@ -961,21 +961,7 @@ class rb_tree
 		if (_begin_node->left == z)
 			_begin_node = z;
 
-
-		// std::cout << "nil:  " << _nil << std::endl;
-
-		// std::cout << "root:" << std::endl;
-		// std::cout << "root:    " << _root() << std::endl;
-		// std::cout << "color:   " << _root()->color << std::endl;
-		// std::cout << "parent:  " << _root()->parent << std::endl;
-		// std::cout << "left:    " << _root()->left << std::endl;
-		// std::cout << "right:   " << _root()->right << std::endl;
-
-		// std::cout << "FIXUP STARTING" << std::endl;
-
 		_insert_fixup(z);
-
-		// std::cout << "FIXUP DONE" << std::endl;
 
 		return ft::make_pair<iterator, bool>(iterator(z), true);
 	}
@@ -988,11 +974,9 @@ class rb_tree
 		{
 			if (z->parent == z->parent->parent->left)
 			{
-				// std::cout << "CASE LEFT" << std::endl;
 				y = z->parent->parent->right;
 				if (y->color == RED)
 				{
-					// std::cout << "CASE 1" << std::endl;
 					z->parent->color = BLACK;
 					y->color = BLACK;
 					z->parent->parent->color = RED;
@@ -1002,12 +986,10 @@ class rb_tree
 				{
 					if (z == z->parent->right)
 					{
-						// std::cout << "CASE 2" << std::endl;
 						z = z->parent;
 						_rotate_left(z);
 					}
 
-					// std::cout << "CASE 3" << std::endl;
 					z->parent->color = BLACK;
 					z->parent->parent->color = RED;
 					_rotate_right(z->parent->parent);
@@ -1015,11 +997,9 @@ class rb_tree
 			}
 			else
 			{
-				// std::cout << "CASE RIGHT" << std::endl;
 				y = z->parent->parent->left;
 				if (y->color == RED)
 				{
-					// std::cout << "CASE 1" << std::endl;
 					z->parent->color = BLACK;
 					y->color = BLACK;
 					z->parent->parent->color = RED;
@@ -1029,12 +1009,10 @@ class rb_tree
 				{
 					if (z == z->parent->left)
 					{
-						// std::cout << "CASE 2" << std::endl;
 						z = z->parent;
 						_rotate_right(z);
 					}
 
-					// std::cout << "CASE 3" << std::endl;
 					z->parent->color = BLACK;
 					z->parent->parent->color = RED;
 					_rotate_left(z->parent->parent);
@@ -1049,7 +1027,6 @@ class rb_tree
 
 	void _transplant(node_pointer u, node_pointer v)
 	{
-// std::cout << "TEST!" << std::endl;
 		if (u == _root())
 		{
 			_root() = v;
@@ -1084,7 +1061,6 @@ class rb_tree
 		else
 		{
 			y = rbt_min_node(z->right);
-// if (y == _nil) std::cout << "y == _nil !" << std::endl;
 			y_color_original = y->color;
 			x = y->right;
 
@@ -1092,10 +1068,6 @@ class rb_tree
 				x->parent = y;
 			else
 			{
-// std::cout << "BLUB!" << std::endl;
-// std::cout << "y->value:  " << y->value << std::endl;
-// if (y == _nil) std::cout << "y == _nil !" << std::endl;
-// std::cout << "y->right->value:  " << y->right->value << std::endl;
 				_transplant(y, y->right);
 				y->right = z->right;
 				y->right->parent = y;
@@ -1106,8 +1078,6 @@ class rb_tree
 			y->left->parent = y;
 			y->color = z->color;
 		}
-
-		// ORDER ?!?
 
 		if (y_color_original == BLACK)
 			_erase_fixup(x);
