@@ -8,6 +8,10 @@ ft_containers_terminator
 ft_containers-unit-test
 ft_containers_test
 
+src/main_*.cpp
+out*
+a.out*
+
 a.out
 ft_containers
 ft_map
