@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 11:44:55 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/16 12:02:23 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ class map
 		iterator it = find(key);
 
 		if (it == end())
-			throw std::out_of_range("ft::map::at");
+			throw std::out_of_range("ft::map");
 
 		return it->second;
 	}
@@ -212,7 +212,7 @@ class map
 		const_iterator it = find(key);
 
 		if (it == end())
-			throw std::out_of_range("ft::map::at");
+			throw std::out_of_range("ft::map");
 
 		return it->second;
 	}
