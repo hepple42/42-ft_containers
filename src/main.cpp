@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:14:44 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 14:05:15 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/16 15:57:19 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,19 @@ int main(void)
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+	}
+	
+	{
+		std::set<int> s;
+		s.insert(42);
+		std::set<int>::iterator it = s.end();
+		std::cout << *(--it) << std::endl;
+	}
+	{
+		ft::set<int> s;
+		s.insert(42);
+		ft::set<int>::iterator it = s.end();
+		std::cout << *(--it) << std::endl;
 	}
 	
 	std::cout << "Blub." << std::endl;
