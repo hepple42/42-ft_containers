@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 17:13:29 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/16 10:44:57 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ struct node
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
+	value_type	value;
 	NODE_COLOR	color;
 	pointer		parent;
 	pointer		left;
 	pointer		right;
-	value_type	value;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -72,7 +72,7 @@ struct node
 
 	node() : color(BLACK), parent(NULL), left(NULL), right(NULL), value() { }
 
-	node(value_type val, NODE_COLOR col = BLACK) : color(col), parent(NULL), left(NULL), right(NULL), value(val) { }
+	explicit node(value_type val, NODE_COLOR col = BLACK) : color(col), parent(NULL), left(NULL), right(NULL), value(val) { }
 
 	node(node const &src) : color(src.color), parent(src.parent), left(src.left), right(src.right), value(src.value) { }
 
@@ -82,19 +82,19 @@ struct node
 
 /* *** Assignment *********************************************************** */
 
-	node &operator=(node const &src)
-	{
-		if (this != &src)
-		{
-			color = src.color;
-			parent = src.parent;
-			left = src.left;
-			right = src.right;
-			value = src.value;
-		}
+	// node &operator=(node const &src)
+	// {
+	// 	if (this != &src)
+	// 	{
+	// 		color = src.color;
+	// 		parent = src.parent;
+	// 		left = src.left;
+	// 		right = src.right;
+	// 		value = src.value;
+	// 	}
 
-		return *this;
-	}
+	// 	return *this;
+	// }
 
 };
 
@@ -205,14 +205,14 @@ class tree_iterator
 		return _current;
 	}
 
-	pointer operator->() const
-	{
-		return &(operator*());
-	}
-
 	reference operator*() const
 	{
 		return _current->value;
+	}
+
+	pointer operator->() const
+	{
+		return &(operator*());
 	}
 
 /* *** Increment / Decrement ************************************************ */
@@ -225,7 +225,7 @@ class tree_iterator
 
 	tree_iterator operator++(int)
 	{
-		tree_iterator tmp(*this);
+		tree_iterator tmp = *this;
 		++(*this);
 		return tmp;
 	}
@@ -238,7 +238,7 @@ class tree_iterator
 
 	tree_iterator operator--(int)
 	{
-		tree_iterator tmp(*this);
+		tree_iterator tmp = *this;
 		--(*this);
 		return tmp;
 	}
@@ -331,14 +331,14 @@ class const_tree_iterator
 		return _current;
 	}
 
-	pointer operator->() const
-	{
-		return &(operator*());
-	}
-
 	reference operator*() const
 	{
 		return _current->value;
+	}
+
+	pointer operator->() const
+	{
+		return &(operator*());
 	}
 
 /* *** Increment / Decrement ************************************************ */
@@ -351,7 +351,7 @@ class const_tree_iterator
 
 	const_tree_iterator operator++(int)
 	{
-		const_tree_iterator tmp(*this);
+		const_tree_iterator tmp = *this;
 		++(*this);
 		return tmp;
 	}
@@ -364,7 +364,7 @@ class const_tree_iterator
 
 	const_tree_iterator operator--(int)
 	{
-		const_tree_iterator tmp(*this);
+		const_tree_iterator tmp = *this;
 		--(*this);
 		return tmp;
 	}
@@ -451,7 +451,7 @@ class rb_tree
 		_begin_node = _end_node();
 	}
 
-	rb_tree(rb_tree const &src) : _comp(src._comp), _value_alloc(src._value_alloc), _node_alloc(src._node_alloc), _size(src._size)
+	rb_tree(rb_tree const &src) : _comp(src._comp), _value_alloc(src._value_alloc), _node_alloc(src._node_alloc), _size(0)
 	{
 		_create_nil();
 		_create_head();
@@ -550,7 +550,7 @@ class rb_tree
 
 	size_type max_size() const
 	{
-		return _value_alloc.max_size();
+		return _node_alloc.max_size();
 	}
 
 /* *** Modifiers ************************************************************ */
