@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:20:12 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 10:43:14 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/16 12:34:36 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ class set
 
 	typedef typename tree_type::difference_type			difference_type;
 	typedef typename tree_type::size_type				size_type;
-	typedef typename tree_type::iterator				iterator;
+	typedef typename tree_type::const_iterator			iterator;
 	typedef typename tree_type::const_iterator			const_iterator;
-	typedef typename tree_type::reverse_iterator		reverse_iterator;
+	typedef typename tree_type::const_reverse_iterator	reverse_iterator;
 	typedef typename tree_type::const_reverse_iterator	const_reverse_iterator;
 
 
