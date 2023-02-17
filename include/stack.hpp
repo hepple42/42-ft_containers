@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:15:36 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/01 14:47:28 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 13:43:36 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,25 @@ class stack
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef Container									container_type;
 	typedef typename container_type::value_type			value_type;
 	typedef typename container_type::size_type			size_type;
-	typedef typename container_type::reference			reference; // C++11 ???
-	typedef typename container_type::const_reference	const_reference; // C++11 ???
+	typedef typename container_type::reference			reference;
+	typedef typename container_type::const_reference	const_reference;
 
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	protected:
+  protected:
 
 	container_type	_c;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 
