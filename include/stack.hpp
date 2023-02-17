@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:15:36 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 13:43:36 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:10:45 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class stack
 
   protected:
 
-	container_type	_c;
+	container_type	c;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -51,9 +51,9 @@ class stack
 
 /* *** Constructor ********************************************************** */
 
-	explicit stack(container_type const &cont = container_type()) : _c(cont) { }
+	explicit stack(container_type const &cont = container_type()) : c(cont) { }
 
-	stack(stack const &src) : _c(src._c) { }
+	stack(stack const &src) : c(src.c) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -63,7 +63,7 @@ class stack
 
 	stack &operator=(stack const &src)
 	{
-		_c = src._c;
+		c = src.c;
 		return *this;
 	}
 
@@ -71,36 +71,36 @@ class stack
 
 	bool empty() const
 	{
-		return _c.empty();
+		return c.empty();
 	}
 
 	size_type size() const
 	{
-		return _c.size();
+		return c.size();
 	}
 
 /* *** Element Access ******************************************************* */
 
 	reference top()
 	{
-		return _c.back();
+		return c.back();
 	}
 
 	const_reference top() const
 	{
-		return _c.back();
+		return c.back();
 	}
 
 /* *** Modifiers ************************************************************ */
 
 	void push(const_reference val)
 	{
-		_c.push_back(val);
+		c.push_back(val);
 	}
 
 	void pop()
 	{
-		_c.pop_back();
+		c.pop_back();
 	}
 
 
@@ -122,7 +122,7 @@ class stack
 template < typename T, typename Container >
 bool operator==(stack<T, Container> const &lhs, stack<T, Container> const &rhs)
 {
-	return (lhs._c == rhs._c);
+	return (lhs.c == rhs.c);
 }
 
 template < typename T, typename Container >
@@ -134,7 +134,7 @@ bool operator!=(stack<T, Container> const &lhs, stack<T, Container> const &rhs)
 template < typename T, typename Container >
 bool operator<(stack<T, Container> const &lhs, stack<T, Container> const &rhs)
 {
-	return (lhs._c < rhs._c);
+	return (lhs.c < rhs.c);
 }
 
 template < typename T, typename Container >

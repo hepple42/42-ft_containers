@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/01 16:31:59 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:14:06 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,7 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 	protected:
 
-	iterator_type	_current;
+	iterator_type	current;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -333,12 +333,12 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 /* *** Constructor ********************************************************** */
 
-	reverse_iterator() : _current() { }
+	reverse_iterator() : current() { }
 
-	explicit reverse_iterator(iterator_type it) : _current(it) { }
+	explicit reverse_iterator(iterator_type it) : current(it) { }
 
 	template < typename Iter >
-	reverse_iterator(reverse_iterator<Iter> const &rev_it) : _current(rev_it.base()) { }
+	reverse_iterator(reverse_iterator<Iter> const &rev_it) : current(rev_it.base()) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -349,7 +349,7 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 	template < typename Iter >
 	reverse_iterator &operator=(reverse_iterator<Iter> const &rev_it)
 	{
-		_current = rev_it.base();
+		current = rev_it.base();
 		return *this;
 	}
 
@@ -357,7 +357,7 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 	iterator_type base() const
 	{
-		return _current;
+		return current;
 	}
 
 	reference operator[](difference_type n) const
@@ -372,7 +372,7 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 	reference operator*() const
 	{
-		iterator_type tmp = _current;
+		iterator_type tmp = current;
 		return *(--tmp);
 	}
 
@@ -380,50 +380,50 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 	reverse_iterator &operator++()
 	{
-		--_current;
+		--current;
 		return *this;
 	}
 
 	reverse_iterator operator++(int)
 	{
 		reverse_iterator tmp(*this);
-		--_current;
+		--current;
 		return tmp;
 	}
 
 	reverse_iterator &operator+= (difference_type n)
 	{
-		_current -= n;
+		current -= n;
 		return *this;
 	}
 
 	reverse_iterator operator+(difference_type n) const
 	{
-		return reverse_iterator(_current - n);
+		return reverse_iterator(current - n);
 	}
 
 	reverse_iterator &operator--()
 	{
-		++_current;
+		++current;
 		return *this;
 	}
 
 	reverse_iterator operator--(int)
 	{
 		reverse_iterator tmp(*this);
-		++_current;
+		++current;
 		return tmp;
 	}
 
 	reverse_iterator &operator-= (difference_type n)
 	{
-		_current += n;
+		current += n;
 		return *this;
 	}
 
 	reverse_iterator operator-(difference_type n) const
 	{
-		return reverse_iterator(_current + n);
+		return reverse_iterator(current + n);
 	}
 
 };

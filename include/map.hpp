@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 12:02:23 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:12:11 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ class map
 		
 		bool operator()(value_type const &lhs, value_type const &rhs) const
 		{
-			return _comp(lhs.first, rhs.first);
+			return comp(lhs.first, rhs.first);
 		}
 
 		protected:
 		
-		key_compare	_comp;
+		key_compare	comp;
 
-		value_compare(key_compare kc) : _comp(kc) { }
+		value_compare(key_compare kc) : comp(kc) { }
 	};
 
 
