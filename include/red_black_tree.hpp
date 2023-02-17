@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 14:23:27 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 19:19:30 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,20 @@ struct node
 template < typename NodePtr >
 NodePtr rbt_min_node(NodePtr node)
 {
+	// min node is leftmost node
 	while (node != NULL && node->left != NULL && node->left->right != NULL) // node->left == _nil
 		node = node->left;
+
 	return node;
 }
 
 template < typename NodePtr >
 NodePtr rbt_max_node(NodePtr node)
 {
+	// max node is rightmost node
 	while (node != NULL && node->right != NULL && node->right->right != NULL) // node->right == _nil
 		node = node->right;
+
 	return node;
 }
 
@@ -124,15 +128,14 @@ NodePtr rbt_max_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_prev_node(NodePtr node)
 {
-	if (node == NULL)
-		return NULL;
-
-	if (node->left == NULL)
+	if (node == NULL || node->left == NULL)
 		return node;
 
+	// if left subtree is non-empty, prev node is max node of this subtree
 	if (node->left->right != NULL) // node->left == _nil
 		return rbt_max_node(node->left);
 
+	// else prev node is lowest ancestor whose right child is also an ancestor
 	while (node == node->parent->left)
 		node = node->parent;
 	return node->parent;
@@ -141,15 +144,14 @@ NodePtr rbt_prev_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_next_node(NodePtr node)
 {
-	if (node == NULL)
-		return NULL;
-
-	if (node->right == NULL)
+	if (node == NULL || node->right == NULL)
 		return node;
 
+	// if right subtree is non-empty, next node is min node of this subtree
 	if (node->right->right != NULL) // node->right == _nil
 		return rbt_min_node(node->right);
 
+	// else next node is lowest ancestor whose left child is also an ancestor
 	while (node == node->parent->right)
 		node = node->parent;
 	return node->parent;
@@ -411,6 +413,30 @@ class const_tree_iterator
 template < typename T, typename Compare, typename Alloc >
 class rb_tree
 {
+
+/* ************************************************************************** **
+** RED BLACK TREE                                                             **
+**                                                                            **
+** - A red black tree (RBT) is a self-balancing binary search tree (BST)      **
+** - Every tree node has an additional property, its color, which can be      **
+**   either red or black.                                                     **
+** - The balancing of the RBT is based on rules for the node colors, and is   **
+**   performed using rotations and recoloring                                 **
+** - The balancing is not perfect, but guarantees a compromise between fast   **
+**   insertion or deletion (O(log n)) and fast searching (O(log n)).          **
+**                                                                            **
+** - Rules for RBTs:                                                          **
+**   1. Every node is either red or black                                     **
+**   2. The root node is black                                                **
+**   3. Every leaf node (nil) is black                                        **
+**   4. Both children of each red node are black                              **
+**   5. Every path from a given node down to every of its descendant nil      **
+**      nodes contains the same number of black nodes                         **
+**                                                                            **
+** Implementation based on                                                    **
+** Cormen, Leiserson, Rivest, and Stein:                                      **
+** Introduction to Algorithms - Third Edition                                 **
+** ************************************************************************** */
 
 /* *** MEMBER TYPES ********************************************************* */
 
@@ -869,52 +895,70 @@ class rb_tree
 
 /* *** Rotate *************************************************************** */
 
-/*       |                 |                                                  **
-**       x                 y                                                  **
-**      / \               / \                                                 **
-**     a   y     -->     x   c                                                **
-**        / \           / \                                                   **
-**       b   c         a   b                                                  */
+/* ************************************************************************** **
+** ROTATE LEFT                                                                **
+**                                                                            **
+**     |                 |                                                    **
+**     x                 y                                                    **
+**    / \               / \                                                   **
+**   a   y     -->     x   c                                                  **
+**      / \           / \                                                     **
+**     b   c         a   b                                                    **
+**                                                                            **
+** a, b, c: arbitrary subtrees                                                **
+** ************************************************************************** */
 
 	void _rotate_left(node_pointer x)
 	{
 		node_pointer y = x->right;
 
+		// turn left subtree of y into right subtree of x
 		x->right = y->left;
 		if (y->left != _nil)
 			y->left->parent = x;
 
+		// link y and parent of x
 		y->parent = x->parent;
 		if (x == x->parent->left)
 			x->parent->left = y;
 		else
 			x->parent->right = y;
 
+		// put x as left child of y
 		y->left = x;
 		x->parent = y;
 	}
 
-/*         |             |                                                    **
-**         x             y                                                    **
-**        / \           / \                                                   **
-**       y   c   -->   a   x                                                  **
-**      / \               / \                                                 **
-**     a   b             b   c                                                */
+/* ************************************************************************** **
+** ROTATE RIGHT                                                               **
+**                                                                            **
+**       |             |                                                      **
+**       x             y                                                      **
+**      / \           / \                                                     **
+**     y   c   -->   a   x                                                    **
+**    / \               / \                                                   **
+**   a   b             b   c                                                  **
+**                                                                            **
+** a, b, c: arbitrary subtrees                                                **
+** ************************************************************************** */
 
 	void _rotate_right(node_pointer x)
 	{
 		node_pointer y = x->left;
 
+		// turn right subtree of y into left subtree of x
 		x->left = y->right;
 		if (y->right != _nil)
 			y->right->parent = x;
 
+		// link y and parent of x
 		y->parent = x->parent;
 		if (x == x->parent->left)
 			x->parent->left = y;
 		else
 			x->parent->right = y;
 
+		// put x as right child of y
 		y->right = x;
 		x->parent = y;
 	}
@@ -927,6 +971,7 @@ class rb_tree
 		node_pointer y = _nil;
 		node_pointer z = _construct_node(val);
 
+		// search for nil node to replace with new node z with value val
 		while (x != _nil)
 		{
 			y = x;
@@ -936,11 +981,13 @@ class rb_tree
 				x = x->right;
 			else
 			{
+				// tree already contains a node with value val
 				_destroy_node(z);
 				return ft::make_pair<iterator, bool>(iterator(x), false);
 			}
 		}
 
+		// link new node z to tree
 		z->parent = y;
 		if (y == _nil)
 			_root() = z;
@@ -949,23 +996,77 @@ class rb_tree
 		else
 			y->right = z;
 
+		// update pointer to leftmost node
 		if (_begin_node->left == z)
 			_begin_node = z;
 
+		// restore red black tree properties if necessary
 		_insert_fixup(z);
 
 		return ft::make_pair<iterator, bool>(iterator(z), true);
 	}
 
+/* ************************************************************************** **
+** INSERT FIXUP                                                               **
+**                                                                            **
+** There are 3 cases in the main loop:                                        **
+**                                                                            **
+** - Case 1: y, uncle of z, is red:                                           **
+**                                                                            **
+**             |                              |                               **
+**             B                              R <- new z                      **
+**           /   \                          /   \                             **
+**         /       \                      /       \                           **
+**       R           R <- y     -->     B           B                         **
+**      / \         / \                / \         / \                        **
+**     a   R <- z  d   e              a   R       d   e                       **
+**        / \                            / \                                  **
+**       b   c                          b   c                                 **
+**                                                                            **
+** - Case 2: y, uncle of z, is black and z is right child:                    **
+**                                                                            **
+**                     |                              |                       **
+**                     B                              B                       **
+**                   /   \                          /   \                     **
+**                 /       \                      /       \                   **
+**     ROTATE -> R           B <- y     -->     R           B <- y            **
+**     LEFT     / \         / \                / \         / \                **
+**             a   R <- z  d   e     new z -> R   c       d   e               **
+**                / \                        / \                              **
+**               b   c                      a   b                             **
+**                                                                            **
+**   --> continue with case 3                                                 **
+**                                                                            **
+** - Case 3: y, uncle of z, is black and z is left child:                     **
+**                                                                            **
+**                  |                              |                          **
+**        ROTATE -> B                              B                          **
+**        RIGHT   /   \                          /   \                        **
+**              /       \                      /       \                      **
+**            R           B <- y     -->     R <- z      R                    **
+**           / \         / \                / \         / \                   **
+**     z -> R   c       d   e              a   b       c   B                  **
+**         / \                                            / \                 **
+**        a   b                                          d   e                **
+**                                                                            **
+**   R: red node                                                              **
+**   B: black node                                                            **
+**   a, b, c, d, e: arbitrary subtrees                                        **
+**                                                                            **
+** ************************************************************************** */
+
 	void _insert_fixup(node_pointer z)
 	{
 		node_pointer y;
 
+		// node z is always red, so rule 4 is violated if its parent is red
 		while (z->parent->color == RED)
 		{
+			// parent of z is left child of its parent
 			if (z->parent == z->parent->parent->left)
 			{
 				y = z->parent->parent->right;
+				// case 1
 				if (y->color == RED)
 				{
 					z->parent->color = BLACK;
@@ -975,20 +1076,24 @@ class rb_tree
 				}
 				else
 				{
+					// case 2
 					if (z == z->parent->right)
 					{
 						z = z->parent;
 						_rotate_left(z);
 					}
 
+					// case 3
 					z->parent->color = BLACK;
 					z->parent->parent->color = RED;
 					_rotate_right(z->parent->parent);
 				}
 			}
+			// parent of z is right child of its parent (mirrored)
 			else
 			{
 				y = z->parent->parent->left;
+				// case 1 (mirrored)
 				if (y->color == RED)
 				{
 					z->parent->color = BLACK;
@@ -998,12 +1103,14 @@ class rb_tree
 				}
 				else
 				{
+					// case 2 (mirrored)
 					if (z == z->parent->left)
 					{
 						z = z->parent;
 						_rotate_right(z);
 					}
 
+					// case 3 (mirrored)
 					z->parent->color = BLACK;
 					z->parent->parent->color = RED;
 					_rotate_left(z->parent->parent);
@@ -1011,6 +1118,7 @@ class rb_tree
 			}
 		}
 
+		// ensure that rule 2 is fulfilled by coloring the root node black
 		_root()->color = BLACK;
 	}
 
