@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 11:44:47 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 13:16:52 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -437,16 +437,13 @@ class rb_tree
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private: // protected ???
-
-	// HEAD UND NIL ZUSAMMENFASSEN???
+	private:
 
 	value_compare		_comp;
 	allocator_type		_value_alloc;
 	node_allocator_type	_node_alloc;
 	size_type			_size;
 	node_pointer		_nil;
-	node_pointer		_head;
 	node_pointer		_begin_node;
 
 
@@ -459,14 +456,12 @@ class rb_tree
 	explicit rb_tree(value_compare const &comp, allocator_type const &alloc) : _comp(comp), _value_alloc(alloc), _node_alloc(alloc), _size(0)
 	{
 		_create_nil();
-		_create_head();
 		_begin_node = _end_node();
 	}
 
 	rb_tree(rb_tree const &src) : _comp(src._comp), _value_alloc(src._value_alloc), _node_alloc(src._node_alloc), _size(0)
 	{
 		_create_nil();
-		_create_head();
 		_begin_node = _end_node();
 
 		*this = src;
@@ -477,9 +472,6 @@ class rb_tree
 	~rb_tree()
 	{
 		_destroy(_root());
-
-		_value_alloc.destroy(&(_head->value));
-		_node_alloc.deallocate(_head, 1);
 
 		_value_alloc.destroy(&(_nil->value));
 		_node_alloc.deallocate(_nil, 1);
@@ -499,7 +491,7 @@ class rb_tree
 		if (src._root() != src._nil)
 		{
 			_root() = _copy(src, src._root());
-			_root()->parent = _head;
+			_root()->parent = _nil;
 			_begin_node = rbt_min_node(_root());
 		}
 
@@ -622,7 +614,6 @@ class rb_tree
 		ft::swap(_node_alloc, t._node_alloc);
 		ft::swap(_size, t._size);
 		ft::swap(_nil, t._nil);
-		ft::swap(_head, t._head);
 		ft::swap(_begin_node, t._begin_node);
 	}
 
@@ -787,22 +778,22 @@ class rb_tree
 
 	node_pointer &_root()
 	{
-		return _head->left;
+		return _nil->left;
 	}
 
 	node_pointer _root() const
 	{
-		return _head->left;
+		return _nil->left;
 	}
 
 	node_pointer &_end_node()
 	{
-		return _head;
+		return _nil;
 	}
 
 	node_pointer _end_node() const
 	{
-		return _head;
+		return _nil;
 	}
 
 /* *** Construction / Destruction ******************************************* */
@@ -812,19 +803,9 @@ class rb_tree
 		_nil = _node_alloc.allocate(1);
 		_value_alloc.construct(&(_nil->value), value_type());
 		_nil->color = BLACK;
-		_nil->parent = NULL;
-		_nil->left = NULL;
+		_nil->parent = _nil;
+		_nil->left = _nil;
 		_nil->right = NULL;
-	}
-
-	void _create_head()
-	{
-		_head = _node_alloc.allocate(1);
-		_value_alloc.construct(&(_head->value), value_type());
-		_head->color = BLACK;
-		_head->parent = _head;
-		_head->left = _nil;
-		_head->right = _nil;
 	}
 
 	node_pointer _construct_node(value_type const &val, NODE_COLOR color = RED)
@@ -964,10 +945,7 @@ class rb_tree
 
 		z->parent = y;
 		if (y == _nil)
-		{
 			_root() = z;
-			z->parent = _head;
-		}
 		else if (_comp(z->value, y->value))
 			y->left = z;
 		else
@@ -1042,12 +1020,7 @@ class rb_tree
 
 	void _transplant(node_pointer u, node_pointer v)
 	{
-		if (u == _root())
-		{
-			_root() = v;
-			v->parent = _head;
-		}
-		else if (u == u->parent->left)
+		if (u == u->parent->left)
 			u->parent->left = v;
 		else
 			u->parent->right = v;
@@ -1056,7 +1029,7 @@ class rb_tree
 
 	void _erase(node_pointer z)
 	{
-		if (z == _head || z == _nil)
+		if (z == _nil)
 			return;
 
 		node_pointer x;
