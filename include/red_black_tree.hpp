@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 13:16:52 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 13:51:07 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ class tree_iterator
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef T										value_type;
 	typedef DiffType								difference_type;
@@ -181,14 +181,14 @@ class tree_iterator
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	node_pointer	_current;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 
@@ -288,7 +288,7 @@ class const_tree_iterator
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef T								value_type;
 	typedef DiffType						difference_type;
@@ -297,7 +297,7 @@ class const_tree_iterator
 	typedef bidirectional_iterator_tag		iterator_category;
 	typedef ft::tree_iterator<T, DiffType>	non_const_iterator;
 
-	private:
+  private:
 
 	typedef typename ft::node<T>::pointer		node_pointer;
 	typedef typename ft::node<T>::const_pointer	const_node_pointer;
@@ -305,14 +305,14 @@ class const_tree_iterator
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	const_node_pointer	_current;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 
@@ -414,7 +414,7 @@ class rb_tree
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef T															value_type;
 	typedef Compare														value_compare;
@@ -437,7 +437,7 @@ class rb_tree
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	value_compare		_comp;
 	allocator_type		_value_alloc;
@@ -449,7 +449,7 @@ class rb_tree
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 
@@ -770,11 +770,13 @@ class rb_tree
 
 	void print()
 	{
-		_print(_root());
+		_print(_root(), "", false, true);
 	}
 
 
-	private:
+  private:
+
+/* *** Root / End Node ****************************************************** */
 
 	node_pointer &_root()
 	{
@@ -865,16 +867,14 @@ class rb_tree
 		return new_node;
 	}
 
-/* *** Rotations ************************************************************ */
+/* *** Rotate *************************************************************** */
 
-/*                              **
-**     |                 |      **
-**     x                 y      **
-**    / \               / \     **
-**   a   y     -->     x   c    **
-**      / \           / \       **
-**     b   c         a   b      **
-**                              */
+/*       |                 |                                                  **
+**       x                 y                                                  **
+**      / \               / \                                                 **
+**     a   y     -->     x   c                                                **
+**        / \           / \                                                   **
+**       b   c         a   b                                                  */
 
 	void _rotate_left(node_pointer x)
 	{
@@ -894,14 +894,12 @@ class rb_tree
 		x->parent = y;
 	}
 
-/*                              **
-**       |             |        **
-**       x             y        **
-**      / \           / \       **
-**     y   c   -->   a   x      **
-**    / \               / \     **
-**   a   b             b   c    **
-**                              */
+/*         |             |                                                    **
+**         x             y                                                    **
+**        / \           / \                                                   **
+**       y   c   -->   a   x                                                  **
+**      / \               / \                                                 **
+**     a   b             b   c                                                */
 
 	void _rotate_right(node_pointer x)
 	{
@@ -1162,34 +1160,34 @@ class rb_tree
 
 /* *** Print **************************************************************** */
 
-	void _print(node_pointer node, std::string const &spaces = "", bool is_left = false, bool is_first = true)
+	void _print(node_pointer node, std::string const &spaces, bool is_left_child, bool is_root)
 	{
 		if (node != _nil)
 		{
-			if (is_first)
+			if (is_root)
 				_print(node->right, spaces, false, false);
 			else
 				_print(node->right, spaces + "     ", false, false);
 
 			std::cout << spaces;
 
-			if (is_first)
-				std::cout << "──";
+			if (is_root)
+				std::cout << "\033[0;34m" << "──" << "\033[0m";
 			else
 			{
 				std::cout << "  ";
-				if (is_left)
-					std::cout << "└────";
+				if (is_left_child)
+					std::cout << "\033[0;34m" << "└────" << "\033[0m";
 				else
-					std::cout << "┌────";
+					std::cout << "\033[0;34m" << "┌────" << "\033[0m";
 			}
 
 			if (node->color == BLACK)
-				std::cout << node->value << std::endl;
+				std::cout << "\033[0;90m" << node->value << "\033[0m" << std::endl;
 			else
 				std::cout << "\033[0;31m" << node->value << "\033[0m" << std::endl;
 
-			if (is_first)
+			if (is_root)
 				_print(node->left, spaces, true, false);
 			else
 				_print(node->left, spaces + "     ", true, false);
