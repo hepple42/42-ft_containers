@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 11:49:45 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 13:59:54 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class vector
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef T											value_type;
 	typedef Alloc										allocator_type;
@@ -53,7 +53,7 @@ class vector
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	allocator_type	_alloc;
 	pointer			_begin;
@@ -63,7 +63,7 @@ class vector
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 
@@ -224,6 +224,7 @@ class vector
 	{
 		if (n >= size())
 			throw std::out_of_range("ft::vector");
+
 		return *(_begin + n);
 	}
 
@@ -231,6 +232,7 @@ class vector
 	{
 		if (n >= size())
 			throw std::out_of_range("ft::vector");
+
 		return *(_begin + n);
 	}
 
@@ -389,7 +391,7 @@ class vector
 	}
 
 
-	private:
+  private:
 
 /* *** Allocation / Deallocation ******************************************** */
 
