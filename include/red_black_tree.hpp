@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 13:47:51 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 11:44:47 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,19 @@ struct node
 
 /* *** Assignment *********************************************************** */
 
-	// node &operator=(node const &src)
-	// {
-	// 	if (this != &src)
-	// 	{
-	// 		color = src.color;
-	// 		parent = src.parent;
-	// 		left = src.left;
-	// 		right = src.right;
-	// 		value = src.value;
-	// 	}
+	node &operator=(node const &src)
+	{
+		if (this != &src)
+		{
+			color = src.color;
+			parent = src.parent;
+			left = src.left;
+			right = src.right;
+			value = src.value;
+		}
 
-	// 	return *this;
-	// }
+		return *this;
+	}
 
 };
 
@@ -106,7 +106,7 @@ struct node
 template < typename NodePtr >
 NodePtr rbt_min_node(NodePtr node)
 {
-	while (node != NULL && node->left != NULL && node->left->right != NULL) // NULL <-> _nil !!!
+	while (node != NULL && node->left != NULL && node->left->right != NULL) // node->left == _nil
 		node = node->left;
 	return node;
 }
@@ -114,7 +114,7 @@ NodePtr rbt_min_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_max_node(NodePtr node)
 {
-	while (node != NULL && node->right != NULL && node->right->right != NULL) // NULL <-> _nil !!!
+	while (node != NULL && node->right != NULL && node->right->right != NULL) // node->right == _nil
 		node = node->right;
 	return node;
 }
@@ -124,7 +124,13 @@ NodePtr rbt_max_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_prev_node(NodePtr node)
 {
-	if (node->left->right != NULL) // NULL <-> _nil !!!
+	if (node == NULL)
+		return NULL;
+
+	if (node->left == NULL)
+		return node;
+
+	if (node->left->right != NULL) // node->left == _nil
 		return rbt_max_node(node->left);
 
 	while (node == node->parent->left)
@@ -135,7 +141,13 @@ NodePtr rbt_prev_node(NodePtr node)
 template < typename NodePtr >
 NodePtr rbt_next_node(NodePtr node)
 {
-	if (node->right->right != NULL) // NULL <-> _nil !!!
+	if (node == NULL)
+		return NULL;
+
+	if (node->right == NULL)
+		return node;
+
+	if (node->right->right != NULL) // node->right == _nil
 		return rbt_min_node(node->right);
 
 	while (node == node->parent->right)
@@ -602,6 +614,9 @@ class rb_tree
 
 	void swap(rb_tree &t)
 	{
+		if (this == &t)
+			return;
+
 		ft::swap(_comp, t._comp);
 		ft::swap(_value_alloc, t._value_alloc);
 		ft::swap(_node_alloc, t._node_alloc);
