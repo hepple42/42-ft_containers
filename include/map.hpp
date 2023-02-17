@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 14:12:11 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:22:38 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class map
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef Key											key_type;
 	typedef T											mapped_type;
@@ -53,7 +53,7 @@ class map
 
 /* *** SUBCLASSES *********************************************************** */
 
-	public:
+  public:
 
 /* *** Value_Compare ******************************************************** */
 
@@ -61,7 +61,7 @@ class map
 	{
 		friend class map;
 
-		public:
+	  public:
 
 		typedef bool		result_type;
 		typedef value_type	first_argument_type;
@@ -72,7 +72,7 @@ class map
 			return comp(lhs.first, rhs.first);
 		}
 
-		protected:
+	  protected:
 		
 		key_compare	comp;
 
@@ -82,11 +82,11 @@ class map
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	private:
+  private:
 
 	typedef rb_tree<value_type, value_compare, allocator_type>	tree_type;
 
-	public:
+  public:
 
 	typedef typename tree_type::iterator				iterator;
 	typedef typename tree_type::const_iterator			const_iterator;
@@ -96,14 +96,14 @@ class map
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	tree_type _tree;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 14:14:06 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:21:20 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ class normal_iterator
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef Iterator												iterator_type;
 	typedef typename iterator_traits<Iterator>::value_type			value_type;
@@ -141,14 +141,14 @@ class normal_iterator
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	iterator_type	_current;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 
@@ -310,7 +310,7 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef Iterator												iterator_type;
 	typedef typename iterator_traits<Iterator>::value_type			value_type;
@@ -322,14 +322,14 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	protected:
+  protected:
 
 	iterator_type	current;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 

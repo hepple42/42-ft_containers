@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:20:12 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 13:18:09 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:24:53 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class set
 
 /* *** MEMBER TYPES ********************************************************* */
 
-	public:
+  public:
 
 	typedef T											key_type;
 	typedef T											value_type;
@@ -48,11 +48,11 @@ class set
 	typedef typename allocator_type::pointer			pointer;
 	typedef typename allocator_type::const_pointer		const_pointer;
 
-	private:
+  private:
 
 	typedef rb_tree<value_type, value_compare, allocator_type>	tree_type;
 
-	public:
+  public:
 
 	typedef typename tree_type::difference_type			difference_type;
 	typedef typename tree_type::size_type				size_type;
@@ -64,14 +64,14 @@ class set
 
 /* *** MEMBER VARIABLES ***************************************************** */
 
-	private:
+  private:
 
 	tree_type _tree;
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
 
-	public:
+  public:
 
 /* *** Constructor ********************************************************** */
 

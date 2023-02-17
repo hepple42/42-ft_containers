@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 13:51:07 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/17 14:23:27 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ class tree_iterator
 	typedef bidirectional_iterator_tag				iterator_category;
 	typedef ft::const_tree_iterator<T, DiffType>	const_iterator;
 
-	private:
+  private:
 
 	typedef typename ft::node<T>::pointer		node_pointer;
 	typedef typename ft::node<T>::const_pointer	const_node_pointer;
