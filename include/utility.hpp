@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 12:05:57 by hepple            #+#    #+#             */
-/*   Updated: 2023/01/26 15:34:31 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:48:04 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #define FT_UTILITY_HPP
 
 
-#include "algorithm.hpp" // TEST!!!
-#include "type_traits.hpp" // TEST!!!
+#include "algorithm.hpp"
+#include "type_traits.hpp"
 
 
 namespace ft {
@@ -44,12 +44,15 @@ struct pair
 
 /* *** Constructor ********************************************************** */
 
-	pair() : first(), second() { }
+	pair()
+		: first(), second() { }
 
 	template < typename U, typename V>
-	pair (pair<U, V> const &src) : first(src.first), second(src.second) { }
+	pair (pair<U, V> const &src)
+		: first(src.first), second(src.second) { }
 
-	pair (first_type const &a, second_type const &b) : first(a) , second(b) { }
+	pair (first_type const &a, second_type const &b)
+		: first(a) , second(b) { }
 
 /* *** Destructor *********************************************************** */
 
