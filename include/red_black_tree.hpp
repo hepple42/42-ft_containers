@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 19:19:30 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 11:05:01 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -410,10 +410,6 @@ class const_tree_iterator
 
 /* *** R B _ T R E E ******************************************************** */
 
-template < typename T, typename Compare, typename Alloc >
-class rb_tree
-{
-
 /* ************************************************************************** **
 ** RED BLACK TREE                                                             **
 **                                                                            **
@@ -437,6 +433,10 @@ class rb_tree
 ** Cormen, Leiserson, Rivest, and Stein:                                      **
 ** Introduction to Algorithms - Third Edition                                 **
 ** ************************************************************************** */
+
+template < typename T, typename Compare, typename Alloc >
+class rb_tree
+{
 
 /* *** MEMBER TYPES ********************************************************* */
 
@@ -469,8 +469,8 @@ class rb_tree
 	allocator_type		_value_alloc;
 	node_allocator_type	_node_alloc;
 	size_type			_size;
-	node_pointer		_nil;
-	node_pointer		_begin_node;
+	node_pointer		_nil; // nil node, root node is its left child
+	node_pointer		_begin_node; // leftmost node of tree
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -996,12 +996,12 @@ class rb_tree
 		else
 			y->right = z;
 
+		// restore red black tree properties if necessary
+		_insert_fixup(z);
+
 		// update pointer to leftmost node
 		if (_begin_node->left == z)
 			_begin_node = z;
-
-		// restore red black tree properties if necessary
-		_insert_fixup(z);
 
 		return ft::make_pair<iterator, bool>(iterator(z), true);
 	}
@@ -1009,50 +1009,51 @@ class rb_tree
 /* ************************************************************************** **
 ** INSERT FIXUP                                                               **
 **                                                                            **
-** There are 3 cases in the main loop:                                        **
+** There are 3 cases in the main loop (plus mirrored versions):               **
 **                                                                            **
-** - Case 1: y, uncle of z, is red:                                           **
+** - Case 1: y, uncle of z, is red                                            **
 **                                                                            **
-**             |                              |                               **
-**             B                              R <- new z                      **
-**           /   \                          /   \                             **
-**         /       \                      /       \                           **
-**       R           R <- y     -->     B           B                         **
-**      / \         / \                / \         / \                        **
-**     a   R <- z  d   e              a   R       d   e                       **
-**        / \                            / \                                  **
-**       b   c                          b   c                                 **
+**             |                                 |                            **
+**             Cb                                Cr <- new z                  **
+**           /   \                             /   \                          **
+**         /       \                         /       \                        **
+**       Ar          Dr <- y     -->       Ab          Db                     **
+**      / \         / \                   / \         / \                     **
+**     a   Br <- z d   e                 a   Br      d   e                    **
+**        / \                               / \                               **
+**       b   c                             b   c                              **
 **                                                                            **
-** - Case 2: y, uncle of z, is black and z is right child:                    **
+** - Case 2: y, uncle of z, is black                                          **
+**           z is right child                                                 **
 **                                                                            **
-**                     |                              |                       **
-**                     B                              B                       **
-**                   /   \                          /   \                     **
-**                 /       \                      /       \                   **
-**     ROTATE -> R           B <- y     -->     R           B <- y            **
-**     LEFT     / \         / \                / \         / \                **
-**             a   R <- z  d   e     new z -> R   c       d   e               **
-**                / \                        / \                              **
-**               b   c                      a   b                             **
+**                     |                                   |                  **
+**                     Cb                                  Cb                 **
+**                   /   \                               /   \                **
+**                 /       \                           /       \              **
+**     ROTATE -> Ar          Db <- y     -->         Br          Db <- y      **
+**     LEFT     / \         / \                     / \         / \           **
+**             a   Br <- z d   e          new z -> Ar  c       d   e          **
+**                / \                             / \                         **
+**               b   c                           a   b                        **
 **                                                                            **
-**   --> continue with case 3                                                 **
+**   --> continue with Case 3                                                 **
 **                                                                            **
-** - Case 3: y, uncle of z, is black and z is left child:                     **
+** - Case 3: y, uncle of z, is black                                          **
+**           z is left child                                                  **
 **                                                                            **
-**                  |                              |                          **
-**        ROTATE -> B                              B                          **
-**        RIGHT   /   \                          /   \                        **
-**              /       \                      /       \                      **
-**            R           B <- y     -->     R <- z      R                    **
-**           / \         / \                / \         / \                   **
-**     z -> R   c       d   e              a   b       c   B                  **
-**         / \                                            / \                 **
-**        a   b                                          d   e                **
+**                  |                                 |                       **
+**        ROTATE -> Cb                                Bb                      **
+**        RIGHT   /   \                             /   \                     **
+**              /       \                         /       \                   **
+**            Br          Db <- y     -->       Ar <- z     Cr                **
+**           / \         / \                   / \         / \                **
+**     z -> Ar  c       d   e                 a   b       c   Db <- y         **
+**         / \                                               / \              **
+**        a   b                                             d   e             **
 **                                                                            **
-**   R: red node                                                              **
-**   B: black node                                                            **
+**   A, B, C, D: nodes                                                        **
+**   r, b: color (red / black)                                                **
 **   a, b, c, d, e: arbitrary subtrees                                        **
-**                                                                            **
 ** ************************************************************************** */
 
 	void _insert_fixup(node_pointer z)
@@ -1126,6 +1127,7 @@ class rb_tree
 
 	void _transplant(node_pointer u, node_pointer v)
 	{
+		// replace subtree as child of its parent by another subtree
 		if (u == u->parent->left)
 			u->parent->left = v;
 		else
@@ -1135,6 +1137,7 @@ class rb_tree
 
 	void _erase(node_pointer z)
 	{
+		// nil node cannot be deleted
 		if (z == _nil)
 			return;
 
@@ -1142,22 +1145,29 @@ class rb_tree
 		node_pointer y = z;
 		NODE_COLOR y_color_original = y->color;
 
+		// node z has only a right child or no children
 		if (z->left == _nil)
 		{
+			// replace z by its right child
 			x = z->right;
 			_transplant(z, z->right);
 		}
+		// node z has only a left child
 		else if (z->right == _nil)
 		{
+			// replace z by its left child
 			x = z->left;
 			_transplant(z, z->left);
 		}
+		// node z has two children
 		else
 		{
+			// find y, successor of z, to replace z in the tree
 			y = rbt_min_node(z->right);
 			y_color_original = y->color;
 			x = y->right;
 
+			// replace y by the right child of y
 			if (y->parent == z)
 				x->parent = y;
 			else
@@ -1167,15 +1177,18 @@ class rb_tree
 				y->right->parent = y;
 			}
 
+			// replace z by y
 			_transplant(z, y);
 			y->left = z->left;
 			y->left->parent = y;
 			y->color = z->color;
 		}
 
+		// restore red black tree properties if necessary
 		if (y_color_original == BLACK)
 			_erase_fixup(x);
 
+		// update pointer to leftmost node
 		if (z == _begin_node)
 		{
 			if (z->right == _nil)
@@ -1187,16 +1200,88 @@ class rb_tree
 		_destroy_node(z);
 	}
 
+/* ************************************************************************** **
+** ERASE FIXUP                                                                **
+**                                                                            **
+** There are 4 cases in the main loop (plus mirrored versions):               **
+**                                                                            **
+** - Case 1: w, sibling of x, is red                                          **
+**                                                                            **
+**                  |                                         |               **
+**        ROTATE -> Bb                                        Db              **
+**        LEFT    /   \                                     /   \             **
+**              /       \                                 /       Eb          **
+**            /           \                             /        / \          **
+**     x -> Ab              Dr <- w     -->           Br        e   f         **
+**         / \            /   \                     /   \                     **
+**        a   b         Cb      Eb           x -> Ab      Cb <- new w         **
+**                     / \     / \               / \     / \                  **
+**                    c   d   e   f             a   b   c   d                 **
+**                                                                            **
+**   --> continue with Case 2, 3, or 4                                        **
+**                                                                            **
+** - Case 2: w, sibling of x, is black                                        **
+**           both children of w are black                                     **
+**                                                                            **
+**                |                                 |                         **
+**                Bc                       new x -> Bc                        **
+**              /   \                             /   \                       **
+**            /       \                         /       \                     **
+**     x -> Ab          Db <- w     -->       Ab          Dr <- w             **
+**         / \        /   \                  / \        /   \                 **
+**        a   b     Cb      Eb              a   b     Cb      Eb              **
+**                 / \     / \                       / \     / \              **
+**                c   d   e   f                     c   d   e   f             **
+**                                                                            **
+** - Case 3: w, sibling of x, is black                                        **
+**           left child of w is red                                           **
+**           right child of w is black                                        **
+**                                                                            **
+**                |                              |                            **
+**                Bc                             Bc                           **
+**              /   \                          /   \                          **
+**            /       \       ROTATE    x -> Ab      Cb <- new w              **
+**     x -> Ab     w -> Db <- RIGHT         / \     / \                       **
+**         / \        /   \         -->    a   b   c   Dr                     **
+**        a   b     Cr      Eb                        / \                     **
+**                 / \     / \                       d   Eb                   **
+**                c   d   e   f                         / \                   **
+**                                                     e   f                  **
+**                                                                            **
+**   --> continue with Case 4                                                 **
+**                                                                            **
+** - Case 4: w, sibling of x, is black                                        **
+**           right child of w is red                                          **
+**                                                                            **
+**                  |                                         |               **
+**        ROTATE -> Bc                                        Dc <- w         **
+**        LEFT    /   \                                     /   \             **
+**              /       \                                 /       Eb          **
+**            /           \                             /        / \          **
+**     x -> Ab              Db <- w     -->           Bb        e   f         **
+**         / \            /   \                     /   \                     **
+**        a   b         Cc'     Er                Ab      Cc'     new x       **
+**                     / \     / \               / \     / \        =         **
+**                    c   d   e   f             a   b   c   d   root node     **
+**                                                                            **
+**   A, B, C, D: nodes                                                        **
+**   r, b, c, c': color (red / black / any / any)                             **
+**   a, b, c, d, e: arbitrary subtrees                                        **
+** ************************************************************************** */
+
 	void _erase_fixup(node_pointer x)
 	{
 		node_pointer w;
 
+		// while x is black and not root node, rule 5 is violated
 		while (x != _root() && x->color == BLACK)
 		{
+			// node x is left child of its parent
 			if (x == x->parent->left)
 			{
 				w = x->parent->right;
 
+				// case 1
 				if (w->color == RED)
 				{
 					w->color = BLACK;
@@ -1205,6 +1290,7 @@ class rb_tree
 					w = x->parent->right;
 				}
 
+				// case 2
 				if (w->left->color == BLACK && w->right->color == BLACK)
 				{
 					w->color = RED;
@@ -1212,6 +1298,7 @@ class rb_tree
 				}
 				else
 				{
+					// case 3
 					if (w->right->color == BLACK)
 					{
 						w->left->color = BLACK;
@@ -1220,6 +1307,7 @@ class rb_tree
 						w = x->parent->right;
 					}
 
+					// case 4
 					w->color = x->parent->color;
 					x->parent->color = BLACK;
 					w->right->color = BLACK;
@@ -1227,10 +1315,12 @@ class rb_tree
 					x = _root();
 				}
 			}
+			// node x is right child of its parent
 			else
 			{
 				w = x->parent->left;
 
+				// case 1 (mirrored)
 				if (w->color == RED)
 				{
 					w->color = BLACK;
@@ -1239,6 +1329,7 @@ class rb_tree
 					w = x->parent->left;
 				}
 
+				// case 2 (mirrored)
 				if (w->right->color == BLACK && w->left->color == BLACK)
 				{
 					w->color = RED;
@@ -1246,6 +1337,7 @@ class rb_tree
 				}
 				else
 				{
+					// case 3 (mirrored)
 					if (w->left->color == BLACK)
 					{
 						w->right->color = BLACK;
@@ -1254,6 +1346,7 @@ class rb_tree
 						w = x->parent->left;
 					}
 
+					// case 4 (mirrored)
 					w->color = x->parent->color;
 					x->parent->color = BLACK;
 					w->left->color = BLACK;
@@ -1263,6 +1356,7 @@ class rb_tree
 			}
 		}
 
+		// color x black to ensure that rules 2 and 4 are fulfilled
 		x->color = BLACK;
 	}
 
