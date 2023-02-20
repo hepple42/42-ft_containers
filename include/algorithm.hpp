@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 13:33:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/15 14:28:55 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:27:35 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, B
 /* *** LEXICOGRAPHICAL_COMPARE ********************************************** */
 
 template < typename InputIterator1, typename InputIterator2 >
-bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2)
+bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
+							 InputIterator2 last2)
 {
 	while (first1 != last1 && first2 != last2)
 	{
@@ -65,7 +66,8 @@ bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputI
 }
 
 template < typename InputIterator1, typename InputIterator2, typename Compare >
-bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2, Compare comp)
+bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
+							 InputIterator2 last2, Compare comp)
 {
 	while (first1 != last1 && first2 != last2)
 	{
