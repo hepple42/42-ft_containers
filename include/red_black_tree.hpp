@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:21:26 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/20 11:05:01 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:49:44 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,15 @@ struct node
 
 /* *** Constructor ********************************************************** */
 
-	node() : color(BLACK), parent(NULL), left(NULL), right(NULL), value() { }
+	node()
+		: color(BLACK), parent(NULL), left(NULL), right(NULL), value() { }
 
-	explicit node(value_type val, NODE_COLOR col = BLACK) : color(col), parent(NULL), left(NULL), right(NULL), value(val) { }
+	explicit node(value_type val, NODE_COLOR col = BLACK)
+		: color(col), parent(NULL), left(NULL), right(NULL), value(val) { }
 
-	node(node const &src) : color(src.color), parent(src.parent), left(src.left), right(src.right), value(src.value) { }
+	node(node const &src)
+		: color(src.color), parent(src.parent), left(src.left), right(src.right),
+		  value(src.value) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -107,7 +111,7 @@ template < typename NodePtr >
 NodePtr rbt_min_node(NodePtr node)
 {
 	// min node is leftmost node
-	while (node != NULL && node->left != NULL && node->left->right != NULL) // node->left == _nil
+	while (node != NULL && node->left != NULL && node->left->right != NULL) // node->left != _nil
 		node = node->left;
 
 	return node;
@@ -117,7 +121,7 @@ template < typename NodePtr >
 NodePtr rbt_max_node(NodePtr node)
 {
 	// max node is rightmost node
-	while (node != NULL && node->right != NULL && node->right->right != NULL) // node->right == _nil
+	while (node != NULL && node->right != NULL && node->right->right != NULL) // node->right != _nil
 		node = node->right;
 
 	return node;
@@ -132,7 +136,7 @@ NodePtr rbt_prev_node(NodePtr node)
 		return node;
 
 	// if left subtree is non-empty, prev node is max node of this subtree
-	if (node->left->right != NULL) // node->left == _nil
+	if (node->left->right != NULL) // node->left != _nil
 		return rbt_max_node(node->left);
 
 	// else prev node is lowest ancestor whose right child is also an ancestor
@@ -148,7 +152,7 @@ NodePtr rbt_next_node(NodePtr node)
 		return node;
 
 	// if right subtree is non-empty, next node is min node of this subtree
-	if (node->right->right != NULL) // node->right == _nil
+	if (node->right->right != NULL) // node->right != _nil
 		return rbt_min_node(node->right);
 
 	// else next node is lowest ancestor whose left child is also an ancestor
@@ -194,11 +198,14 @@ class tree_iterator
 
 /* *** Constructor ********************************************************** */
 
-	tree_iterator() : _current(NULL) { }
+	tree_iterator()
+		: _current(NULL) { }
 
-	tree_iterator(node_pointer node) : _current(node) { }
+	tree_iterator(node_pointer node)
+		: _current(node) { }
 
-	tree_iterator(tree_iterator const &src) : _current(src._current) { }
+	tree_iterator(tree_iterator const &src)
+		: _current(src._current) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -318,13 +325,17 @@ class const_tree_iterator
 
 /* *** Constructor ********************************************************** */
 
-	const_tree_iterator() : _current(NULL) { }
+	const_tree_iterator()
+		: _current(NULL) { }
 
-	const_tree_iterator(const_node_pointer node) : _current(node) { }
+	const_tree_iterator(const_node_pointer node)
+		: _current(node) { }
 
-	const_tree_iterator(const_tree_iterator const &src) : _current(src._current) { }
+	const_tree_iterator(const_tree_iterator const &src)
+		: _current(src._current) { }
 
-	const_tree_iterator(non_const_iterator const &src) : _current(src.base()) { }
+	const_tree_iterator(non_const_iterator const &src)
+		: _current(src.base()) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -479,13 +490,15 @@ class rb_tree
 
 /* *** Constructor ********************************************************** */
 
-	explicit rb_tree(value_compare const &comp, allocator_type const &alloc) : _comp(comp), _value_alloc(alloc), _node_alloc(alloc), _size(0)
+	explicit rb_tree(value_compare const &comp, allocator_type const &alloc)
+		: _comp(comp), _value_alloc(alloc), _node_alloc(alloc), _size(0)
 	{
 		_create_nil();
 		_begin_node = _end_node();
 	}
 
-	rb_tree(rb_tree const &src) : _comp(src._comp), _value_alloc(src._value_alloc), _node_alloc(src._node_alloc), _size(0)
+	rb_tree(rb_tree const &src)
+		: _comp(src._comp), _value_alloc(src._value_alloc), _node_alloc(src._node_alloc), _size(0)
 	{
 		_create_nil();
 		_begin_node = _end_node();
