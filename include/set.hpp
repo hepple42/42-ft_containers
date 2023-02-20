@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:20:12 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 14:24:53 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:02:00 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ namespace ft {
 
 
 /* *** S E T **************************************************************** */
+
+/* ************************************************************************** **
+** SET                                                                        **
+**                                                                            **
+** Sets are associative containers that store elements following some         **
+** specific order. The value of an element also identifies it, therefore it   **
+** must be unique. Values cannot be modified once an element has been added   **
+** to the container.                                                          **
+**                                                                            **
+** Internally, the elements of a set are sorted by their values, following a  **
+** strict weak ordering defined through its internal comparison object.       **
+** Using this ordering, iterations over subsets are possible.                 **
+**                                                                            **
+** Sets are typically implemented as binary search trees. This set uses a red **
+** black tree as an underlying data structure, which offers a balance between **
+** fast insertion or deletion and fast element search.                        **
+**                                                                            **
+** [https://cplusplus.com/reference/set/set/]                                 **
+** ************************************************************************** */
 
 template < typename T, typename Compare = std::less<T>, typename Alloc = std::allocator<T> >
 class set
@@ -66,7 +85,7 @@ class set
 
   private:
 
-	tree_type _tree;
+	tree_type _tree; // red black tree
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -75,15 +94,20 @@ class set
 
 /* *** Constructor ********************************************************** */
 
-	explicit set(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) : _tree(comp, alloc) { }
+	explicit set(key_compare const &comp = key_compare(),
+				 allocator_type const &alloc = allocator_type())
+		: _tree(comp, alloc) { }
 
 	template < typename InputIter >
-	set(InputIter first, InputIter last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) : _tree(comp, alloc)
+	set(InputIter first, InputIter last, key_compare const &comp = key_compare(),
+		allocator_type const &alloc = allocator_type())
+		: _tree(comp, alloc)
 	{
 		_tree.insert(first, last);
 	}
 
-	set(set const &src) : _tree(src._tree) { }
+	set(set const &src)
+		: _tree(src._tree) { }
 
 /* *** Destructor *********************************************************** */
 
