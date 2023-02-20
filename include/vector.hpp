@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 13:59:54 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 11:55:35 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,27 @@ namespace ft {
 
 
 /* *** V E C T O R ********************************************************** */
+
+/* ************************************************************************** **
+** VECTOR                                                                     **
+**                                                                            **
+** Vectors are sequence containers representing arrays that can dynamically   **
+** change in size. Like normal arrays, vectors use continuous blocks of       **
+** memory for their elements. The storage is handled by the container itself  **
+** automatically, potentially allocating some extra storage to accommodate    **
+** for possible growth.                                                       **
+**                                                                            **
+** Due to this memory management system, vectors consume more memory than     **
+** arrays, but offer the ability to dynamically change in size.               **
+**                                                                            **
+** Compared to other containers, the elements of vectors can be accessed very **
+** efficiently (constant time), and elements can efficiently be added or      **
+** removed at the end of the container. However, when inserting or removing   **
+** elements at other positions, vectors perform worse. Also, when running out **
+** of memory, all vector elements have to be copied.                          **
+**                                                                            **
+** [https://cplusplus.com/reference/vector/vector/]                           **
+** ************************************************************************** */
 
 template < typename T, typename Alloc = std::allocator<T> >
 class vector
@@ -56,9 +77,9 @@ class vector
   private:
 
 	allocator_type	_alloc;
-	pointer			_begin;
-	pointer			_end;
-	pointer			_cap;
+	pointer			_begin; // begin of allocated and used memory
+	pointer			_end; // end of used memory
+	pointer			_cap; // end of allocated memory
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -67,9 +88,11 @@ class vector
 
 /* *** Constructor ********************************************************** */
 
-	explicit vector(allocator_type const &alloc = allocator_type()) : _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL) { }
+	explicit vector(allocator_type const &alloc = allocator_type())
+		: _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL) { }
 
-	explicit vector(size_type n, value_type const &val = value_type(), allocator_type const &alloc = allocator_type()) : _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
+	explicit vector(size_type n, value_type const &val = value_type(), allocator_type const &alloc = allocator_type())
+		: _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
 	{
 		if (n > 0)
 		{
@@ -79,12 +102,14 @@ class vector
 	}
 
 	template < typename InputIter >
-	vector(InputIter first, InputIter last, allocator_type const &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0) : _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
+	vector(InputIter first, InputIter last, allocator_type const &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
+		: _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
 	{
 		_range_init(first, last, iterator_category(first));
 	}
 
-	vector(vector const &src) : _alloc(src.get_allocator()), _begin(NULL), _end(NULL), _cap(NULL)
+	vector(vector const &src)
+		: _alloc(src.get_allocator()), _begin(NULL), _end(NULL), _cap(NULL)
 	{
 		size_type n = src.size();
 		if (n > 0)
