@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main_old.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:14:44 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/16 15:57:19 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 15:52:07 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,123 +91,146 @@ int main(void)
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 18;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 7;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 15;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 16;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 30;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 25;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 40;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 60;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 2;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 1;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 70;
 		std::cout << "Inserting " << x << ":" << std::endl;
 		tree.insert(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
-		std::cout << "- - - - - - - - - - - - - - - - -" << std::endl;
 
 		x = 10;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 18;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 7;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 15;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 16;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 30;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 25;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 40;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 60;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 2;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 1;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 
 		x = 70;
 		std::cout << "Erasing " << x << ":" << std::endl;
 		tree.erase(x);
 		tree.print();
+		std::cout << "- - - - - - - - - - - - - - -" << std::endl;
 	}
 	
 	{
@@ -225,5 +248,4 @@ int main(void)
 	
 	std::cout << "Blub." << std::endl;
 	return 0;
-
 }
