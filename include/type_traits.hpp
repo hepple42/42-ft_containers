@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:45:41 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/20 13:34:15 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:38:11 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ struct integral_constant
 	
 	static value_type const	value = v;
 
-	operator const value_type() const
+	operator value_type() const
 	{
 		return value;
 	}
