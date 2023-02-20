@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:28:52 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/20 11:55:35 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:01:01 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ class vector
 	explicit vector(allocator_type const &alloc = allocator_type())
 		: _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL) { }
 
-	explicit vector(size_type n, value_type const &val = value_type(), allocator_type const &alloc = allocator_type())
+	explicit vector(size_type n, value_type const &val = value_type(),
+					allocator_type const &alloc = allocator_type())
 		: _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
 	{
 		if (n > 0)
@@ -102,7 +103,8 @@ class vector
 	}
 
 	template < typename InputIter >
-	vector(InputIter first, InputIter last, allocator_type const &alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
+	vector(InputIter first, InputIter last, allocator_type const &alloc = allocator_type(),
+		   typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
 		: _alloc(alloc), _begin(NULL), _end(NULL), _cap(NULL)
 	{
 		_range_init(first, last, iterator_category(first));
@@ -319,7 +321,8 @@ class vector
 	}
 
 	template < class InputIter >
-	void assign(InputIter first, InputIter last, typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
+	void assign(InputIter first, InputIter last,
+				typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
 	{
 		_range_assign(first, last, ft::iterator_category(first));
 	}
@@ -368,7 +371,8 @@ class vector
 	}
 
 	template < class InputIter >
-	void insert(iterator pos, InputIter first, InputIter last, typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
+	void insert(iterator pos, InputIter first, InputIter last,
+				typename ft::enable_if<!ft::is_integral<InputIter>::value, InputIter>::type* = 0)
 	{
 		_range_insert(pos, first, last, ft::iterator_category(first));
 	}
