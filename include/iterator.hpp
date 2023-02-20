@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 11:16:05 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 14:21:20 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 13:21:09 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 
 #include <cstddef>
-#include <iterator> // ITERATOR TAGS
+#include <iterator> // std::iterator_tags
 
 #include "type_traits.hpp"
 
@@ -25,6 +25,11 @@ namespace ft {
 
 
 /* *** ITERATOR_TAGS ******************************************************** */
+
+/* ************************************************************************** **
+** The std::iterator_tags are used here, as separate ft::iterator_tags would  **
+** only work with ft::iterators, but not with std::iterators.                 **
+** ************************************************************************** */
 
 typedef std::input_iterator_tag			input_iterator_tag;
 typedef std::output_iterator_tag		output_iterator_tag;
@@ -74,7 +79,8 @@ struct iterator_traits<T const *>
 
 /* *** ITERATOR ************************************************************* */
 
-template < typename Category, typename T, typename Distance = std::ptrdiff_t, typename Pointer = T *, typename Reference = T & >
+template < typename Category, typename T, typename Distance = std::ptrdiff_t,
+		   typename Pointer = T *, typename Reference = T & >
 struct iterator
 {
 	typedef T			value_type;
@@ -97,7 +103,8 @@ typename iterator_traits<Iterator>::iterator_category iterator_category(Iterator
 /* *** DISTANCE ************************************************************* */
 
 template < typename InputIter >
-typename ft::iterator_traits<InputIter>::difference_type dist(InputIter first, InputIter last, input_iterator_tag)
+typename ft::iterator_traits<InputIter>::difference_type dist(InputIter first, InputIter last,
+															  input_iterator_tag)
 {
 	typename ft::iterator_traits<InputIter>::difference_type diff(0);
 	while (first != last)
@@ -109,7 +116,8 @@ typename ft::iterator_traits<InputIter>::difference_type dist(InputIter first, I
 }
 
 template < typename RndIter >
-typename ft::iterator_traits<RndIter>::difference_type dist(RndIter first, RndIter last, random_access_iterator_tag)
+typename ft::iterator_traits<RndIter>::difference_type dist(RndIter first, RndIter last,
+															random_access_iterator_tag)
 {
 	return last - first;
 }
@@ -152,12 +160,15 @@ class normal_iterator
 
 /* *** Constructor ********************************************************** */
 
-	normal_iterator() : _current() { }
+	normal_iterator()
+		: _current() { }
 
-	explicit normal_iterator(iterator_type it) : _current(it) { }
+	explicit normal_iterator(iterator_type it)
+		: _current(it) { }
 
 	template < typename Iter >
-	normal_iterator(normal_iterator<Iter> const &n_it) : _current(n_it.base()) { }
+	normal_iterator(normal_iterator<Iter> const &n_it)
+		: _current(n_it.base()) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -290,13 +301,15 @@ bool operator>=(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const 
 /* *** Increment / Decrement ************************************************ */
 
 template < typename Iter >
-normal_iterator<Iter> operator+(typename normal_iterator<Iter>::difference_type n, normal_iterator<Iter> const &n_it)
+normal_iterator<Iter> operator+(typename normal_iterator<Iter>::difference_type n,
+								normal_iterator<Iter> const &n_it)
 {
 	return normal_iterator<Iter>(n_it.base() + n);
 }
 
 template < typename IterL, typename IterR >
-typename normal_iterator<IterL>::difference_type operator-(normal_iterator<IterL> const &lhs, normal_iterator<IterR> const &rhs)
+typename normal_iterator<IterL>::difference_type operator-(normal_iterator<IterL> const &lhs,
+														   normal_iterator<IterR> const &rhs)
 {
 	return (lhs.base() - rhs.base());
 }
@@ -305,7 +318,12 @@ typename normal_iterator<IterL>::difference_type operator-(normal_iterator<IterL
 /* *** R E V E R S E _ I T E R A T O R ************************************** */
 
 template < typename Iterator >
-class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category, typename ft::iterator_traits<Iterator>::value_type, typename ft::iterator_traits<Iterator>::difference_type, typename ft::iterator_traits<Iterator>::pointer, typename ft::iterator_traits<Iterator>::reference>
+class reverse_iterator
+	: public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category,
+						  typename ft::iterator_traits<Iterator>::value_type,
+						  typename ft::iterator_traits<Iterator>::difference_type,
+						  typename ft::iterator_traits<Iterator>::pointer,
+						  typename ft::iterator_traits<Iterator>::reference>
 {
 
 /* *** MEMBER TYPES ********************************************************* */
@@ -333,12 +351,15 @@ class reverse_iterator : public ft::iterator<typename ft::iterator_traits<Iterat
 
 /* *** Constructor ********************************************************** */
 
-	reverse_iterator() : current() { }
+	reverse_iterator()
+		: current() { }
 
-	explicit reverse_iterator(iterator_type it) : current(it) { }
+	explicit reverse_iterator(iterator_type it)
+		: current(it) { }
 
 	template < typename Iter >
-	reverse_iterator(reverse_iterator<Iter> const &rev_it) : current(rev_it.base()) { }
+	reverse_iterator(reverse_iterator<Iter> const &rev_it)
+		: current(rev_it.base()) { }
 
 /* *** Destructor *********************************************************** */
 
@@ -472,13 +493,15 @@ bool operator>=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> cons
 /* *** Increment / Decrement ************************************************ */
 
 template < typename Iter >
-reverse_iterator<Iter> operator+(typename reverse_iterator<Iter>::difference_type n, reverse_iterator<Iter> const &rev_it)
+reverse_iterator<Iter> operator+(typename reverse_iterator<Iter>::difference_type n,
+								 reverse_iterator<Iter> const &rev_it)
 {
 	return reverse_iterator<Iter>(rev_it.base() - n);
 }
 
 template < typename IterL, typename IterR >
-typename reverse_iterator<IterL>::difference_type operator-(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+typename reverse_iterator<IterL>::difference_type operator-(reverse_iterator<IterL> const &lhs,
+															reverse_iterator<IterR> const &rhs)
 {
 	return (rhs.base() - lhs.base());
 }
