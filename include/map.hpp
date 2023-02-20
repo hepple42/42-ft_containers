@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:41:09 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/17 14:22:38 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/20 12:43:44 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,28 @@ namespace ft {
 
 /* *** M A P **************************************************************** */
 
-template < typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = std::allocator<ft::pair<Key const, T> > >
+/* ************************************************************************** **
+** MAP                                                                        **
+**                                                                            **
+** Maps are associative containers that store elements that are pairs of a    **
+** key and a mapped value, following some specific order. The key is used to  **
+** sort and uniquely identify the elements, while the actual data is stored   **
+** in the mapped value. The types of key and mapped value may differ.         **
+**                                                                            **
+** Internally, the elements of a map are sorted by their keys, following a    **
+** strict weak ordering defined through its internal comparison object.       **
+** Using this ordering, mapped values can be directly accessed through the    **
+** corresponding key, and iterations over subsets are possible.               **
+**                                                                            **
+** Maps are typically implemented as binary search trees. This map uses a red **
+** black tree as an underlying data structure, which offers a balance between **
+** fast insertion or deletion and fast element search.                        **
+**                                                                            **
+** [https://cplusplus.com/reference/map/map/]                                 **
+** ************************************************************************** */
+
+template < typename Key, typename T, typename Compare = std::less<Key>,
+		   typename Alloc = std::allocator<ft::pair<Key const, T> > >
 class map
 {
 
@@ -98,7 +119,7 @@ class map
 
   private:
 
-	tree_type _tree;
+	tree_type _tree; // red black tree
 
 
 /* *** MEMBER FUNCTIONS ***************************************************** */
@@ -107,15 +128,20 @@ class map
 
 /* *** Constructor ********************************************************** */
 
-	explicit map(key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) : _tree(value_compare(comp), alloc) { }
+	explicit map(key_compare const &comp = key_compare(),
+				 allocator_type const &alloc = allocator_type())
+		: _tree(value_compare(comp), alloc) { }
 
 	template < typename InputIter >
-	map(InputIter first, InputIter last, key_compare const &comp = key_compare(), allocator_type const &alloc = allocator_type()) : _tree(value_compare(comp), alloc)
+	map(InputIter first, InputIter last, key_compare const &comp = key_compare(),
+		allocator_type const &alloc = allocator_type())
+		: _tree(value_compare(comp), alloc)
 	{
 		_tree.insert(first, last);
 	}
 
-	map(map const &src) : _tree(src._tree) { }
+	map(map const &src)
+		: _tree(src._tree) { }
 
 /* *** Destructor *********************************************************** */
 
