@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:14 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/21 15:59:49 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/21 17:41:38 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void print_title(std::string title)
 	std::cout << title << std::endl << std::endl;
 }
 
-void print_seperator()
+void print_separator()
 {
 	std::cout << "- - - - - - - - - - - - - - - - - - - -"<< std::endl << std::endl;
 }
@@ -105,19 +105,63 @@ void print_vector(NAMESPACE::vector<T> const &v, std::string name = "vector")
 	print_line("");
 }
 
-// template < typename Key, typename T, typename Compare >
-// void print_map(NAMESPACE::map<Key, T, Compare> m)
-// {
-// 	for (typename NAMESPACE::map<Key, T, Compare>::iterator it = m.begin(); it != m.end(); ++it)
-// 		std::cout << "->" << it->first << ", " << it->second << "<-" << std::endl;
-// }
+template < typename Key, typename T, typename Compare >
+void print_map(NAMESPACE::map<Key, T, Compare> m, std::string name = "map")
+{
+	print_line(name + ":");
 
-// template < typename T, typename Compare >
-// void print_set(NAMESPACE::vector<T> s)
-// {
-// 	for (typename NAMESPACE::set<T>::iterator it = s.begin(); it != s.end(); ++it)
-// 		std::cout << "->" << *it << "<-" << std::endl;
-// }
+	print_value("size", m.size());
+
+	print_value("max_size", m.max_size());
+
+	print_bool("empty", m.empty());
+
+	print_line("content:");
+	for (typename NAMESPACE::map<Key, T, Compare>::const_iterator it = m.begin(); it != m.end(); ++it)
+		std::cout << name << "[" << (*it).first << "] = " << (*it).second << std::endl;
+
+	print_line("");
+}
+
+template < typename T >
+void print_stack(NAMESPACE::stack<T> const &s, std::string name = "stack")
+{
+	print_line(name + ":");
+
+	print_value("size", s.size());
+
+	print_value("max_size", s.max_size());
+
+	print_bool("empty", s.empty());
+
+	print_line("content:");
+	NAMESPACE::stack<T> tmp(s);
+	while (!(tmp.empty()))
+	{
+		std::cout << tmp.top() << std::endl;
+		tmp.pop();
+	}
+
+	print_line("");
+}
+
+template < typename T, typename Compare >
+void print_set(NAMESPACE::set<T, Compare> const &s, std::string name = "set")
+{
+	print_line(name + ":");
+
+	print_value("size", s.size());
+
+	print_value("max_size", s.max_size());
+
+	print_bool("empty", s.empty());
+
+	print_line("content:");
+	for (typename NAMESPACE::set<T, Compare>::const_iterator it = s.begin(); it != s.end(); ++it)
+		std::cout << *it << std::endl;
+
+	print_line("");
+}
 
 
 /* *** V E C T O R ********************************************************** */
@@ -176,7 +220,7 @@ void vector_construction_and_assignment()
 		print_vector(v6, "v6");
 	}
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_iterators()
@@ -240,7 +284,7 @@ void vector_iterators()
 		std::cout << *(it - 1) << " ";
 	std::cout << std::endl << std::endl;
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_resize()
@@ -262,7 +306,7 @@ void vector_resize()
 	v.resize(0);
 	print_vector(v, "v");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_reserve()
@@ -285,7 +329,7 @@ void vector_reserve()
 	v.reserve(6);
 	print_vector(v, "v");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_access()
@@ -321,7 +365,7 @@ void vector_access()
 	}
 	print_line("");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_assign()
@@ -352,7 +396,7 @@ void vector_assign()
 	v1.assign(v1.begin() + 1, v1.end() - 1);
 	print_vector(v1, "v1");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_push_and_pop()
@@ -374,7 +418,7 @@ void vector_push_and_pop()
 		v.pop_back();
 	print_vector(v, "v");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_insert()
@@ -399,7 +443,7 @@ void vector_insert()
 	v1.insert(v1.begin() + 2, v2.begin(), v2.end());
 	print_vector(v1, "v1");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_erase()
@@ -427,7 +471,7 @@ void vector_erase()
 		v.erase(v.begin());
 	print_vector(v, "v");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_swap()
@@ -435,8 +479,8 @@ void vector_swap()
 	print_title("VECTOR - SWAP");
 
 	NAMESPACE::vector<int> v1(2, 2);
-	NAMESPACE::vector<int> v2(7, 7);
 	print_vector(v1, "v1");
+	NAMESPACE::vector<int> v2(7, 7);
 	print_vector(v2, "v2");
 
 	v1.swap(v2);
@@ -452,7 +496,7 @@ void vector_swap()
 	print_vector(v1, "v1");
 	print_vector(v2, "v2");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_clear()
@@ -470,7 +514,7 @@ void vector_clear()
 	v.clear();
 	print_vector(v, "v");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_relational_operators()
@@ -521,7 +565,7 @@ void vector_relational_operators()
 	print_bool("v5 >= v6", v5 >= v6);
 	print_line("");
 
-	print_seperator();
+	print_separator();
 }
 
 void vector_benchmark()
@@ -544,6 +588,265 @@ void vector_benchmark()
 }
 
 
+/* *** M A P **************************************************************** */
+
+void map_construction_and_assignment()
+{
+	print_title("MAP - CONSTRUCTION AND ASSIGNMENT");
+
+	{
+		NAMESPACE::map<int, char> m1;
+		print_map(m1, "m1");
+
+		NAMESPACE::map<int, char> m2;
+		for (size_t i = 0; i < 7; ++i)
+			m2[i] = 'a' + 2 * i;
+		print_map(m2, "m2");
+
+		NAMESPACE::map<int, char> m3(m2);
+		print_map(m3, "m3");
+
+		NAMESPACE::map<int, char> m4(m3.begin(), m3.end());
+		print_map(m4, "m4");
+
+		NAMESPACE::map<int, char> m5 = m4;
+		print_map(m5, "m5");
+	}
+
+	{
+		NAMESPACE::map<std::string, double> m1;
+		print_map(m1, "m1");
+
+		NAMESPACE::map<std::string, double> m2;
+		m2["Blub"] = 7.77;
+		m2["Test"] = -1.0;
+		m2["42"] = 42;
+		print_map(m2, "m2");
+
+		NAMESPACE::map<std::string, double> m3(m2);
+		print_map(m3, "m3");
+
+		NAMESPACE::map<std::string, double> m4(m3.begin(), m3.end());
+		print_map(m4, "m4");
+
+		NAMESPACE::map<std::string, double> m5 = m4;
+		print_map(m5, "m5");
+	}
+
+	print_separator();
+}
+
+void map_iterators()
+{
+	print_title("MAP - ITERATORS");
+
+	NAMESPACE::map<int, char> m;
+	print_map(m, "m");
+
+	print_bool("begin() == end()", m.begin() == m.end());
+	print_bool("begin() != end()", m.begin() != m.end());
+	print_line("");
+
+	for (size_t i = 0; i < 8; ++i)
+		m[i] = 'a' + i;
+	print_map(m, "m");
+
+	print_bool("begin() == end()", m.begin() == m.end());
+	print_bool("begin() != end()", m.begin() != m.end());
+	print_line("");
+
+	for (NAMESPACE::map<int, char>::iterator it = m.begin(); it != m.end(); ++it)
+		std::cout << "[" << it->first << "," << it->second << "] ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::map<int, char>::iterator it1 = m.end();
+	while (it1 != m.begin())
+	{
+		--it1;
+		std::cout << "[" << it1->first << "," << it1->second << "] ";
+	}
+	std::cout << std::endl << std::endl;
+
+	for (NAMESPACE::map<int, char>::reverse_iterator it = m.rbegin(); it != m.rend(); ++it)
+		std::cout << "[" << it->first << "," << it->second << "] ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::map<int, char>::reverse_iterator it2 = m.rend();
+	while (it2 != m.rbegin())
+	{
+		--it2;
+		std::cout << "[" << it2->first << "," << it2->second << "] ";
+	}
+	std::cout << std::endl << std::endl;
+
+	for (NAMESPACE::map<int, char>::const_iterator it = m.begin(); it != m.end(); ++it)
+		std::cout << "[" << it->first << "," << it->second << "] ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::map<int, char>::const_iterator it3 = m.end();
+	while (it3 != m.begin())
+	{
+		--it3;
+		std::cout << "[" << it3->first << "," << it3->second << "] ";
+	}
+	std::cout << std::endl << std::endl;
+
+	for (NAMESPACE::map<int, char>::const_reverse_iterator it = m.rbegin(); it != m.rend(); ++it)
+		std::cout << "[" << it->first << "," << it->second << "] ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::map<int, char>::const_reverse_iterator it4 = m.rend();
+	while (it4 != m.rbegin())
+	{
+		--it4;
+		std::cout << "[" << it4->first << "," << it4->second << "] ";
+	}
+	std::cout << std::endl << std::endl;
+
+	print_separator();
+}
+
+void map_access()
+{
+	print_title("MAP - ACCESS");
+
+	NAMESPACE::map<int, char> m;
+	print_map(m, "m");
+
+	for (size_t i = 0; i < 5; ++i)
+		m[i] = 'a' + i;
+	print_map(m, "m");
+
+	print_value("m.at(0)", m.at(0));
+	print_value("m[3]", m[3]);
+	print_bool("m.at(2) == m[2]", m.at(2) == m[2]);
+
+	try
+	{
+		m.at(5);
+	}
+	catch(std::exception const &e)
+	{
+		print_line("Exception: m.at(5)");
+	}
+	try
+	{
+		m.at(999999);
+	}
+	catch(std::exception const &e)
+	{
+		print_line("Exception: m.at(999999)");
+	}
+	print_line("");
+
+	print_separator();
+}
+
+void map_insert()
+{
+	print_title("MAP - INSERT");
+
+	NAMESPACE::map<int, char> m1;
+	print_map(m1, "m1");
+
+	m1.insert(NAMESPACE::make_pair(3, 'a'));
+	m1.insert(NAMESPACE::make_pair(0, 'b'));
+	m1.insert(NAMESPACE::make_pair(2, 'c'));
+	m1.insert(NAMESPACE::make_pair(1, 'd'));
+	print_map(m1, "m1");
+
+	m1.insert(m1.begin(), NAMESPACE::make_pair(4, 'e'));
+	print_map(m1, "m1");
+
+	NAMESPACE::map<int, char> m2;
+	for (size_t i = 3; i < 8; ++i)
+		m2[i] = 'a' + 2 * i;
+	m1.insert(m2.begin(), m2.end());
+	print_map(m1, "m1");
+
+	print_separator();
+}
+
+void map_erase()
+{
+	print_title("MAP - ERASE");
+
+	NAMESPACE::map<int, char> m;
+	for (size_t i = 0; i < 8; ++i)
+		m[i] = 'a' + i;
+	print_map(m, "m");
+
+	m.erase(m.begin());
+	print_map(m, "m");
+
+	m.erase(--(m.end()));
+	print_map(m, "m");
+
+	m.erase(4);
+	print_map(m, "m");
+
+	m.erase(++(m.begin()), --(m.end()));
+	print_map(m, "m");
+
+	while (!(m.empty()))
+		m.erase(m.begin());
+	print_map(m, "m");
+
+	print_separator();
+}
+
+void map_swap()
+{
+	print_title("MAP - SWAP");
+
+	NAMESPACE::map<int, char> m1;
+	for (size_t i = 0; i < 8; ++i)
+		m1[i + 42] = 'a' + i;
+	print_map(m1, "m1");
+	NAMESPACE::map<int, char> m2;
+	for (size_t i = 0; i < 3; ++i)
+		m2[i] = 'a' + 3 * i;
+	print_map(m2, "m2");
+
+	m1.swap(m2);
+	print_map(m1, "m1");
+	print_map(m2, "m2");
+
+	m2.swap(m1);
+	print_map(m1, "m1");
+	print_map(m2, "m2");
+
+	m1.swap(m1);
+	print_map(m1, "m1");
+	print_map(m2, "m2");
+
+	print_separator();
+}
+
+void map_clear()
+{
+	print_title("MAP - CLEAR");
+
+	NAMESPACE::map<int, char> m;
+	for (size_t i = 0; i < 8; ++i)
+		m[i] = 'a' + i;
+	m.clear();
+	print_map(m, "m");
+
+	m.insert(NAMESPACE::make_pair(3, 'a'));
+	m.insert(NAMESPACE::make_pair(0, 'b'));
+	m.insert(NAMESPACE::make_pair(2, 'c'));
+	m.insert(NAMESPACE::make_pair(1, 'd'));
+	m.clear();
+	print_map(m, "m");
+
+	m.clear();
+	print_map(m, "m");
+
+	print_separator();
+}
+
+
 /* *** M A I N ************************************************************** */
 
 int main(int argc, char **argv)
@@ -560,10 +863,11 @@ int main(int argc, char **argv)
 #endif
 	print_line("");
 
+
 	print_title("VECTOR");
 
 	start = std::clock();
-
+	
 	vector_construction_and_assignment();
 	vector_iterators();
 	vector_resize();
@@ -577,11 +881,37 @@ int main(int argc, char **argv)
 	vector_clear();
 	vector_relational_operators();
 	vector_benchmark();
-
+	
 	std::cout << "time (vector): " 
 			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
 			  << "ms"
 			  << std::endl;
+			  
+	print_line("");
+	print_separator();
+	print_separator();
+
+
+	print_title("MAP");
+	
+	start = std::clock();
+	
+	map_construction_and_assignment();
+	map_iterators();
+	map_access();
+	map_insert();
+	map_erase();
+	map_swap();
+	map_clear();
+	
+	std::cout << "time (map): " 
+			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
+			  << "ms"
+			  << std::endl;
+
+	print_line("");
+	print_separator();
+	print_separator();
 
 	if (argc > 1)
 	{
