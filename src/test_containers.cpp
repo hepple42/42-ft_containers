@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:14 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/22 11:54:19 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/22 12:42:50 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,39 @@ struct map_more : std::binary_function <T, T, bool>
 	bool operator()(T const &x, T const &y) const
 	{
 		return (x > y);
+	}
+};
+
+template< typename T >
+class mutant_stack : public NAMESPACE::stack<T>
+{
+  public:
+
+	mutant_stack() { }
+
+	mutant_stack(mutant_stack<T> const &src)
+	{
+		*this = src;
+	}
+
+	mutant_stack<T> &operator=(mutant_stack<T> const &rhs)
+	{
+		this->c = rhs.c;
+		return *this;
+	}
+
+	~mutant_stack() { }
+
+	typedef typename NAMESPACE::stack<T>::container_type::iterator iterator;
+
+	iterator begin()
+	{
+		return this->c.begin();
+	}
+	
+	iterator end()
+	{
+		return this->c.end();
 	}
 };
 
@@ -141,9 +174,12 @@ void print_stack(NAMESPACE::stack<T> const &s, std::string name = "stack")
 
 	print_value("size", s.size());
 
-	print_value("max_size", s.max_size());
-
 	print_bool("empty", s.empty());
+
+	if (s.size() > 0)
+		print_value("top", s.top());
+	else
+		print_line("top: -");
 
 	print_line("content:");
 	NAMESPACE::stack<T> tmp(s);
@@ -583,6 +619,8 @@ void vector_benchmark()
 {
 	srand(42);
 
+	print_title("VECTOR - BENCHMARK");
+
 	NAMESPACE::vector<int> v;
 	for (size_t i = 0; i < 10; ++i)
 	{
@@ -598,6 +636,8 @@ void vector_benchmark()
 	}
 
 	print_vector(v, "v");
+
+	print_separator();
 }
 
 
@@ -1014,17 +1054,151 @@ void map_benchmark()
 {
 	srand(42);
 
+	print_title("MAP - BENCHMARK");
+
 	NAMESPACE::map<int, char> m;
 	for (size_t i = 0; i < 100000; ++i)
 		m.insert(NAMESPACE::make_pair(i, 'a' + rand() % 26));
 	for (size_t i = 0; i < 100000; ++i)
 		m.find(i);
 	for (size_t i = 0; i < 100000; ++i)
-		m.find(i);
+		m.erase(i);
 
 	print_map(m, "m");
+
+	print_separator();
 }
 
+
+/* *** S T A C K ************************************************************ */
+
+void stack_construction_and_assignment()
+{
+	print_title("STACK - CONSTRUCTION AND ASSIGNMENT");
+
+	NAMESPACE::stack<int> s1;
+	print_stack(s1, "s1");
+
+	NAMESPACE::stack<int> s2;
+	for (size_t i = 0; i < 8; ++i)
+		s2.push(100 * i);
+	print_stack(s2, "s2");
+
+	NAMESPACE::stack<int> s3(s2);
+	print_stack(s3, "s3");
+
+	NAMESPACE::stack<int> s4 = s3;
+	print_stack(s4, "s4");
+
+	print_separator();
+}
+
+void stack_mutant()
+{
+	print_title("STACK - MUTANT");
+
+	mutant_stack<char> ms;
+	for(char c = 'a'; c <= 'z'; ++c)
+		ms.push(c);
+	std::cout << "ms:" << std::endl << "content:" << std::endl;
+	for(mutant_stack<char>::iterator it = ms.begin(); it != ms.end(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl << std::endl;
+
+	print_separator();
+}
+
+void stack_push_and_pop()
+{
+	print_title("STACK - PUSH AND POP");
+
+	NAMESPACE::stack<int> s;
+	print_stack(s, "s");
+
+	s.push(42);
+	for (size_t i = 0; i < 8; ++i)
+		s.push(i);
+	print_stack(s, "s");
+
+	s.push(42);
+	print_stack(s, "s");
+
+	s.pop();
+	print_stack(s, "s");
+
+	while (!(s.empty()))
+		s.pop();
+	print_stack(s, "s");
+
+	print_separator();
+}
+
+void stack_relational_operators()
+{
+	print_title("STACK - RELATIONAL OPERATORS");
+
+	NAMESPACE::stack<int> s1;
+	for (size_t i = 0; i < 6; ++i)
+		s1.push(i);
+	print_stack(s1, "s1");
+	NAMESPACE::stack<int> s2(s1);
+	print_stack(s2, "s2");
+
+	print_bool("s1 == s2", s1 == s2);
+	print_bool("s1 != s2", s1 != s2);
+	print_bool("s1 < s2", s1 < s2);
+	print_bool("s1 <= s2", s1 <= s2);
+	print_bool("s1 > s2", s1 > s2);
+	print_bool("s1 >= s2", s1 >= s2);
+	print_line("");
+
+	NAMESPACE::stack<int> s3;
+	for (size_t i = 0; i < 4; ++i)
+		s3.push(i);
+	print_stack(s3, "s3");
+	NAMESPACE::stack<int> s4;
+	for (size_t i = 0; i < 5; ++i)
+		s4.push(i);
+	print_stack(s4, "s4");
+
+	print_bool("s3 == s4", s3 == s4);
+	print_bool("s3 != s4", s3 != s4);
+	print_bool("s3 < s4", s3 < s4);
+	print_bool("s3 <= s4", s3 <= s4);
+	print_bool("s3 > s4", s3 > s4);
+	print_bool("s3 >= s4", s3 >= s4);
+	print_line("");
+
+	NAMESPACE::stack<int> s5;
+	print_stack(s5, "s5");
+	NAMESPACE::stack<int> s6(s5);
+	print_stack(s6, "s6");
+
+	print_bool("s5 == s6", s5 == s6);
+	print_bool("s5 != s6", s5 != s6);
+	print_bool("s5 < s6", s5 < s6);
+	print_bool("s5 <= s6", s5 <= s6);
+	print_bool("s5 > s6", s5 > s6);
+	print_bool("s5 >= s6", s5 >= s6);
+	print_line("");
+
+	print_separator();
+}
+
+void stack_benchmark()
+{
+	print_title("STACK - BENCHMARK");
+
+	NAMESPACE::stack<int> s;
+	for (size_t i = 0; i < 1000000; ++i)
+		s.push((i + 100) % 1000000);
+	for (size_t i = 0; i < 1000000; ++i)
+		s.pop();
+
+	print_stack(s, "s");
+
+	print_separator();
+}
 
 
 /* *** M A I N ************************************************************** */
@@ -1090,6 +1264,26 @@ int main(int argc, char **argv)
 	map_benchmark();
 	
 	std::cout << "time (map): " 
+			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
+			  << "ms"
+			  << std::endl;
+
+	print_line("");
+	print_separator();
+	print_separator();
+
+	
+	print_title("STACK");
+	
+	start = std::clock();
+	
+	stack_construction_and_assignment();
+	stack_mutant();
+	stack_push_and_pop();
+	stack_relational_operators();
+	stack_benchmark();
+	
+	std::cout << "time (stack): " 
 			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
 			  << "ms"
 			  << std::endl;
