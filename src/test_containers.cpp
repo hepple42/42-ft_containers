@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:14 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/22 12:42:50 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/22 13:58:11 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@
 #endif
 
 
+/* *** H E L P E R   C L A S S E S ****************************************** */
+
 template < typename T >
-struct map_more : std::binary_function <T, T, bool>
+struct compare_more : std::binary_function <T, T, bool>
 {
 	bool operator()(T const &x, T const &y) const
 	{
@@ -698,7 +700,7 @@ void map_compare()
 		m1[i] = 'a' + i;
 	print_map(m1, "m1");
 
-	NAMESPACE::map<int, char, map_more<int> > m2;
+	NAMESPACE::map<int, char, compare_more<int> > m2;
 	for (size_t i = 0; i < 8; ++i)
 		m2[i] = 'a' + i;
 	print_map(m2, "m2");
@@ -1017,7 +1019,7 @@ void map_relational_operators()
 	NAMESPACE::map<int, char> m3;
 	for (size_t i = 0; i < 6; ++i)
 		m3[i] = 'a' + (3 * i) % 8;
-	print_map(m1, "m1");
+	print_map(m3, "m3");
 	NAMESPACE::map<int, char> m4;
 	for (size_t i = 0; i < 5; ++i)
 		m4[i] = 'a' + (3 * i) % 8;
@@ -1200,6 +1202,386 @@ void stack_benchmark()
 	print_separator();
 }
 
+/* *** S E T **************************************************************** */
+
+void set_construction_and_assignment()
+{
+	print_title("SET - CONSTRUCTION AND ASSIGNMENT");
+
+	{
+		NAMESPACE::set<int> s1;
+		print_set(s1, "s1");
+
+		NAMESPACE::set<int> s2;
+		for (size_t i = 0; i < 7; ++i)
+			s2.insert(7 * i);
+		print_set(s2, "s2");
+
+		NAMESPACE::set<int> s3(s2);
+		print_set(s3, "s3");
+
+		NAMESPACE::set<int> s4(s3.begin(), s3.end());
+		print_set(s4, "s4");
+
+		NAMESPACE::set<int> s5 = s4;
+		print_set(s5, "s5");
+	}
+
+	{
+		NAMESPACE::set<std::string> s1;
+		print_set(s1, "s1");
+
+		NAMESPACE::set<std::string> s2;
+		s2.insert("Blub");
+		s2.insert("Test");
+		s2.insert("42");
+		print_set(s2, "s2");
+
+		NAMESPACE::set<std::string> s3(s2);
+		print_set(s3, "s3");
+
+		NAMESPACE::set<std::string> s4(s3.begin(), s3.end());
+		print_set(s4, "s4");
+
+		NAMESPACE::set<std::string> s5 = s4;
+		print_set(s5, "s5");
+	}
+
+	print_separator();
+}
+
+void set_compare()
+{
+	print_title("SET - COMPARE");
+
+	NAMESPACE::set<int> s1;
+	for (size_t i = 0; i < 8; ++i)
+		s1.insert(i);
+	print_set(s1, "s1");
+
+	NAMESPACE::set<int, compare_more<int> > s2;
+	for (size_t i = 0; i < 8; ++i)
+		s2.insert(i);
+	print_set(s2, "s2");
+
+	print_separator();
+}
+
+void set_iterators()
+{
+	print_title("SET - ITERATORS");
+
+	NAMESPACE::set<int> s;
+	print_set(s, "m");
+
+	print_bool("begin() == end()", s.begin() == s.end());
+	print_bool("begin() != end()", s.begin() != s.end());
+	print_line("");
+
+	for (size_t i = 0; i < 6; ++i)
+		s.insert(i);
+	print_set(s, "m");
+
+	print_bool("begin() == end()", s.begin() == s.end());
+	print_bool("begin() != end()", s.begin() != s.end());
+	print_line("");
+
+	for (NAMESPACE::set<int>::iterator it = s.begin(); it != s.end(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::set<int>::iterator it1 = s.end();
+	while (it1 != s.begin())
+	{
+		--it1;
+		std::cout << *it1 << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+	for (NAMESPACE::set<int>::reverse_iterator it = s.rbegin(); it != s.rend(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::set<int>::reverse_iterator it2 = s.rend();
+	while (it2 != s.rbegin())
+	{
+		--it2;
+		std::cout << *it2 << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+	for (NAMESPACE::set<int>::const_iterator it = s.begin(); it != s.end(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::set<int>::const_iterator it3 = s.end();
+	while (it3 != s.begin())
+	{
+		--it3;
+		std::cout << *it3 << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+	for (NAMESPACE::set<int>::const_reverse_iterator it = s.rbegin(); it != s.rend(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl << std::endl;
+
+	NAMESPACE::set<int>::const_reverse_iterator it4 = s.rend();
+	while (it4 != s.rbegin())
+	{
+		--it4;
+		std::cout << *it4 << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+	print_separator();
+}
+
+void set_insert()
+{
+	print_title("SET - INSERT");
+
+	NAMESPACE::set<int> s1;
+	print_set(s1, "s1");
+
+	s1.insert(7);
+	s1.insert(42);
+	s1.insert(1);
+	s1.insert(0);
+	print_set(s1, "s1");
+
+	s1.insert(s1.begin(), 123);
+	print_set(s1, "s1");
+
+	NAMESPACE::set<int> s2;
+	for (size_t i = 0; i < 4; ++i)
+		s2.insert(i);
+	s1.insert(s2.begin(), s2.end());
+	print_set(s1, "s1");
+
+	print_separator();
+}
+
+void set_erase()
+{
+	print_title("SET - ERASE");
+
+	NAMESPACE::set<int> s;
+	for (size_t i = 0; i < 8; ++i)
+		s.insert(i);
+	print_set(s, "s");
+
+	s.erase(s.begin());
+	print_set(s, "s");
+
+	s.erase(--(s.end()));
+	print_set(s, "s");
+
+	s.erase(4);
+	print_set(s, "s");
+
+	s.erase(9);
+	print_set(s, "s");
+
+	s.erase(++(s.begin()), --(s.end()));
+	print_set(s, "s");
+
+	while (!(s.empty()))
+		s.erase(s.begin());
+	print_set(s, "s");
+
+	print_separator();
+}
+
+void set_swap()
+{
+	print_title("SET - SWAP");
+
+	NAMESPACE::set<int> s1;
+	for (size_t i = 0; i < 8; ++i)
+		s1.insert(i);
+	print_set(s1, "s1");
+	NAMESPACE::set<int> s2;
+	for (size_t i = 0; i < 3; ++i)
+		s2.insert(3 + 2 * i);
+	print_set(s2, "s2");
+
+	s1.swap(s2);
+	print_set(s1, "s1");
+	print_set(s2, "s2");
+
+	s2.swap(s1);
+	print_set(s1, "s1");
+	print_set(s2, "s2");
+
+	s1.swap(s1);
+	print_set(s1, "s1");
+	print_set(s2, "s2");
+
+	print_separator();
+}
+
+void set_clear()
+{
+	print_title("SET - CLEAR");
+
+	NAMESPACE::set<int> s;
+	for (size_t i = 0; i < 8; ++i)
+		s.insert(i);
+	s.clear();
+	print_set(s, "s");
+
+	s.insert(42);
+	s.insert(0);
+	s.insert(7);
+	s.insert(-1);
+	s.clear();
+	print_set(s, "s");
+
+	s.clear();
+	print_set(s, "s");
+
+	print_separator();
+}
+
+void set_find()
+{
+	print_title("SET - FIND");
+
+	NAMESPACE::set<int> s;
+	for (size_t i = 0; i < 8; ++i)
+		s.insert((3 * i) % 8);
+	print_set(s, "s");
+
+	print_value("*(s.find(0))", *(s.find(0)));
+	print_value("*(s.find(7))", *(s.find(7)));
+	print_value("*(s.find(2))", *(s.find(2)));
+
+	print_bool("s.find(42) == s.end()", s.find(42) == s.end());
+
+	print_separator();
+}
+
+void set_count()
+{
+	print_title("SET - COUNT");
+
+	NAMESPACE::set<int> s;
+	for (size_t i = 0; i < 8; ++i)
+		s.insert((5 * i) % 8);
+	print_set(s, "s");
+
+	print_value("s.count(0)", s.count(0));
+	print_value("s.count(7)", s.count(7));
+	print_value("s.count(2)", s.count(2));
+	print_value("s.count(42)", s.count(42));
+
+	print_separator();
+}
+
+void set_bounds()
+{
+	print_title("SET - BOUNDS");
+
+	NAMESPACE::set<int> s;
+	for (size_t i = 0; i < 8; ++i)
+		s.insert(2 * i);
+	print_set(s, "s");
+
+	print_value("*(s.lower_bound(4))", *(s.lower_bound(4)));
+	print_value("*(s.upper_bound(4))", *(s.upper_bound(4)));
+	print_value("*((s.equal_range(4)).first)", *((s.equal_range(4)).first));
+	print_value("*((s.equal_range(4)).second)", *((s.equal_range(4)).second));
+	print_line("");
+
+	print_value("*(s.lower_bound(7))", *(s.lower_bound(7)));
+	print_value("*(s.upper_bound(7))", *(s.upper_bound(7)));
+	print_value("*((s.equal_range(7)).first)", *((s.equal_range(7)).first));
+	print_value("*((s.equal_range(7)).second)", *((s.equal_range(7)).second));
+	print_line("");
+
+	print_bool("s.lower_bound(42) == m.end()", s.lower_bound(42) == s.end());
+	print_bool("s.upper_bound(42) == m.end()", s.upper_bound(42) == s.end());
+	print_bool("(s.equal_range(42)).first == s.end()", (s.equal_range(42)).first == s.end());
+	print_bool("(s.equal_range(42)).second == s.end()", (s.equal_range(42)).second == s.end());
+	print_line("");
+
+	print_separator();
+}
+
+void set_relational_operators()
+{
+	print_title("SET - RELATIONAL OPERATORS");
+
+	NAMESPACE::set<int> s1;
+	for (size_t i = 0; i < 8; ++i)
+		s1.insert(i);
+	print_set(s1, "s1");
+	NAMESPACE::set<int> s2(s1);
+	print_set(s2, "s2");
+
+	print_bool("s1 == s2", s1 == s2);
+	print_bool("s1 != s2", s1 != s2);
+	print_bool("s1 < s2", s1 < s2);
+	print_bool("s1 <= s2", s1 <= s2);
+	print_bool("s1 > s2", s1 > s2);
+	print_bool("s1 >= s2", s1 >= s2);
+	print_line("");
+
+	NAMESPACE::set<int> s3;
+	for (size_t i = 0; i < 5; ++i)
+		s3.insert(i);
+	print_set(s1, "s1");
+	NAMESPACE::set<int> s4;
+	for (size_t i = 0; i < 4; ++i)
+		s4.insert(i);
+	print_set(s4, "s4");
+
+	print_bool("s3 == s4", s3 == s4);
+	print_bool("s3 != s4", s3 != s4);
+	print_bool("s3 < s4", s3 < s4);
+	print_bool("s3 <= s4", s3 <= s4);
+	print_bool("s3 > s4", s3 > s4);
+	print_bool("s3 >= s4", s3 >= s4);
+	print_line("");
+
+	NAMESPACE::set<int> s5;
+	for (size_t i = 0; i < 5; ++i)
+		s5.insert(i);
+	print_set(s5, "s5");
+	NAMESPACE::set<int> s6(s5);
+	s6.erase(3);
+	print_set(s6, "s6");
+
+	print_bool("s5 == s6", s5 == s6);
+	print_bool("s5 != s6", s5 != s6);
+	print_bool("s5 < s6", s5 < s6);
+	print_bool("s5 <= s6", s5 <= s6);
+	print_bool("s5 > s6", s5 > s6);
+	print_bool("s5 >= s6", s5 >= s6);
+	print_line("");
+
+	print_separator();
+}
+
+void set_benchmark()
+{
+	print_title("SET - BENCHMARK");
+
+	NAMESPACE::set<int> s;
+	for (size_t i = 0; i < 100000; ++i)
+		s.insert(i);
+	for (size_t i = 0; i < 100000; ++i)
+		s.find(i);
+	for (size_t i = 0; i < 100000; ++i)
+		s.erase(i);
+
+	print_set(s, "s");
+
+	print_separator();
+}
+
+
 
 /* *** M A I N ************************************************************** */
 
@@ -1208,19 +1590,15 @@ int main(int argc, char **argv)
 	(void)argv;
 	clock_t start;
 
-
 #ifdef FT
-	print_line("**** F T ****");
+	print_line("FT");
 #else
-	print_line("*** S T D ***");
+	print_line("STD");
 #endif
 	print_line("");
 
-
 	print_title("VECTOR");
-
 	start = std::clock();
-	
 	vector_construction_and_assignment();
 	vector_iterators();
 	vector_resize();
@@ -1234,21 +1612,16 @@ int main(int argc, char **argv)
 	vector_clear();
 	vector_relational_operators();
 	vector_benchmark();
-	
 	std::cout << "time (vector): " 
 			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
 			  << "ms"
 			  << std::endl;
-			  
 	print_line("");
 	print_separator();
 	print_separator();
 
-
 	print_title("MAP");
-	
 	start = std::clock();
-	
 	map_construction_and_assignment();
 	map_compare();
 	map_iterators();
@@ -1262,42 +1635,59 @@ int main(int argc, char **argv)
 	map_bounds();
 	map_relational_operators();
 	map_benchmark();
-	
 	std::cout << "time (map): " 
 			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
 			  << "ms"
 			  << std::endl;
-
 	print_line("");
 	print_separator();
 	print_separator();
 
-	
 	print_title("STACK");
-	
 	start = std::clock();
-	
 	stack_construction_and_assignment();
 	stack_mutant();
 	stack_push_and_pop();
 	stack_relational_operators();
 	stack_benchmark();
-	
 	std::cout << "time (stack): " 
 			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
 			  << "ms"
 			  << std::endl;
+	print_line("");
+	print_separator();
+	print_separator();
 
+	print_title("SET");
+	start = std::clock();
+	set_construction_and_assignment();
+	set_compare();
+	set_iterators();
+	set_insert();
+	set_erase();
+	set_swap();
+	set_clear();
+	set_find();
+	set_count();
+	set_bounds();
+	set_relational_operators();
+	set_benchmark();
+	std::cout << "time (set): " 
+			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
+			  << "ms"
+			  << std::endl;
 	print_line("");
 	print_separator();
 	print_separator();
 
 	if (argc > 1)
 	{
+		std::string arg = argv[1];
+		if (arg == "leaks")
 #ifdef FT
-		system("leaks test_ft");
+			system("leaks test_ft");
 #else
-		system("leaks test_std");
+			system("leaks test_std");
 #endif
 	}
 
