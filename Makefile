@@ -6,13 +6,15 @@
 #    By: hepple <hepple@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 12:14:51 by hepple            #+#    #+#              #
-#    Updated: 2023/02/22 17:19:05 by hepple           ###   ########.fr        #
+#    Updated: 2023/02/22 18:36:35 by hepple           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ********************* #
 #   V A R I A B L E S   #
 # ********************* #
+
+NAME		:= ft_containers
 
 FT			:= ft
 STD			:= std
@@ -55,6 +57,8 @@ DEPS_RBT	:= $(addprefix $(DDIR_RBT)/, $(SRCS_RBT:%.cpp=%.d))
 .PHONY: all clean fclean re
 
 all: $(FT) $(STD)
+
+$(NAME): all
 
 $(FT): $(OBJS_FT)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS_FT) -o $@
