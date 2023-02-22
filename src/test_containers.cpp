@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:14 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/22 13:58:11 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/22 18:12:03 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1685,9 +1685,9 @@ int main(int argc, char **argv)
 		std::string arg = argv[1];
 		if (arg == "leaks")
 #ifdef FT
-			system("leaks test_ft");
+			system("leaks ft");
 #else
-			system("leaks test_std");
+			system("leaks std");
 #endif
 	}
 
