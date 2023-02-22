@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:14 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/22 11:45:58 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/22 11:54:19 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@
 #else
 # define NAMESPACE std
 #endif
+
+
+template < typename T >
+struct map_more : std::binary_function <T, T, bool>
+{
+	bool operator()(T const &x, T const &y) const
+	{
+		return (x > y);
+	}
+};
+
 
 /* *** P R I N T ************************************************************ */
 
@@ -638,6 +649,23 @@ void map_construction_and_assignment()
 	print_separator();
 }
 
+void map_compare()
+{
+	print_title("MAP - COMPARE");
+
+	NAMESPACE::map<int, char> m1;
+	for (size_t i = 0; i < 8; ++i)
+		m1[i] = 'a' + i;
+	print_map(m1, "m1");
+
+	NAMESPACE::map<int, char, map_more<int> > m2;
+	for (size_t i = 0; i < 8; ++i)
+		m2[i] = 'a' + i;
+	print_map(m2, "m2");
+
+	print_separator();
+}
+
 void map_iterators()
 {
 	print_title("MAP - ITERATORS");
@@ -1048,6 +1076,7 @@ int main(int argc, char **argv)
 	start = std::clock();
 	
 	map_construction_and_assignment();
+	map_compare();
 	map_iterators();
 	map_access();
 	map_insert();
@@ -1069,7 +1098,7 @@ int main(int argc, char **argv)
 	print_separator();
 	print_separator();
 
-	if (argc > 1 && argv[1] == "leaks")
+	if (argc > 1)
 	{
 #ifdef FT
 		system("leaks test_ft");
