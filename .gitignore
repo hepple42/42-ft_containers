@@ -9,18 +9,12 @@ ft_containers-unit-test
 ft_containers_test
 
 src/main_*.cpp
-out*
-a.out*
 
-a.out
-ft_containers
-ft_map
-ft_vector
-ft_set
-ft_stack
-std_map
-std_vector
-std_stack
-std_set
-test_ft
-test_std
+out*
+*.out
+a.out*
+ft
+std
+rb_tree
+
+*.txt
