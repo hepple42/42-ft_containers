@@ -6,7 +6,7 @@
 /*   By: hepple <hepple@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:14 by hepple            #+#    #+#             */
-/*   Updated: 2023/02/21 17:41:38 by hepple           ###   ########.fr       */
+/*   Updated: 2023/02/22 11:45:58 by hepple           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -570,6 +570,8 @@ void vector_relational_operators()
 
 void vector_benchmark()
 {
+	srand(42);
+
 	NAMESPACE::vector<int> v;
 	for (size_t i = 0; i < 10; ++i)
 	{
@@ -846,13 +848,162 @@ void map_clear()
 	print_separator();
 }
 
+void map_find()
+{
+	print_title("MAP - FIND");
+
+	NAMESPACE::map<int, char> m;
+	for (size_t i = 0; i < 8; ++i)
+		m[i] = 'a' + (3 * i) % 8;
+	print_map(m, "m");
+
+	print_value("(m.find(0))->first", (m.find(0))->first);
+	print_value("(m.find(0))->second", (m.find(0))->second);
+
+	print_value("(m.find(7))->first", (m.find(7))->first);
+	print_value("(m.find(7))->second", (m.find(7))->second);
+
+	print_value("(m.find(2))->first", (m.find(2))->first);
+	print_value("(m.find(2))->second", (m.find(2))->second);
+
+	print_bool("m.find(0) == m.end()", m.find(0) == m.end());
+	print_bool("m.find(42) == m.end()", m.find(42) == m.end());
+
+	print_separator();
+}
+
+void map_count()
+{
+	print_title("MAP - COUNT");
+
+	NAMESPACE::map<int, char> m;
+	for (size_t i = 0; i < 8; ++i)
+		m[i] = 'a' + (5 * i) % 8;
+	print_map(m, "m");
+
+	print_value("m.count(0)", m.count(0));
+	print_value("m.count(7)", m.count(7));
+	print_value("m.count(2)", m.count(2));
+	print_value("m.count(42)", m.count(42));
+
+	print_separator();
+}
+
+void map_bounds()
+{
+	print_title("MAP - BOUNDS");
+
+	NAMESPACE::map<int, char> m;
+	for (size_t i = 0; i < 8; ++i)
+		m[2 * i] = 'a' + (5 * i) % 8;
+	print_map(m, "m");
+
+	print_value("(m.lower_bound(4))->first", (m.lower_bound(4))->first);
+	print_value("(m.lower_bound(4))->second", (m.lower_bound(4))->second);
+	print_value("(m.upper_bound(4))->first", (m.upper_bound(4))->first);
+	print_value("(m.upper_bound(4))->second", (m.upper_bound(4))->second);
+	print_value("((m.equal_range(4)).first)->first", ((m.equal_range(4)).first)->first);
+	print_value("((m.equal_range(4)).first)->second", ((m.equal_range(4)).first)->second);
+	print_value("((m.equal_range(4)).second)->first", ((m.equal_range(4)).second)->first);
+	print_value("((m.equal_range(4)).second)->second", ((m.equal_range(4)).second)->second);
+	print_line("");
+
+	print_value("(m.lower_bound(7))->first", (m.lower_bound(7))->first);
+	print_value("(m.lower_bound(7))->second", (m.lower_bound(7))->second);
+	print_value("(m.upper_bound(7))->first", (m.upper_bound(7))->first);
+	print_value("(m.upper_bound(7))->second", (m.upper_bound(7))->second);
+	print_value("((m.equal_range(7)).first)->first", ((m.equal_range(7)).first)->first);
+	print_value("((m.equal_range(7)).first)->second", ((m.equal_range(7)).first)->second);
+	print_value("((m.equal_range(7)).second)->first", ((m.equal_range(7)).second)->first);
+	print_value("((m.equal_range(7)).second)->second", ((m.equal_range(7)).second)->second);
+	print_line("");
+
+	print_bool("m.lower_bound(42) == m.end()", m.lower_bound(42) == m.end());
+	print_bool("m.upper_bound(42) == m.end()", m.upper_bound(42) == m.end());
+	print_bool("(m.equal_range(42)).first == m.end()", (m.equal_range(42)).first == m.end());
+	print_bool("(m.equal_range(42)).second == m.end()", (m.equal_range(42)).second == m.end());
+	print_line("");
+
+	print_separator();
+}
+
+void map_relational_operators()
+{
+	print_title("MAP - RELATIONAL OPERATORS");
+
+	NAMESPACE::map<int, char> m1;
+	for (size_t i = 0; i < 8; ++i)
+		m1[i] = 'a' + (3 * i) % 8;
+	print_map(m1, "m1");
+	NAMESPACE::map<int, char> m2(m1);
+	print_map(m2, "m2");
+
+	print_bool("m1 == m2", m1 == m2);
+	print_bool("m1 != m2", m1 != m2);
+	print_bool("m1 < m2", m1 < m2);
+	print_bool("m1 <= m2", m1 <= m2);
+	print_bool("m1 > m2", m1 > m2);
+	print_bool("m1 >= m2", m1 >= m2);
+	print_line("");
+
+	NAMESPACE::map<int, char> m3;
+	for (size_t i = 0; i < 6; ++i)
+		m3[i] = 'a' + (3 * i) % 8;
+	print_map(m1, "m1");
+	NAMESPACE::map<int, char> m4;
+	for (size_t i = 0; i < 5; ++i)
+		m4[i] = 'a' + (3 * i) % 8;
+	print_map(m4, "m4");
+
+	print_bool("m3 == m4", m3 == m4);
+	print_bool("m3 != m4", m3 != m4);
+	print_bool("m3 < m4", m3 < m4);
+	print_bool("m3 <= m4", m3 <= m4);
+	print_bool("m3 > m4", m3 > m4);
+	print_bool("m3 >= m4", m3 >= m4);
+	print_line("");
+
+	NAMESPACE::map<int, char> m5;
+	for (size_t i = 0; i < 6; ++i)
+		m5[i] = 'a' + (5 * i) % 8;
+	print_map(m5, "m5");
+	NAMESPACE::map<int, char> m6(m5);
+		m6[1] = 'a';
+	print_map(m6, "m6");
+
+	print_bool("m5 == m6", m5 == m6);
+	print_bool("m5 != m6", m5 != m6);
+	print_bool("m5 < m6", m5 < m6);
+	print_bool("m5 <= m6", m5 <= m6);
+	print_bool("m5 > m6", m5 > m6);
+	print_bool("m5 >= m6", m5 >= m6);
+	print_line("");
+
+	print_separator();
+}
+
+void map_benchmark()
+{
+	srand(42);
+
+	NAMESPACE::map<int, char> m;
+	for (size_t i = 0; i < 100000; ++i)
+		m.insert(NAMESPACE::make_pair(i, 'a' + rand() % 26));
+	for (size_t i = 0; i < 100000; ++i)
+		m.find(i);
+	for (size_t i = 0; i < 100000; ++i)
+		m.find(i);
+
+	print_map(m, "m");
+}
+
+
 
 /* *** M A I N ************************************************************** */
 
 int main(int argc, char **argv)
 {
 	(void)argv;
-	srand(42);
 	clock_t start;
 
 
@@ -903,6 +1054,11 @@ int main(int argc, char **argv)
 	map_erase();
 	map_swap();
 	map_clear();
+	map_find();
+	map_count();
+	map_bounds();
+	map_relational_operators();
+	map_benchmark();
 	
 	std::cout << "time (map): " 
 			  << static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC * 1000
@@ -913,7 +1069,7 @@ int main(int argc, char **argv)
 	print_separator();
 	print_separator();
 
-	if (argc > 1)
+	if (argc > 1 && argv[1] == "leaks")
 	{
 #ifdef FT
 		system("leaks test_ft");
