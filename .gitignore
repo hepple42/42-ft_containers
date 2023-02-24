@@ -10,11 +10,11 @@ ft_containers_test
 
 src/main_*.cpp
 
-out*
-*.out
-a.out*
+a.out
+
 ft
 std
 rb_tree
 
 *.txt
+*.diff
