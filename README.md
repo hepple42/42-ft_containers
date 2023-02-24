@@ -33,6 +33,23 @@ Apart from implementing set, the bonus part is to use a [red-black tree] as inte
 
 ## Approach
 
+## Testing
+
+To check that my own containers (namespace `ft`) work as the original ones (namespace `std`), some tests are included.
+
+The [Makefile] rule `all` compiles my [tests] into two binaries, `ft` and `std`, using the containers from the respective namespace.
+Running them shows the test output, including the time from a small benchmark.
+Further, the `rb_tree` rule produces a binary of the same name. 
+This program will display a small visualization of the insertion and deletion process of the red-black tree.
+
+A small script [test.sh] is also included.
+It automates the comparison between the `ft` and the `std` containers and saves the result in a file `result.diff`.
+Ideally, this file should only contain the benchmark times.
+
+Apart from my own tests, I also used the following testers:
+- [Mikastiv/ft_containers-terminator]
+- [mli42/containers_test]
+
 ## Resources
 
 #### C++ STL
@@ -59,6 +76,10 @@ Apart from implementing set, the bonus part is to use a [red-black tree] as inte
 [42 Heilbronn]: https://www.42heilbronn.de/learncoderepeat
 [container]: https://en.cppreference.com/w/cpp/container
 [red-black tree]: https://en.wikipedia.org/wiki/Red-black_tree
+
+[Mikastiv/ft_containers-terminator]: https://github.com/Mikastiv/ft_containers-terminator
+[mli42/containers_test]: https://github.com/mli42/containers_test
+
 [CPP Reference]: https://en.cppreference.com/w/
 [cplusplus.com]: https://cplusplus.com/reference/
 [GNU Compiler Collection]: https://github.com/gcc-mirror/gcc/tree/master/libstdc++-v3/include/bits
