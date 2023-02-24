@@ -15,14 +15,14 @@ The task in this project is to reimplement some of the [container] types from th
 - [`set`] _(bonus)_
 
 Further, some additional features are required:
-- `iterator_traits`
-- `reverse_iterator`
-- `enable_if`
-- `is_integral`
-- `equal`
-- `lexicographical_compare`
-- `pair`
-- `make_pair`
+- [`iterator_traits`]
+- [`reverse_iterator`]
+- [`enable_if`]
+- [`is_integral`]
+- [`equal`]
+- [`lexicographical_compare`]
+- [`pair`]
+- [`make_pair`]
 
 The structure of each standard container has to be taken as reference.
 As the solution has to comply with the C++98 standard, every C++98 feature (even deprecated ones) is expected.
@@ -67,7 +67,7 @@ Apart from my own tests, I also used the following testers:
 
 #### Red-Black Tree
 
-- Cormen, Leiserson, Rivest, Stein: Introduction to Algorithms, Third Edition
+- Cormen, Leiserson, Rivest, Stein: __Introduction to Algorithms__, Third Edition
 - [CodesDope: Red-Black Trees]
 
 #### Miscellaneous
@@ -86,6 +86,14 @@ Apart from my own tests, I also used the following testers:
 [`map`]: https://cplusplus.com/reference/map/map/
 [`stack`]: https://cplusplus.com/reference/stack/stack/
 [`set`]: https://cplusplus.com/reference/set/set/
+[`iterator_traits`]: https://cplusplus.com/reference/iterator/iterator_traits/
+[`reverse_iterator`]: https://cplusplus.com/reference/iterator/reverse_iterator/
+[`enable_if`]: https://cplusplus.com/reference/type_traits/enable_if/
+[`is_integral`]: https://cplusplus.com/reference/type_traits/is_integral/
+[`equal`]: https://cplusplus.com/reference/algorithm/equal/
+[`lexicographical_compare`]: https://cplusplus.com/reference/algorithm/lexicographical_compare/
+[`pair`]: https://cplusplus.com/reference/utility/pair/
+[`make_pair`]: https://cplusplus.com/reference/utility/make_pair/
 [red-black tree]: https://en.wikipedia.org/wiki/Red-black_tree
 
 [Makefile]: https://github.com/hepple42/42-ft_containers/blob/master/Makefile
