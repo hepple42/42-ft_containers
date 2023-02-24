@@ -2,17 +2,17 @@
 
 This repository contains one of my projects of the core curriculum at [42 Heilbronn].
 
-The project ft_containers is about some of the [container] class templates from the C++ standard template library (STL).
+The project ft_containers is about some of the container class templates from the C++ standard template library (STL).
 As with all C++ projects at 42 Heilbronn, the code has to be written according to the C++98 standard.
 
 ## Description
 
-The task in this project is to reimplement some of the container types from the C++ STL:
+The task in this project is to reimplement some of the [container] types from the C++ STL:
 
-- `vector`
-- `map`
-- `stack`
-- `set` _(bonus)_
+- `[vector]`
+- `[map]`
+- `[stack]`
+- `[set]` _(bonus)_
 
 Further, some additional features are required:
 - `iterator_traits`
@@ -74,7 +74,12 @@ Apart from my own tests, I also used the following testers:
 
 
 [42 Heilbronn]: https://www.42heilbronn.de/learncoderepeat
+
 [container]: https://en.cppreference.com/w/cpp/container
+[vector]: https://cplusplus.com/reference/vector/vector/
+[map]: https://cplusplus.com/reference/map/map/
+[stack]: https://cplusplus.com/reference/stack/stack/
+[set]: https://cplusplus.com/reference/set/set/
 [red-black tree]: https://en.wikipedia.org/wiki/Red-black_tree
 
 [Makefile]: https://github.com/hepple42/42-ft_containers/blob/master/Makefile
