@@ -1,16 +1,19 @@
 # 42-ft_containers
 
 This repository contains one of my projects of the core curriculum at [42 Heilbronn].
+
 The project ft_containers is about some of the container class templates from the C++ standard template library (STL).
 As with all C++ projects at 42 Heilbronn, the code has to be written according to the C++98 standard.
 
 ## Description
 
 The task in this project is to reimplement four of the container types from the C++ STL:
+
 - `vector`
 - `map`
 - `stack`
 - `set` _(bonus)_
+
 Further, some additional features are required:
 - `iterator_traits`
 - `reverse_iterator`
@@ -20,6 +23,7 @@ Further, some additional features are required:
 - `lexicographical_compare`
 - `pair`
 - `make_pair`
+
 The structure of each standard container has to be taken as reference.
 As the solution has to comply with the C++98 standard, so every C++98 feature (even deprecated ones) is expected.
 Any later feature of the containers must not be implemented.
