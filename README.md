@@ -77,6 +77,9 @@ Apart from my own tests, I also used the following testers:
 [container]: https://en.cppreference.com/w/cpp/container
 [red-black tree]: https://en.wikipedia.org/wiki/Red-black_tree
 
+[Makefile]: https://github.com/hepple42/42-ft_containers/blob/master/Makefile
+[tests]: https://github.com/hepple42/42-ft_containers/blob/master/src/test_containers.cpp
+[test.sh]: https://github.com/hepple42/42-ft_containers/blob/master/test.sh
 [Mikastiv/ft_containers-terminator]: https://github.com/Mikastiv/ft_containers-terminator
 [mli42/containers_test]: https://github.com/mli42/containers_test
 
