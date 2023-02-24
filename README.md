@@ -7,7 +7,7 @@ As with all C++ projects at 42 Heilbronn, the code has to be written according t
 
 ## Description
 
-The task in this project is to reimplement four of the container types from the C++ STL:
+The task in this project is to reimplement some of the container types from the C++ STL:
 
 - `vector`
 - `map`
@@ -28,8 +28,8 @@ The structure of each standard container has to be taken as reference.
 As the solution has to comply with the C++98 standard, so every C++98 feature (even deprecated ones) is expected.
 Any later feature of the containers must not be implemented.
 If the container has an iterator system, then this has to be implemented as well.
-For memory management, std::allocator has to be used.
-For map and set, a [binary search tree] is required, for the bonus part, it has to be a [red-black tree].
+
+Apart from implementing the set container, the bonus part is to use a [red-black tree] as internal data structure for map and set.
 
 ## Approach
 
@@ -58,7 +58,6 @@ For map and set, a [binary search tree] is required, for the bonus part, it has 
 
 [42 Heilbronn]: https://www.42heilbronn.de/learncoderepeat
 [container]: https://en.cppreference.com/w/cpp/container
-[binary search tree]: https://en.wikipedia.org/wiki/Binary_search_tree
 [red-black tree]: https://en.wikipedia.org/wiki/Red-black_tree
 [CPP Reference]: https://en.cppreference.com/w/
 [cplusplus.com]: https://cplusplus.com/reference/
