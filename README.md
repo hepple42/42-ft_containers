@@ -29,9 +29,15 @@ As the solution has to comply with the C++98 standard, every C++98 feature (even
 Any later feature of the containers must not be implemented.
 If the container has an iterator system, then this has to be implemented as well.
 
-Apart from implementing set, the bonus part is to use a [red-black tree] as internal data structure for map and set.
+Apart from implementing `set`, the bonus part is to use a [red-black tree] as internal data structure for `map` and `set`.
 
 ## Approach
+
+My general approach was to follow the original implementation rather closely, so I read a lot of source code of the STL.
+A good overview over the required member functions, their actions, and parameters was provided by [cplusplus.com].
+
+I decided to implement a red-black tree for `map` and `set`.
+For this, I used the excellent guide provided in __Introduction to Algorithms__ by Cormen, Leiserson, Rivest, and Stein.
 
 ## Testing
 
