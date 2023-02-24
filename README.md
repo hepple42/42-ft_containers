@@ -25,11 +25,11 @@ Further, some additional features are required:
 - `make_pair`
 
 The structure of each standard container has to be taken as reference.
-As the solution has to comply with the C++98 standard, so every C++98 feature (even deprecated ones) is expected.
+As the solution has to comply with the C++98 standard, every C++98 feature (even deprecated ones) is expected.
 Any later feature of the containers must not be implemented.
 If the container has an iterator system, then this has to be implemented as well.
 
-Apart from implementing the set container, the bonus part is to use a [red-black tree] as internal data structure for map and set.
+Apart from implementing set, the bonus part is to use a [red-black tree] as internal data structure for map and set.
 
 ## Approach
 
